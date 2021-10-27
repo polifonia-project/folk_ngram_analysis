@@ -30,7 +30,6 @@ NOTES_NAMES_NUMBERS = {
 
 # TODO: Above works for root assignment but will need to add a second, reformatted, table for root detection
 #  with separate entries for all sharps and flats.
-# TODO: Rename 'fourth_oct_midi_nums' variable.
 
 
 def setup_lookup_table(data=NOTES_NAMES_NUMBERS):
@@ -62,4 +61,3 @@ else:
     lookup_table = setup_lookup_table()
 
 
-# TODO: Make numbers_note_names more robust

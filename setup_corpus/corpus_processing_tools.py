@@ -189,7 +189,6 @@ class MusicData:
         0 = repeated tone, and the opening note / reference tone.
         """
 
-        # TODO: apply this approach across all methods
         for df in self.music_data, self.music_data_accents:
             prev_note = df['MIDI_note'].shift(1)
             # conditionally assign Parsons codes, comparing each note event with prev note:
@@ -388,8 +387,7 @@ class MusicDataCorpus(Music21Corpus):
 
         feat_seq_path -- path to directory for note-level feature sequence data files for all melodies in corpus
         accents_path -- path to directory for accent-level feature sequence data files for all melodies in corpus
-        duration_weighted_path -- path to directory for duration-weighted data for specific features as targeted in
-        MusicDataCorpus.calc_duration_weighted_pitch_classes() for all melodies in corpus
+        duration_weighted_path -- path to directory for duration-weighted data for all melodies in corpus
         """
 
         for melody in self.corpus:
@@ -402,9 +400,9 @@ class MusicDataCorpus(Music21Corpus):
             for pa in paths_data:
                 filename = f"{melody.title}_{pa.split('/')[-1]}"
                 utils.write_to_csv(paths_data[pa], pa, filename)
-                print(f"File sucessfully written: {pa}/{filename}.csv")
+                print(f"Writing output: {pa}/{filename}.csv")
 
-        return None  # drop?
+        return None
 
 
 def main():

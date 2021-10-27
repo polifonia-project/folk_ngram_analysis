@@ -8,8 +8,8 @@ import pandas as pd
 
 def read_csv(inpath):
 
-    # TODO: Consider refactoring data structure of output?
-    """Reads csv file to Pandas dataframe. Returns a single-item dict, formatted per:
+    """
+    Reads csv file to Pandas dataframe. Returns a single-item dict, formatted per:
     filename (key): dataframe (value).
     """
 
