@@ -66,12 +66,19 @@ class SetupCorpus:
         self.corpus.calc_duration_weighted_feat_seqs(features)
         return self.corpus
 
-    def save_corpus_data_to_csv(self):
+    def save_corpus(self, feat_seq_path, accents_path, duration_weighted_path):
+        """Saves output corpus data using Music21Corpus.save_corpus_data_to_csv().
+
+        feat_seq_path -- path to directory for note-level feature sequence data files for all melodies in corpus
+        accents_path -- path to directory for accent-level feature sequence data files for all melodies in corpus
+        duration_weighted_path -- path to directory for duration-weighted data for all melodies in corpus
+        """
+        self.corpus.save_corpus_data_to_csv(feat_seq_path, accents_path, duration_weighted_path)
         pass
 
 
 def main():
-    # TODO: Add Cli?
+    # TODO: Add ClI?
     # TODO: Target online rather than local corpus data
     """Main function for setting up Ceol Rince na hEireann (CRE) test corpus"""
     cre_inpath = "/Users/dannydiamond/NUIG/Polifonia/CRE_clean/testing/MIDI"
@@ -83,6 +90,11 @@ def main():
     cre_roots_path = "/Users/dannydiamond/NUIG/Polifonia/CRE_clean/testing/roots_a.csv"
     cre_corpus.run_key_invariant_sequence_calulations(cre_roots_path)
     cre_corpus.run_duration_weighted_sequence_calculations(['pitch', 'pitch_class'])
+    cre_corpus.save_corpus(
+        feat_seq_path="/Users/dannydiamond/NUIG/Polifonia/CRE_clean/testing/feat_seq_data/note",
+        accents_path="/Users/dannydiamond/NUIG/Polifonia/CRE_clean/testing/feat_seq_data/accent",
+        duration_weighted_path="/Users/dannydiamond/NUIG/Polifonia/CRE_clean/testing/feat_seq_data/duration_weighted"
+    )
     return cre_corpus
 
 
