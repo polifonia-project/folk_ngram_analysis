@@ -50,7 +50,6 @@ def remove_cols_from_dataframe(df, col_names):
 def main():
     print('Running utils.py')
 
+
 if __name__ == "__main__":
     main()
-
-
