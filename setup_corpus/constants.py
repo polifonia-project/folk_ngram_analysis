@@ -29,8 +29,10 @@ NOTES_NAMES_NUMBERS = {
 #  with separate entries for all sharps and flats.
 
 
-def setup_lookup_table(data=NOTES_NAMES_NUMBERS):
+def setup_lookup_table(data=None):
 
+    if data is None:
+        data = NOTES_NAMES_NUMBERS
     note_names = [key for key in data.keys()]
     fourth_oct_midi_nums = [(val[5]) for val in data.values()]
     root_nums = [val % 12 for val in fourth_oct_midi_nums]
@@ -56,5 +58,3 @@ if __name__ == "__main__":
     main()
 else:
     lookup_table = setup_lookup_table()
-
-
