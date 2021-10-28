@@ -293,7 +293,7 @@ class MusicDataCorpus(Music21Corpus):
     def read_root_data(self, roots_path):
 
         """
-        Reads root notes csv table.
+        Reads root notes csv table from location specified in 'roots_path' arg.
         This table must contain a column named 'root' containing a root note value for every melody in the corpus,
         expressed as a chromatic pitch classes (C = 0 through B# = 11).
         It must also contain a 'title' column of melody titles , formatted as per MusicData.title
