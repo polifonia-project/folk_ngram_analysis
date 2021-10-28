@@ -11,6 +11,7 @@ class SetupCorpus:
     monophonic MIDI files. It allows generation of additional duration-weighted feature sequences, via
     SetupCorpus.run_duration_weighted_sequence_calculations() method.
     """
+
     def __init__(self, m21_corpus):
         self.corpus = m21_corpus
 
@@ -39,7 +40,6 @@ class SetupCorpus:
         self.corpus.calc_corpus_parsons()
         self.corpus.calc_corpus_parsons_cumsum()
         return self.corpus
-
 
     def run_key_invariant_sequence_calulations(self, roots_path):
 
@@ -102,7 +102,3 @@ def main():
 
 
 main()
-
-
-
-
