@@ -114,10 +114,6 @@ class Music21Corpus:
             feat_seq.to_csv(f"{output_dir}/{title}.csv")
 
 
-    # Question: Is it better to keep all operations in memory and only write one, final set of csv files?
-    # Try this way (single set of output files) and change if necessary.
-
-
 class MusicData:
     """A MusicData object represents a single melody: it holds the melody name (MusicData.title)
     and numeric data sequences representing various features of the melody; it is instantiated with a single
@@ -416,6 +412,7 @@ class MusicDataCorpus(Music21Corpus):
 
 def main():
     print('Running corpus_processing_tools.py')
+
 
 if __name__ == "__main__":
     main()
