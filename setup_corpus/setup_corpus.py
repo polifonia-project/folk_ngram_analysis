@@ -8,7 +8,7 @@ class SetupCorpus:
     """
     SetupCorpus class sets up Music21Corpus and MusicDataCorpus objects, and runs their methods: creating tables of
     primary and secondary feature sequence data at note event- and accent-level for every melody in an input corpus of
-    monophonic MIDI files. It also allows generation of duration-weighted sequences for specific features, via
+    monophonic MIDI files. It allows generation of additional duration-weighted feature sequences, via
     SetupCorpus.run_duration_weighted_sequence_calculations() method.
     """
     def __init__(self, m21_corpus):
@@ -45,7 +45,7 @@ class SetupCorpus:
 
         """
         Reads root data; converts root values to MIDI note numbers via lookup table; derives key-invariant pitch
-        (relative to root) and key invariant pitch class sequences. Runs at at note event- and accent-level for all
+        and key invariant pitch class sequences. Runs at at note event- and accent-level for all
         melodies in Music21Corpus object.
         """
 
@@ -67,12 +67,15 @@ class SetupCorpus:
         return self.corpus
 
     def save_corpus(self, feat_seq_path, accents_path, duration_weighted_path):
-        """Saves output corpus data using Music21Corpus.save_corpus_data_to_csv().
+
+        """
+        Saves output corpus data using Music21Corpus.save_corpus_data_to_csv().
 
         feat_seq_path -- path to directory for note-level feature sequence data files for all melodies in corpus
         accents_path -- path to directory for accent-level feature sequence data files for all melodies in corpus
         duration_weighted_path -- path to directory for duration-weighted data for all melodies in corpus
         """
+
         self.corpus.save_corpus_data_to_csv(feat_seq_path, accents_path, duration_weighted_path)
         pass
 

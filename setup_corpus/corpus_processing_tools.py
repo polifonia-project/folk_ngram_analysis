@@ -120,7 +120,7 @@ class Music21Corpus:
 
 class MusicData:
     """A MusicData object represents a single melody: it holds the melody name (MusicData.title)
-    and various feature sequence formats; it is instantiated with a single
+    and numeric data sequences representing various features of the melody; it is instantiated with a single
     argument, 'feat_seq', which must be a two-tuple formatted per:
     (melody title [str], primary feature sequence data [Pandas dataframe])
 
@@ -128,7 +128,7 @@ class MusicData:
         title -- melody title (MIDI filename)
         music_data -- Pandas dataframe containing primary feature sequence data for melody
 
-        music_data_accents -- will hold filtered version of music_data dataframe, retaining only data for note events
+        music_data_accents --  filtered version of music_data dataframe, retaining only data for note events
         with MIDI velocity values above a threshold value of 80.
 
         weighted_music_data -- empty attribute to hold duration-weighted feature sequence dataframe as returned by
@@ -176,8 +176,8 @@ class MusicData:
     def calc_parsons_codes(self):
 
         """
-        Calculates Parsons code for all note events in feature sequence. Psrsons code is a simple representation of
-        melodic contour: as formulated by Denys Parsons:
+        Calculates Parsons code for all note events in feature sequence. Parsons code is a simple representation of
+        melodic contour, formulated by Denys Parsons:
         'u' = upward melodic movement relative to previous note
         'd' = downward melodic movement relative to previous note
         'r' = repeated tone
@@ -206,9 +206,13 @@ class MusicData:
     def generate_duration_weighted_music_data(self, features):
 
         """
-        Returns a dataframe containing duration-weighted version of a single column
-        from MusicData.music_data feature sequence dataframe.
-        List of target column name(s) must be passed as 'features' argument.
+        Derives duration-weighted sequence for target feature sequences and returns output to
+        MusicData.weighted_music_data dataframe.
+
+        Duration weighting re-indexes sequence data from one value per note event in MusicData.music_data to
+        one value per eighth note in MusicData.weighted_music_data.
+
+        Target feature names (i.e.: names of columns to be processed) must be passed as list to 'features' arg.
         """
 
         self.weighted_music_data = pd.DataFrame()
@@ -234,13 +238,13 @@ class MusicDataCorpus(Music21Corpus):
 
     """
     MusicDataCorpus class inherits from Music21Corpus class, and holds a corpus of many
-    MusicData objects. Through access to MusicData methods, and supplementary Music21Corpus corpus-level methods,
+    MusicData objects. Through access to MusicData methods, and supplementary Music21Corpus methods,
     the class allows flexible corpus-level calculation and storage of secondary feature sequence data.
 
-     It is instantiated with a single argument, a Music21Corpus object.
+    It is instantiated with a single argument, a Music21Corpus object.
 
     Attributes per Music21Corpus, plus:
-        corpus -- overwritten
+        corpus -- list holding a MusicData object for every melody in a Music21Corpus.corpus dictionary.
         roots-- empty attribute to be filled with a table of root notes for all melodies in corpus, read from external
         csv file via MusicDataCorpus.read_root_data() method.
     """
@@ -296,7 +300,7 @@ class MusicDataCorpus(Music21Corpus):
         Reads root notes csv table.
         This table must contain a column named 'root' containing a root note value for every melody in the corpus,
         expressed as a chromatic pitch classes (C = 0 through B# = 11).
-        It must also contain a column of melody titles named 'title', formatted as per MusicData.title
+        It must also contain a 'title' column of melody titles , formatted as per MusicData.title
         (i.e.: full filename without filetype suffix).
         """
 
@@ -309,8 +313,9 @@ class MusicDataCorpus(Music21Corpus):
     def convert_roots_to_midi_note_nums(self):
 
         """
-        Converts root values from chromatic pitch classes to 4th octave MIDI note numbers. EG: G = 7 -> G = 67
-        Appends resultant values to MusicDataCorpus.roots as a new column.
+        Converts root values from chromatic pitch classes (C=0 through B=11) to 4th octave MIDI note numbers,
+        corresponding to the core pitch range of Irish traditional repertoire and instrumentation (C=60 through B=71)
+        Appends resultant values to MusicDataCorpus.roots in new 'MIDI_root' column.
         """
 
         roots = self.roots.copy()
@@ -321,7 +326,12 @@ class MusicDataCorpus(Music21Corpus):
         return self.roots
 
     def assign_roots(self):
-        """Assigns a MIDI note number root value to every melody in the corpus via MusicDataCorpus.roots lookup table"""
+
+        """
+        Assigns a MIDI root value to every melody in the corpus from 'MIDI_root' column in MusicDataCorpus.roots
+        lookup table
+        """
+
         for melody in self.corpus:
             # lookup root value from self.roots by melody title:
             midi_root = self.roots[self.roots['title'] == melody.title]['MIDI_root']
@@ -335,10 +345,9 @@ class MusicDataCorpus(Music21Corpus):
 
     def calc_key_invariant_pitches(self):
 
-        """Uses root values from MusicDataCorpus.assign_roots to calculate key-invariant pitch sequences
-        for all melodies in corpus, relative to MIDI note numbers per (C=60 through B=71).
-        This set of MIDI note numbers is used as D, rather than C, is the tonal centre of repertoire and instrumentation
-        in the Irish instrumental tradition."""
+        """Uses root value assigned by MusicDataCorpus.assign_roots() to calculate key-invariant pitch sequences
+        for all melodies in corpus, relative to 4th octave MIDI note numbers (C=60 through B=71).
+        """
 
         for melody in self.corpus:
             for df in melody.music_data, melody.music_data_accents:
@@ -363,7 +372,7 @@ class MusicDataCorpus(Music21Corpus):
     def calc_duration_weighted_feat_seqs(self, features):
 
         """
-        Derives duration-weighted sequence for target feature across all melodies in corpus.
+        Derives duration-weighted sequence for target features across all melodies in corpus.
         Target features (i.e.: column names) must be passed as list to 'features' arg.
         Output for each individual melody is stored as dataframe at MusicData.weighted_music_data.
         """
