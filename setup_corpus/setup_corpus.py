@@ -1,9 +1,5 @@
 """Flow control / corpus setup script, running tools from corpus_processing_tools.py module."""
 
-
-import requests
-import io
-
 from corpus_processing_tools import Music21Corpus, MusicDataCorpus
 
 
@@ -87,7 +83,6 @@ def main():
     # TODO: Upload corpus data and edit to target online rather than local paths.
     # TODO: Add ClI?
     """Main function for setting up Ceol Rince na hEireann (CRE) test corpus"""
-
     cre_inpath = "/Users/dannydiamond/NUIG/Polifonia/CRE_clean/testing/MIDI"
     cre_m21_corpus = Music21Corpus(cre_inpath)
     cre_corpus = SetupCorpus(cre_m21_corpus)
