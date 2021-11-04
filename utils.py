@@ -17,7 +17,7 @@ def read_csv(inpath):
     print(f"\nReading data from:\n{inpath}")
     print(data.head())
     filename = inpath.split('/')[-1][:-4]
-    return {filename: data}
+    return filename, data
 
 
 def write_to_csv(df, outpath, filename):

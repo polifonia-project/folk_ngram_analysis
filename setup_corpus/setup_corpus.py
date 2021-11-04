@@ -1,14 +1,18 @@
 """Flow control / corpus setup script, running tools from corpus_processing_tools.py module."""
 
+
+import requests
+import io
+
 from corpus_processing_tools import Music21Corpus, MusicDataCorpus
 
 
 class SetupCorpus:
 
     """
-    SetupCorpus class sets up Music21Corpus and MusicDataCorpus objects, and runs their methods: creating tables of
+    SetupCorpus class sets up Music21Corpus and MusicDataCorpus objects, and runs their methods, creating tables of
     primary and secondary feature sequence data at note event- and accent-level for every melody in an input corpus of
-    monophonic MIDI files. It allows generation of additional duration-weighted feature sequences, via
+    monophonic MIDI files. It also allows generation of duration-weighted feature sequences, via
     SetupCorpus.run_duration_weighted_sequence_calculations() method.
     """
 
@@ -77,13 +81,13 @@ class SetupCorpus:
         """
 
         self.corpus.save_corpus_data_to_csv(feat_seq_path, accents_path, duration_weighted_path)
-        pass
 
 
 def main():
+    # TODO: Upload corpus data and edit to target online rather than local paths.
     # TODO: Add ClI?
-    # TODO: Target online rather than local corpus data
     """Main function for setting up Ceol Rince na hEireann (CRE) test corpus"""
+
     cre_inpath = "/Users/dannydiamond/NUIG/Polifonia/CRE_clean/testing/MIDI"
     cre_m21_corpus = Music21Corpus(cre_inpath)
     cre_corpus = SetupCorpus(cre_m21_corpus)
