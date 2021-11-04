@@ -1,10 +1,19 @@
 """This file holds utility functions for 'music_pattern_analysis' repository"""
 
 from collections import Counter
+import re
 
 import os
 import pandas as pd
 
+
+def reformat_midi_filenames(indir):
+    """Strips special characters and spaces from filenames in input MIDI corpus"""
+    for root, dirs, filenames in os.walk(os.path.abspath(indir)):
+        for filename in filenames:
+            alnum_name = [ch for ch in filename[:-4] if ch.isalnum()]
+            reformatted_name = f"{''.join(alnum_name)}.mid"
+            os.rename(src=os.path.join(root, filename), dst=os.path.join(root, reformatted_name))
 
 def read_csv(inpath):
 
