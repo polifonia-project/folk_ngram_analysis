@@ -84,21 +84,21 @@ def main():
     # TODO: Add ClI?
     # TODO: Target online rather than local corpus data
     """Main function for setting up Ceol Rince na hEireann (CRE) test corpus"""
-    cre_inpath = "/Users/dannydiamond/NUIG/Polifonia/CRE_clean/testing/MIDI"
-    cre_m21_corpus = Music21Corpus(cre_inpath)
-    cre_corpus = SetupCorpus(cre_m21_corpus)
-    cre_corpus.generate_primary_feat_seqs()
-    cre_corpus.setup_music_data_corpus()
-    cre_corpus.run_simple_secondary_feature_sequence_calculations()
-    cre_roots_path = "/Users/dannydiamond/NUIG/Polifonia/CRE_clean/testing/roots_a.csv"
-    cre_corpus.run_key_invariant_sequence_calulations(cre_roots_path)
-    cre_corpus.run_duration_weighted_sequence_calculations(['pitch', 'pitch_class'])
-    cre_corpus.save_corpus(
+    inpath = "/Users/dannydiamond/NUIG/Polifonia/CRE_clean/testing/MIDI"
+    m21_corpus = Music21Corpus(inpath)
+    corpus = SetupCorpus(m21_corpus)
+    corpus.generate_primary_feat_seqs()
+    corpus.setup_music_data_corpus()
+    corpus.run_simple_secondary_feature_sequence_calculations()
+    roots_path = "/Users/dannydiamond/NUIG/Polifonia/CRE_clean/testing/roots_a.csv"
+    corpus.run_key_invariant_sequence_calulations(roots_path)
+    corpus.run_duration_weighted_sequence_calculations(['pitch', 'pitch_class'])
+    corpus.save_corpus(
         feat_seq_path="/Users/dannydiamond/NUIG/Polifonia/CRE_clean/testing/feat_seq_data/note",
         accents_path="/Users/dannydiamond/NUIG/Polifonia/CRE_clean/testing/feat_seq_data/accent",
         duration_weighted_path="/Users/dannydiamond/NUIG/Polifonia/CRE_clean/testing/feat_seq_data/duration_weighted"
     )
-    return cre_corpus
+    return corpus
 
 
 main()
