@@ -1,10 +1,11 @@
 """This file holds utility functions for 'music_pattern_analysis' repository"""
 
 from collections import Counter
-import re
 
+from bs4 import BeautifulSoup
 import os
 import pandas as pd
+import requests
 
 
 def reformat_midi_filenames(indir):
@@ -14,6 +15,23 @@ def reformat_midi_filenames(indir):
             alnum_name = [ch for ch in filename[:-4] if ch.isalnum()]
             reformatted_name = f"{''.join(alnum_name)}.mid"
             os.rename(src=os.path.join(root, filename), dst=os.path.join(root, reformatted_name))
+
+
+def get_url_paths_for_online_midi_corpus(url):
+
+    """
+    Returns a list of file paths when passed the url for a directory of online MIDI files.
+    """
+
+    response = requests.get(url)
+    if response.ok:
+        response_text = response.text
+    else:
+        return response.raise_for_status()
+    soup = BeautifulSoup(response_text, 'html.parser')
+    corpus_paths = [url + node.get('href') for node in soup.find_all('a') if node.get('href').endswith('.mid')]
+    return corpus_paths
+
 
 def read_csv(inpath):
 

@@ -407,6 +407,8 @@ class MusicDataCorpus(Music21Corpus):
                 utils.write_to_csv(paths_data[pa], pa, filename)
                 print(f"Writing output: {pa}/{filename}.csv")
 
+        return None
+
 
 def main():
     print('Running corpus_processing_tools.py')
