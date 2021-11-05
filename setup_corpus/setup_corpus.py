@@ -115,8 +115,6 @@ def main():
     Duration-weighted sequences can also be derived for selected features,
     with feature names passed as arguments to SetupCorpus.run_duration_weighted_sequence_calculations():
     Per below, the defaults are 'pitch' and 'pitch_class'
-
-    NOTE: For the full corpus, it can take up to c. 15 mins to process.
     """
 
     inpath = "/Users/dannydiamond/NUIG/Polifonia/CRE_clean/MIDI"
