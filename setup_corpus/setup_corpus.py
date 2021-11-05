@@ -1,4 +1,12 @@
-"""Flow control / corpus setup script, running tools from corpus_processing_tools.py module."""
+"""
+
+Flow control / corpus setup script, running tools from corpus_processing_tools.py module.
+
+This module's main() function extracts primary and secondary feature sequence data from a corpus
+of monophonic MIDI files, and saves the results for each MIDI to csv. For further information, please see the main()
+function docstring.
+
+"""
 
 from corpus_processing_tools import Music21Corpus, MusicDataCorpus
 
@@ -81,22 +89,49 @@ class SetupCorpus:
 
 
 def main():
-    # TODO: Add ClI?
-    # TODO: Target online rather than local corpus data
-    """Main function for setting up Ceol Rince na hEireann (CRE) test corpus"""
-    inpath = "/Users/dannydiamond/NUIG/Polifonia/CRE_clean/testing/MIDI"
+
+    """
+    Main function for setting up Ceol Rince na hEireann (CRE) test corpus.
+
+    To run, first download the test dataset from:
+    https://drive.google.com/drive/folders/1DTROUZeKHSs_Bqe0lsn2UXdfrW2IgBYi?usp=sharing;
+
+    Next, point 'inpath' variable (below) to local location of 'midi' directory,
+    and 'roots_path' variable (below) to local location of 'roots.csv' file.
+
+    By default, this function will generate sequences of the following primary musical features:
+    - 'MIDI_note': MIDI note number
+    - 'Onset': note-event onset (eighth notes)
+    - 'Duration': note-event duration (eighth notes)
+    - 'velocity': MIDI velocity per note-event
+    - 'interval': chromatic interval (relative to previous tone)
+    - 'parsons_code': simple contour (Parsons code)
+    - 'Parsons_cumsum': cumulative Parsons code contour
+    - 'chromatic_root': root (chromatic pitch class of )
+    - 'pitch': key-invariant pitch (relative to 4th octave MIDI numbers)
+    - 'pitch_class': key-invariant chromatic pitch class
+
+    This data is outputted at two levels for every melody in the corpus: per note-event and per accented note-event.
+    Duration-weighted sequences can also be derived for selected features,
+    with feature names passed as arguments to SetupCorpus.run_duration_weighted_sequence_calculations():
+    Per below, the defaults are 'pitch' and 'pitch_class'
+
+    NOTE: For the full corpus, it can take up to c. 15 mins to process.
+    """
+
+    inpath = "/Users/dannydiamond/NUIG/Polifonia/CRE_clean/MIDI"
     m21_corpus = Music21Corpus(inpath)
     corpus = SetupCorpus(m21_corpus)
     corpus.generate_primary_feat_seqs()
     corpus.setup_music_data_corpus()
     corpus.run_simple_secondary_feature_sequence_calculations()
-    roots_path = "/Users/dannydiamond/NUIG/Polifonia/CRE_clean/testing/roots_a.csv"
+    roots_path = "/Users/dannydiamond/NUIG/Polifonia/CRE_clean/testing/roots.csv"
     corpus.run_key_invariant_sequence_calulations(roots_path)
     corpus.run_duration_weighted_sequence_calculations(['pitch', 'pitch_class'])
     corpus.save_corpus(
-        feat_seq_path="/Users/dannydiamond/NUIG/Polifonia/CRE_clean/testing/feat_seq_data/note",
-        accents_path="/Users/dannydiamond/NUIG/Polifonia/CRE_clean/testing/feat_seq_data/accent",
-        duration_weighted_path="/Users/dannydiamond/NUIG/Polifonia/CRE_clean/testing/feat_seq_data/duration_weighted"
+        feat_seq_path="/Users/dannydiamond/NUIG/Polifonia/CRE_clean/feat_seq_data/note",
+        accents_path="/Users/dannydiamond/NUIG/Polifonia/CRE_clean/feat_seq_data/accent",
+        duration_weighted_path="/Users/dannydiamond/NUIG/Polifonia/CRE_clean/feat_seq_data/duration_weighted"
     )
     return corpus
 
