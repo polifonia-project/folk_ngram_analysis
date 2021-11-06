@@ -91,7 +91,7 @@ class SetupCorpus:
 def main():
 
     """
-    Main function for setting up Ceol Rince na hEireann (CRE) test corpus.
+    Main function for setting up test subset of Ceol Rince na hEireann (CRE) corpus.
 
     To run, first download the test dataset from:
     https://drive.google.com/drive/folders/1DTROUZeKHSs_Bqe0lsn2UXdfrW2IgBYi?usp=sharing;
