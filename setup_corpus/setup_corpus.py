@@ -14,7 +14,7 @@ from corpus_processing_tools import Music21Corpus, MusicDataCorpus
 class SetupCorpus:
 
     """
-    SetupCorpus class sets up Music21Corpus and MusicDataCorpus objects, and runs their methods: creating tables of
+    SetupCorpus class sets up Music21Corpus and MusicDataCorpus objects, and runs their methods, creating tables of
     primary and secondary feature sequence data at note event- and accent-level for every melody in an input corpus of
     monophonic MIDI files. It allows generation of additional duration-weighted feature sequences, via
     SetupCorpus.run_duration_weighted_sequence_calculations() method.
@@ -117,6 +117,7 @@ def main():
     Per below, the defaults are 'pitch' and 'pitch_class'
     """
 
+    # TODO: Add cli to allow modification of paths and targeting of features for duration-weighting
     inpath = "/Users/dannydiamond/NUIG/Polifonia/CRE_clean/MIDI"
     m21_corpus = Music21Corpus(inpath)
     corpus = SetupCorpus(m21_corpus)

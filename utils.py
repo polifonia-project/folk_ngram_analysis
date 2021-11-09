@@ -52,7 +52,6 @@ def write_to_csv(df, outpath, filename):
     df.to_csv(f"{outpath}/{filename}.csv", encoding='utf-8')
     return None
 
-
 def extract_feature_sequence(df, seq):
     return df[seq].to_numpy()
 
