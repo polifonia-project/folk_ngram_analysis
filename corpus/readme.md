@@ -12,7 +12,9 @@ The five volumes of _Ceol Rince na hÉireann_ (hereafter _CRÉ_) contain 1,208 t
 
 Breathnach's collecting concentrated on materials sourced from musical communities in Dublin city, along with counties Clare and Galway, and the _Sliabh Luachra_ region of Southwestern Ireland. Despite the relative lack of coverage of material from the north of the island, the CRÉ series is generally regarded as the key canonical print collection of the mid-late 20th century in the Irish instrumental tradition, documenting the revival of the tradition from its lowest ebb in the 1950s to mainstream prominence by the time of Breathnach's death in 1985.<br><br>
 
-**Conversion to ABC notation by Bill Black:** The CRÉ collection has been transcribed into ABC notation by America traditional music researcher Bill Black, and made freely available online via the link above. This resource has been used in previous research work, for example it makes up part of a larger aggregated corpus used in the [_Tunepal_][2] Music Information Retrieval app.
+**Conversion to ABC notation by Bill Black:** 
+
+The CRÉ collection has been transcribed into ABC notation by America traditional music researcher Bill Black, and made freely available online via the link above. This resource has been used in previous research work, for example it makes up part of a larger aggregated corpus used in the [_Tunepal_][2] Music Information Retrieval app.
 
 During conversion to ABC notation, alternative versions of tunes in the collection were not treated in the same manner as in the print collection, and additional alternative versions were appended in some cases. Due to these changes the online collection comprises 1,224 rather than 1,208 individual tunes.<br><br>
 
