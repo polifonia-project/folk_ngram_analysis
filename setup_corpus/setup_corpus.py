@@ -93,13 +93,15 @@ def main():
     """
     Main function for setting up test subset of Ceol Rince na hEireann (CRE) corpus.
 
-    To run, first download the test dataset from:
+    To run, first download the test dataset from Google Drive:
     https://drive.google.com/drive/folders/1DTROUZeKHSs_Bqe0lsn2UXdfrW2IgBYi?usp=sharing;
+    Or the full Ceol Rince na hEireann corpus from GitHub:
+    https://github.com/danDiamo/music_pattern_analysis/tree/master/corpus
 
     Next, point 'inpath' variable (below) to local location of 'midi' directory,
     and 'roots_path' variable (below) to local location of 'roots.csv' file.
 
-    By default, this function will generate sequences of the following primary musical features:
+    This function will generate sequences of the following primary musical features:
     - 'MIDI_note': MIDI note number
     - 'Onset': note-event onset (eighth notes)
     - 'Duration': note-event duration (eighth notes)
@@ -124,7 +126,7 @@ def main():
     corpus.generate_primary_feat_seqs()
     corpus.setup_music_data_corpus()
     corpus.run_simple_secondary_feature_sequence_calculations()
-    roots_path = "/Users/dannydiamond/NUIG/Polifonia/CRE_clean/testing/roots.csv"
+    roots_path = "/Users/dannydiamond/NUIG/Polifonia/CRE_clean/roots.csv"
     corpus.run_key_invariant_sequence_calulations(roots_path)
     corpus.run_duration_weighted_sequence_calculations(['pitch', 'pitch_class'])
     corpus.save_corpus(

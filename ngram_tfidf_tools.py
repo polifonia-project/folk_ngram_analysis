@@ -202,7 +202,8 @@ class NgramData:
         # store n-grams and counts in dataframe:
         self.ngrams = pd.DataFrame.from_dict(ngram_count, orient='index')
         self.ngrams.reset_index(inplace=True)
-        self.ngrams.columns = ['ngram', f'{self.title} freq']
+        self.ngrams.columns = ['ngram', f'{self.title}_freq']
+        self.ngrams['ngram'] = [tuple(ngram) for ngram in self.ngrams['ngram']]
 
         return self.ngrams
 
@@ -219,9 +220,9 @@ class NgramData:
         # set up dataframe:
         self.tfidf = self.ngrams[['ngram']]
         # calculate tf, idf, and tf-idf:
-        tf = self.ngrams[f'{self.title} freq'] / self.ngrams[f'{self.title} freq'].sum().round(decimals=3)
+        tf = self.ngrams[f'{self.title}_freq'] / self.ngrams[f'{self.title}_freq'].sum().round(decimals=3)
         idf = self.ngrams['ngram'].map(lookup_table.set_index('ngram')['idf'])
-        self.tfidf[f'{self.title} tf_idf'] = (tf * idf).round(decimals=3)
+        self.tfidf[f'{self.title}_tf_idf'] = (tf * idf).round(decimals=3)
         # sort dataframe by tf-idf
-        self.tfidf.sort_values(by=[f'{self.title} tf_idf'], axis=0, ascending=False, inplace=True)
+        self.tfidf.sort_values(by=[f'{self.title}_tf_idf'], axis=0, ascending=False, inplace=True)
         return self.tfidf
