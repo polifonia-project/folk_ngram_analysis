@@ -14,7 +14,7 @@ Breathnach's collecting concentrated on materials sourced from musical communiti
 
 **Conversion to ABC notation by Bill Black:** 
 
-The _CRÉ_ collection has been transcribed into ABC notation by America traditional music researcher Bill Black, and made freely available online via the link above. This resource has been used in previous research work, for example it makes up part of a larger aggregated corpus used in the [_Tunepal_][2] Music Information Retrieval app.
+The _CRÉ_ collection has been transcribed into ABC notation by American traditional music researcher Bill Black, and made freely available online via the link above. This resource has been used in previous research work, for example it makes up part of a larger aggregated corpus used in the [_Tunepal_][2] Music Information Retrieval app.
 
 During conversion to ABC notation, alternative versions of tunes in the collection were not treated in the same manner as in the print collection, and additional alternative versions were appended in some cases. Due to these changes the online collection comprises 1,224 rather than 1,208 individual tunes.<br><br>
 
