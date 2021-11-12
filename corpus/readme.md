@@ -25,7 +25,7 @@ Bill Black's ABC version of the _CRÉ_ collection has been manually edited and a
 * Removal of alternative tune versions, so that the ABC collection more accurately reflects the original print collection.
 * Removal of non-valid ABC notation characters.
 * Editing of repeat markers to ensure accurate MIDI output.
-*Conversion to MIDI via EasyABC software.
+* Conversion to MIDI via EasyABC software.
 * Manual assignment of root note (as chromatic pitch class) for every piece of music in the corpus. This step generated the file [roots.csv][3], which is essential to deriving key-invariant feature sequence data from the MIDI files.<br><br>
 
 **Extracting feature sequence data from corpus:**
