@@ -10,7 +10,7 @@ Between 1963 and 1999, Irish State publishing companies Oifig an tSolatáthair a
 
 The five volumes of _Ceol Rince na hÉireann_ (hereafter _CRÉ_) contain 1,208 traditional tunes, a subset of Breathnach's more extensive personal collection of 5,000+ melodies, which contains material from a variety of sources including private and commercial recordings; manuscript collections; and tune versions transcribed directly from prominent traditional musicians of Breathnach's era.
 
-Breathnach's collecting concentrated on materials sourced from musical communities in Dublin city, along with counties Clare and Galway, and the _Sliabh Luachra_ region of Southwestern Ireland. Despite the relative lack of coverage of material from the north of the island, the _CRÉ_ publications are generally regarded as the key canonical print collection of the mid-late 20th century in the Irish instrumental tradition, documenting the revival of the tradition from its lowest ebb in the 1950s to mainstream prominence by the time of Breathnach's death in 1985.<br><br>
+Breathnach's collecting concentrated on materials sourced from musical communities in Dublin city,  counties Clare and Galway, and the _Sliabh Luachra_ region of Southwestern Ireland; along with repertoire specifically associated with the uilleann pipes. Despite the relative lack of coverage of material from the north of the island, the _CRÉ_ publications are widely regarded as the key canonical print collection of the mid-late 20th century in the Irish instrumental tradition, documenting the revival of the tradition from its lowest ebb in the 1950s to mainstream prominence by the time of Breathnach's death in 1985.<br><br>
 
 **Conversion to ABC notation by Bill Black:** 
 
