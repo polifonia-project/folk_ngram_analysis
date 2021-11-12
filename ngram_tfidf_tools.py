@@ -38,11 +38,12 @@ class NgramCorpus:
         ngrams -- A list of NgramData class instances, one for each piece of music in the corpus, which are
         automatically instantiated on creation of an NgramCorpus object.
 
-        ngram_freq_corpus -- empty attribute to hold a dataframe containing frequency counts of all unique ngram
+        ngram_freq_corpus -- empty attribute to hold a Dataframe containing frequency counts of all unique ngram
         patterns which occur at least once in the corpus for a given feature. Additional columns give counts of n-gram
         pattern instances for every melody in the corpus.
 
-        ngram_tfidf_corpus -- an equivalent dataframe to n_gram_corpus, with tf-idf values in place of frequency counts.
+        ngram_tfidf_corpus -- an equivalent Dataframe to n_gram_corpus, which will hold tf-idf values in place of
+        frequency counts.
     """
 
     def __init__(self, inpath):
@@ -53,13 +54,13 @@ class NgramCorpus:
         self.ngram_tfidf_corpus = None
 
     def extract_corpus_ngrams(self, feature, n_vals):
-        
+
         """
         This method calls NgramData.extract_ngrams() method on all NgramData objects listed in NgramCorpus.ngrams:
-        For a give feature (feature name passed to 'feature' arg) and range of n-values (passed as list to 'n_vals' arg) 
-        , NgramData.extract_ngrams() extracts all unique n-gram patterns which occur at least one time, counts their 
+        For a give feature (feature name passed to 'feature' arg) and range of n-values (passed as list to 'n_vals' arg)
+        , NgramData.extract_ngrams() extracts all unique n-gram patterns which occur at least one time, counts their
         frequencies, and ranks the patterns by frequency of occurrence. This is applied to the feature sequence data for
-         each tune stored in NgramCorpus.feat_seq_data, and the n-gram results for each individual tune are 
+         each tune stored in NgramCorpus.feat_seq_data, and the n-gram results for each individual tune are
          listed in NgramCorpus.ngram_freq_corpus.
         """
         print("\nExtracting and sorting n-grams...")
@@ -68,7 +69,7 @@ class NgramCorpus:
         return self.ngrams
 
     def create_corpus_level_ngrams_dataframe(self):
-        
+
         """
         Concatenates the dataframes created by NgramCorpus.extract_corpus_ngrams() into a single corpus-level n-gram
         frequency dataframe, which is sorted by corpus-level n-gram frequency and stored at
@@ -123,7 +124,7 @@ class NgramCorpus:
         Concatenates the dataframes created by NgramCorpus.calculate_corpus_tfidf_values() into a single corpus-level
         tf-idf dataframe, which is sorted by n-gram idf value, and stored at NgramCorpus.ngram_tfidf_corpus.
         """
-        
+
         # concatenate tfidf dataframes:
         self.ngram_tfidf_corpus = pd.concat(
             ngram_data.tfidf for ngram_data in self.ngrams).groupby(["ngram"]).sum().reset_index()
@@ -165,18 +166,24 @@ class NgramData:
     NgramData object for each file in the corpus directory.
 
     NgramData attributes:
+
     title -- title of the piece of music (derived from filename via utils.read_csv()).
+
     feat_seq_data -- Pandas dataframe containing feature sequence data for an individual monophonic piece of music.
 
-    ngrams -- Pandas dataframe containing unique n-gram patterns extracted from feat_seq_data and the frequency of
-    occurrence of each pattern.
+    feature -- name of musical feature under investigation: see setup_corpus.main() doscstring for list of available
+    features.
 
-    tfidf -- per ngrams, but with tfidf value rather than simple frequency for each n-gram pattern.
+    ngrams -- empty attribute to contain pandas Dataframe holding all unique n-gram patterns extracted from
+    feat_seq_data, and the frequency of occurrence of each pattern.
+
+    tfidf -- per ngrams, but the Dataframe will hold tfidf values rather than simple frequency for each n-gram pattern.
     """
 
     def __init__(self, feat_seq):
         self.title = feat_seq[0]
         self.feat_seq_data = feat_seq[1]
+        self.feature = None
         self.ngrams = None
         self.tfidf = None
 
@@ -193,7 +200,7 @@ class NgramData:
         EG: feature='pitch_class', n_vlas = [5, 6, 7] will return all unique pitch class patterns of 5-7 items in length
         ; with results ranked by pattern frequency.
         """
-
+        self.feature = feature
         target_feat_seq = self.feat_seq_data[feature]
         # extract n-grams:
         ngrams = [tuple(target_feat_seq[i:i+n]) for n in n_vals for i in range(len(target_feat_seq)-n+1)]
@@ -202,7 +209,7 @@ class NgramData:
         # store n-grams and counts in dataframe:
         self.ngrams = pd.DataFrame.from_dict(ngram_count, orient='index')
         self.ngrams.reset_index(inplace=True)
-        self.ngrams.columns = ['ngram', f'{self.title}_freq']
+        self.ngrams.columns = ['ngram', f'{self.title}_{feature}_freq']
         self.ngrams['ngram'] = [tuple(ngram) for ngram in self.ngrams['ngram']]
 
         return self.ngrams
@@ -220,9 +227,10 @@ class NgramData:
         # set up dataframe:
         self.tfidf = self.ngrams[['ngram']]
         # calculate tf, idf, and tf-idf:
-        tf = self.ngrams[f'{self.title}_freq'] / self.ngrams[f'{self.title}_freq'].sum().round(decimals=3)
+        tf = self.ngrams[f'{self.title}_{self.feature}_freq'] / \
+             self.ngrams[f'{self.title}_{self.feature}_freq'].sum().round(decimals=3)
         idf = self.ngrams['ngram'].map(lookup_table.set_index('ngram')['idf'])
-        self.tfidf[f'{self.title}_tf_idf'] = (tf * idf).round(decimals=3)
+        self.tfidf[f'{self.title}_{self.feature}_freq'] = (tf * idf).round(decimals=3)
         # sort dataframe by tf-idf
-        self.tfidf.sort_values(by=[f'{self.title}_tf_idf'], axis=0, ascending=False, inplace=True)
+        self.tfidf.sort_values(by=[f'{self.title}_{self.feature}_freq'], axis=0, ascending=False, inplace=True)
         return self.tfidf
