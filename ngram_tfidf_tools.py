@@ -230,7 +230,15 @@ class NgramData:
         tf = self.ngrams[f'{self.title}_{self.feature}_freq'] / \
              self.ngrams[f'{self.title}_{self.feature}_freq'].sum().round(decimals=3)
         idf = self.ngrams['ngram'].map(lookup_table.set_index('ngram')['idf'])
-        self.tfidf[f'{self.title}_{self.feature}_freq'] = (tf * idf).round(decimals=3)
+        self.tfidf[f'{self.title}_{self.feature}_tfidf'] = (tf * idf).round(decimals=3)
         # sort dataframe by tf-idf
-        self.tfidf.sort_values(by=[f'{self.title}_{self.feature}_freq'], axis=0, ascending=False, inplace=True)
+        self.tfidf.sort_values(by=[f'{self.title}_{self.feature}_tfidf'], axis=0, ascending=False, inplace=True)
         return self.tfidf
+
+
+def main():
+    print('Running ngram_tfidf_tools.py')
+
+
+if __name__ == "__main__":
+    main()

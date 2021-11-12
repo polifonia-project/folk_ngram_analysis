@@ -75,29 +75,49 @@ class NgramSimilarity:
         self.ngram_similarity_results = None
         self.results = None
 
-    def extract_candidate_ngrams(self, title, n):
+    def extract_candidate_ngrams(self, title, n=None, mode=None, indices=None):
+        # TODO: Add exceptions for if blocks.
 
         """
-        Extracts most frequent n-gram pattern(s) of length 'n' items for a given piece of music.
+        Extracts frequent n-gram pattern(s) of length 'n' items for a target piece of music.
         Stores results in self.candidate_ngrams dict, formatted per: tune_title [key]: candidate_ngrams [value].
 
+        Args:
+            
         title -- title of the candidate tune under investigation. This is equivalent to the filename of the feature
         sequence csv representation of the tune, with the '.csv' suffix removed.
 
         n -- length of candidate pattern(s).
         EG: n = 6: extracts the most frequent pattern(s) of 6 items in length from the piece of music named in 'title'.
+
+        mode -- either 'tfidf' or 'idx'.
+        If mode=='max_tfidf' the method will return all ngram pattern(s) in the target piece of music with the maximum
+        tf-ifd value.
+
+        If mode=='idx' the method returns n-gram patterns for a specific range of indices, as ranked by tf-idf.
+        The index values are passed as a list to 'indices' parameter.
+
+        indices -- A list of integer column index values. EG: for 'indices'=[0, 1], the top two n-gram patterns as
+        ranked by tf-idf will be extracted..
+
+        NOTE: This method will be augmented with n-gram pattern clustering functionality in future work.
         """
 
         self.n, self.title = n, title
         for col_name in self.input_corpus.columns:
             if self.title in col_name:
                 target_col = col_name
-        # TODO: Add exception
         # retain only rows for n-grams of length n:
         filtered_corpus = self.input_corpus[self.input_corpus['ngram'].apply(lambda x: len(x) == self.n)]
         # extract n-gram(s) of max tf-idf value from column in corpus Dataframe corresponding to search candidate tune:
-        freq_ngrams = filtered_corpus[['ngram', target_col]][filtered_corpus[target_col] ==
+        if mode == 'max_tfidf':
+            freq_ngrams = filtered_corpus[['ngram', target_col]][filtered_corpus[target_col] ==
                                                              filtered_corpus[target_col].max()]
+        elif mode == 'idx':
+            filtered_corpus.sort_values(by=[target_col], ascending=False, inplace=True)
+            filtered_corpus.reset_index(inplace=True, drop=True)
+            print(filtered_corpus.head())
+            freq_ngrams = filtered_corpus[filtered_corpus.index.isin(indices)]
 
         self.candidate_ngrams = freq_ngrams
         print(f"\nFrequent n-gram pattern(s) extracted from {title}:")
@@ -132,7 +152,7 @@ class NgramSimilarity:
 
         The results are filtered according to an integer value, as passed to 'edit_dist_threshold' arg:
         only n-grams with an edit distance less than or equal to the threshold value are retained, and they are returned
-        to NgramDistance.ngram_similarity_results Dataframe.
+        to NgramSimilarity.ngram_similarity_results Dataframe.
         """
 
         print("\nSearching corpus for similar n-gram patterns...")
@@ -197,8 +217,18 @@ def main():
     With an NgramSimilarity object set up, we call:
 
     NgramSimilarity.extract_candidate_ngrams()
-    Extracts the most frequent pattern of length n from the candidate, as ranked by tf-idf.
-    args: 'title' = title of candidate piece of music per the filename of the original MIDI file; 'n' = pattern length.
+    Extracts n-gram patterns from candidate tune under investigation.
+    
+    Args: 
+    
+    'title' -- title of candidate piece of music per the filename of the original MIDI file.
+    'n' -- pattern length.
+    
+    'mode' -- If 'tfidf', this method call will extract the most frequent n-gram pattern of length n from the 
+    candidate tune, as ranked by tf-idf. If 'idx', the cal will extract the n-grams at indices listed in 
+    'indices' arg.
+    
+    indices -- list of integers corresponding to NgramSimilarity.test_corpus dataframe indices.
 
     NgramSimilarity.setup_test_corpus()
     Filters corpus Dataframe to include patterns of length n±1.
@@ -220,12 +250,12 @@ def main():
     the corpus. Evaluation and work on additional metrics is ongoing.
     """
 
-    # TODO: Add CLI to allow modification of in/out paths; candidate title; pattern length; and edit_dist_threshold.
-    inpath = "/Users/dannydiamond/NUIG/Polifonia/CRE_clean/testing/test_ngrams_tfidf.ftr"
+    # TODO: Add CLI to allow modification of args.
+    inpath = "/Users/dannydiamond/NUIG/Polifonia/CRE_clean/ngrams/cre_pitch_class_accents_tfidf.ftr"
     pattern_search = NgramSimilarity(inpath)
-    pattern_search.extract_candidate_ngrams("A Trip To Galway", 6)
+    pattern_search.extract_candidate_ngrams("Lord McDonald's (reel)", n=6, mode='idx', indices=[0, 1])
     pattern_search.setup_test_corpus()
-    pattern_search.find_similar_patterns(edit_dist_threshold=2)
+    pattern_search.find_similar_patterns(edit_dist_threshold=1)
     pattern_search.find_similar_tunes()
 
     return pattern_search.results
