@@ -1,6 +1,24 @@
+---
+id: folk_ngram_analysis
+name: FONN - FOlk N-gram aNalysis
+brief-description: Work-in-progress on pattern extraction and melodic similarity on a corpus of monophonic Irish folk tunes.
+type: Repository
+release-date: TBD
+release-number: v0.1-dev
+work-package: 
+- WP3
+licence: Public domain, https://unlicense.org
+links:
+- https://github.com/polifonia-project/folk_ngram_analysis
+- https://github.com/danDiamo/music_ngram_analysis
+credits:
+- https://github.com/danDiamo
+- https://github.com/ashahidkhattak
+---
+
 # FONN - FOlk N-gram aNalysis 
 
-FONN repo targets the goals of the Polifonia WP3 i.e., identification of patterns that are useful in detecting relationships between pieces of music, with particular focus on Europe’s musical heritage. At present, it includes scripts that make use of sequence mining approaches on monophonic Irish folk tunes.
+FONN repo targets the goals of the Polifonia WP3 i.e., identification of patterns that are useful in detecting relationships between pieces of music, with particular focus on Europe’s musical heritage. At present, it includes scripts that make use of n-grams and edit distance on monophonic Irish folk tunes.
 
 Following is the summary of each task alognwith relevant file
 
