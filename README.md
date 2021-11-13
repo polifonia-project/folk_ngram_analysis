@@ -1,4 +1,4 @@
-#FONN - FOlk N-gram aNalysis 
+# FONN - FOlk N-gram aNalysis 
 
 FONN repo targets the goals of the Polifonia WP3 i.e., identification of patterns that are useful in detecting relationships between pieces of music, with particular focus on Europe’s musical heritage. At present, it includes scripts that make use of sequence mining approaches on monophonic Irish folk tunes.
 
