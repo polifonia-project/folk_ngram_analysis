@@ -44,7 +44,7 @@ def plot_dist(col, ax):
 
 f, ax = plt.subplots(3,3, figsize = (22,15))
 f.tight_layout(h_pad=9, w_pad=2, rect=[0, 0.03, 1, 0.93])
-cols = num_cols #['bra_size','bust', 'category', 'cup_size', 'fit', 'height', 'hips', 'length', 'quality']
+cols = num_cols 
 k = 0
 for i in range(3):
     for j in range(3):
