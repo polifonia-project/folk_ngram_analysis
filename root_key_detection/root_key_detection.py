@@ -10,7 +10,7 @@ from scipy import stats
 import warnings
 
 # reading the annotated dataset
-df = pd.read_csv('../dataset/cre_root_detection.csv')
+df = pd.read_csv('cre_root_detection.csv')
 
 
 # finding out the missing data in the dataset
