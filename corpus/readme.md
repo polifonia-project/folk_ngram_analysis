@@ -24,38 +24,35 @@ credits:
 
 **Contents:** 1,224 traditional Irish dance tunes, each of which is represented as a monophonic MIDI file.<br><br>
 
-**Breathnach's _Ceol Rince na hÉireann_:** 
+**About dataset:** 
 
-Between 1963 and 1999, Irish State publishing companies Oifig an tSolatáthair and An Gúm issued five printed volumes of tunes from the collections of Breadán Breathnach under the series title _Ceol Rince na hÉireann_ (Dance Music of Ireland). Breathnach (1912-1985) was a State-funded independent folk music collector, researcher, and publisher: his work was crucial in evolving the study of Irish traditional music into an academic discipline, and central to the establishment  of key institutions in the field, the _Irish Traditional Music Archive / Taisce Cheol Dúchais Éireann_ and _Na Piobairí Uilleann_.
-
-The five volumes of _Ceol Rince na hÉireann_ (hereafter _CRÉ_) contain 1,208 traditional tunes, a subset of Breathnach's more extensive personal collection of 5,000+ melodies, which contains material from a variety of sources including private and commercial recordings; manuscript collections; and tune versions transcribed directly from prominent traditional musicians of Breathnach's era.
-
-Breathnach's collecting concentrated on materials sourced from musical communities in Dublin city,  counties Clare and Galway, and the _Sliabh Luachra_ region of Southwestern Ireland; along with repertoire specifically associated with the uilleann pipes. Despite the relative lack of coverage of material from the north of the island, the _CRÉ_ publications are widely regarded as the key canonical print collection of the mid-late 20th century in the Irish instrumental tradition, documenting the revival of the tradition from its lowest ebb in the 1950s to mainstream prominence by the time of Breathnach's death in 1985.<br><br>
-
-**Conversion to ABC notation by Bill Black:** 
-
-The _CRÉ_ collection has been transcribed into ABC notation by American traditional music researcher Bill Black, and made freely available online via the link above. This resource has been used in previous research work, for example it makes up part of a larger aggregated corpus used in the [_Tunepal_][2] Music Information Retrieval app.
-
-During conversion to ABC notation, alternative versions of tunes in the collection were not treated in the same manner as in the print collection, and additional alternative versions were appended in some cases. Due to these changes the online collection comprises 1,224 rather than 1,208 individual tunes.<br><br>
+Between 1963 and 1999, Irish State publishing companies Oifig an tSolatáthair and An Gúm issued five printed volumes of tunes from the collections of Breadán Breathnach (1912-1985) under the series title _Ceol Rince na hÉireann_ (Dance Music of Ireland, hereafter _CRÉ_). The five volumes of _CRÉ_ contain 1,208 traditional tunes, a subset of Breathnach's more extensive personal collection of 5,000+ melodies. The collection has been transcribed into ABC notation by American traditional music researcher Bill Black, and made freely available online via his [personal website][1]. This resource has been used in previous research work, for example it makes up part of a larger aggregated corpus used in the [_Tunepal_][2] Music Information Retrieval app. We have created a new cleaned and annotated MIDI version of the corpus, from which feature sequence data can be extracted and analysed via Polifonia's [FONN][3] music pattern analysis toolkit.<br><br>
 
 
-**Conversion to annotated MIDI corpus for analysis in Polifonia:**
+**About data collection methodology**
 
-Bill Black's ABC version of the _CRÉ_ collection has been manually edited and annotated, and converted to MIDI for use as an input corpus for Polifonia pattern analysis tools. This work included:
+Bill Black's ABC version of the _CRÉ_ collection has been manually edited and annotated, and converted to MIDI. This work included:
 * Removal of alternative tune versions, so that the ABC collection more accurately reflects the original print collection.
 * Removal of non-valid ABC notation characters.
 * Editing of repeat markers to ensure accurate MIDI output.
 * Conversion to MIDI via EasyABC software.
-* Manual assignment of root note (as chromatic pitch class) for every piece of music in the corpus. This step generated the file [roots.csv][3], which is essential to deriving key-invariant feature sequence data from the MIDI files.<br><br>
+* Manual assignment of root note (as chromatic pitch class) for every piece of music in the corpus. This data is stored in the file [roots.csv][4], which is used to derive key-invariant  secondary feature sequence data from the MIDI files.<br><br>
+
+**Description of the data:**
+
+Each melody in the corpus is stored as a MIDI file, named per the melody title.
+These files are stored in the [./MIDI][4] directory.
+The corpus also contains the files [roots.csv][5] and this readme, which are stored in the [corpus][6] directory.
+
 
 **Extracting feature sequence data from corpus:**
 
-To extract feature sequence data from the MIDI corpus, please download the corpus and run [setup_corpus.main()][4]. Please see module docstrings for further information.
+To extract feature sequence data from the MIDI corpus, please download the corpus and run [setup_corpus.main()][7]. Please see module docstrings for further information.
 
 [1]: http://www.capeirish.com/webabc
 [2]: https://tunepal.org/index.html
-[3]: https://github.com/danDiamo/music_pattern_analysis/blob/master/corpus/roots.csv
-[4]: https://github.com/danDiamo/music_pattern_analysis/blob/master/setup_corpus/setup_corpus.py
-
-
-
+[3]: https://github.com/polifonia-project/folk_ngram_analysis
+[4]: https://github.com/polifonia-project/folk_ngram_analysis/tree/master/corpus/MIDI
+[5]: https://github.com/danDiamo/music_pattern_analysis/blob/master/corpus/roots.csv
+[6]: https://github.com/polifonia-project/folk_ngram_analysis/tree/master/corpus
+[7]: https://github.com/danDiamo/music_pattern_analysis/blob/master/setup_corpus/setup_corpus.py
