@@ -96,16 +96,18 @@ def main():
     """
 
     # TODO: Add CLI to allow modification of in/out paths, target feature and n_vals.
-    inpath = "/Users/dannydiamond/NUIG/Polifonia/CRE_clean/feat_seq_data/accent"
+    basepath = "./corpus/"
+    inpath = basepath + "/feat_seq_data/accent"
     feature = "pitch_class"
     n_vals = list(range(5, 10))
     feat_seq_corpus = NgramCorpus(inpath)
     ngram_corpus = SetupNgramsTfidf(feat_seq_corpus, feature, n_vals)
     ngram_corpus.extract_ngrams()
     ngram_corpus.calculate_tfidf()
-    ngram_corpus.save_results(outpath="/Users/dannydiamond/NUIG/Polifonia/CRE_clean/ngrams",
+    ngram_corpus.save_results(outpath=basepath + "/ngrams",
                               corpus_name='cre_pitch_class_accents')
     return ngram_corpus
 
 
-main()
+if __name__ == "__main__":
+    main()
