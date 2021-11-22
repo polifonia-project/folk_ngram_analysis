@@ -64,15 +64,13 @@ Roots.csv holds two columns with one row per each MIDI file in the corpus:
 To extract feature sequence data from the MIDI corpus, please download the corpus data and run [setup_corpus.main()][9] from folk_ngram_analysis component. Please see [folk_ngram_analysis readme][8] for further information.<br><br>
 
 
-**[Online repository link:][6]**
+**Online repository link:**<br>
+https://github.com/polifonia-project/folk_ngram_analysis/tree/master/corpus
 <br><br>
-**Authors:**
-
-* Danny Diamond
+**Author:** Danny Diamond
 <br><br>
 **License:**
 This project is licensed under the MIT License - see [LICENSE.md][10] file for details
-<br><br>
 
 [1]: http://www.capeirish.com/webabc
 [2]: https://tunepal.org/index.html
@@ -83,4 +81,4 @@ This project is licensed under the MIT License - see [LICENSE.md][10] file for d
 [7]: https://en.wikipedia.org/wiki/Pitch_class
 [8]: https://github.com/polifonia-project/folk_ngram_analysis/blob/master/README.md
 [9]: https://github.com/danDiamo/music_pattern_analysis/blob/master/setup_corpus/setup_corpus.py
-[10]: https://github.com/polifonia-project/folk_ngram_analysis/blob/master/corpus/readme.md
+[10]: https://github.com/polifonia-project/folk_ngram_analysis/blob/master/corpus/license.md
