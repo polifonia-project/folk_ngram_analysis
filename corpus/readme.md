@@ -41,20 +41,38 @@ Bill Black's ABC version of the _CRÉ_ collection has been manually edited and a
 
 **Description of the data:**
 
-Each melody in the corpus is represented as a monophonic MIDI file, named per the melody title. There are 1,224 files in total, which are stored in the [./MIDI][4] directory. 
+```
+corpus/
+  -MIDI/
+    -1,224 monophonic MIDI files (.mid)
+  -roots.csv
+  -README.md
+  -LICENSE.md
 
-The corpus also contains a [roots.csv][5] file and this readme, which are stored in the [corpus][6] directory.
+```
+
+Each melody in the corpus is represented as a monophonic MIDI file, named per the melody title. There are 1,224 files in total, stored in the [./MIDI][4] directory. 
+
+The [corpus][6] root directory contains a [roots.csv][5] file, this readme, and a LICENSE.md file.
 Roots.csv holds two columns with one row per each MIDI file in the corpus:
 'title': MIDI file title
 'root': expert-assigned root note of each melody, represented as a [chromatic pitch class][7] (i.e.: An integer value from C=0 through B=11). 
 
 <img width="400" alt="image" src="https://user-images.githubusercontent.com/78231894/142916162-9ace1c42-ceae-412f-95df-98ce34acd359.png">
-.<br><br>
+<br><br>
+
+To extract feature sequence data from the MIDI corpus, please download the corpus data and run [setup_corpus.main()][9] from folk_ngram_analysis component. Please see [folk_ngram_analysis readme][8] for further information.<br><br>
 
 
-**Extracting feature sequence data from corpus:**
+**[Online repository link:][6]**
+<br><br>
+**Authors:**
 
-To extract feature sequence data from the MIDI corpus, please download the corpus and run [setup_corpus.main()][8]. Please see module docstrings for further information.
+* Danny Diamond
+<br><br>
+**License:**
+This project is licensed under the MIT License - see [LICENSE.md][10] file for details
+<br><br>
 
 [1]: http://www.capeirish.com/webabc
 [2]: https://tunepal.org/index.html
@@ -63,4 +81,6 @@ To extract feature sequence data from the MIDI corpus, please download the corpu
 [5]: https://github.com/danDiamo/music_pattern_analysis/blob/master/corpus/roots.csv
 [6]: https://github.com/polifonia-project/folk_ngram_analysis/tree/master/corpus
 [7]: https://en.wikipedia.org/wiki/Pitch_class
-[8]: https://github.com/danDiamo/music_pattern_analysis/blob/master/setup_corpus/setup_corpus.py
+[8]: https://github.com/polifonia-project/folk_ngram_analysis/blob/master/README.md
+[9]: https://github.com/danDiamo/music_pattern_analysis/blob/master/setup_corpus/setup_corpus.py
+[10]: https://github.com/polifonia-project/folk_ngram_analysis/blob/master/corpus/readme.md
