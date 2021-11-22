@@ -41,7 +41,7 @@ Bill Black's ABC version of the _CRÉ_ collection has been manually edited and a
 
 **Description of the data:**
 
-Each melody in the corpus is stored as a MIDI file, named per the melody title. There are 1,224 files in total. These are available to download as a single zip file, which is stored in the [./MIDI][4] directory.
+Each melody in the corpus is represented as a monophonic MIDI file, named per the melody title. There are 1,224 files in total, which are stored in the [./MIDI][4] directory. 
 
 The corpus also contains a [roots.csv][5] file and this readme, which are stored in the [corpus][6] directory.
 Roots.csv holds two columns with one row per each MIDI file in the corpus:
