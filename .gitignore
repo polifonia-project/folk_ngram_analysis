@@ -4,4 +4,6 @@
 /corpus/feat_seq_data
 /corpus/ngrams
 /.DS_Store
+/corpus/.DS_Store
 /.ipynb_checkpoints
+*.pyc
