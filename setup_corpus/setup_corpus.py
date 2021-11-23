@@ -137,4 +137,5 @@ def main():
     return corpus
 
 
-main()
+if __name__ == "__main__":
+    main()

@@ -204,7 +204,7 @@ class NgramSimilarity:
         results.sort_values(by=['count'], ascending=False, inplace=True)
         print(f"Similarity results for {self.title}:")
         print(results.head())
-        results.to_csv(f"/Users/dannydiamond/NUIG/Polifonia/CRE_clean/testing/{self.title}.csv")
+        # results.to_csv(f"/Users/dannydiamond/NUIG/Polifonia/CRE_clean/testing/{self.title}.csv")
         self.results = results
 
 
@@ -251,7 +251,8 @@ def main():
     """
 
     # TODO: Add CLI to allow modification of args.
-    inpath = "/Users/dannydiamond/NUIG/Polifonia/CRE_clean/ngrams/cre_pitch_class_accents_tfidf.ftr"
+    basepath = "./corpus"
+    inpath = basepath + "/ngrams/cre_pitch_class_accents_tfidf.ftr"
     pattern_search = NgramSimilarity(inpath)
     pattern_search.extract_candidate_ngrams("Lord McDonald's (reel)", n=6, mode='idx', indices=[0, 1])
     pattern_search.setup_test_corpus()
@@ -261,5 +262,6 @@ def main():
     return pattern_search.results
 
 
-main()
+if __name__ == "__main__":
+    main()
 
