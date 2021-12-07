@@ -8,133 +8,98 @@ function docstring.
 
 """
 
-from corpus_processing_tools import Music21Corpus, MusicDataCorpus
+from ngram_tfidf_tools import NgramCorpus
 
 
-class SetupCorpus:
+class SetupNgramsTfidf:
 
     """
-    SetupCorpus class sets up Music21Corpus and MusicDataCorpus objects, and runs their methods, creating tables of
-    primary and secondary feature sequence data at note event- and accent-level for every melody in an input corpus of
-    monophonic MIDI files. It allows generation of additional duration-weighted feature sequences, via
-    SetupCorpus.run_duration_weighted_sequence_calculations() method.
+    An ExtractNgrams object sets up and runs n-gram extraction and tfidf calculations on a corpus of feature sequence
+    representations of monophonic pieces of music, stored in a single directory.
+    ExtractNgrams class objects are instantiated by passing the class an ngram_extraction_tools.NgramCorpus object.
+    ExtractNgrams allows use of NgramCorpus methods (and lower-level ngram_extraction_tools.NgramData methods)
+     to extract n-gram patterns and calculate tf-idf.
+    Attributes:
+        corpus -- An NgramCorpus object representing a monophonic music corpus in feature sequence format. Within the
+        NgramCorpus object, data for each individual piece of music in the corpus is represented as an NgramData object.
+        feature -- name of target feature for which patterns will be extracted. See setup_corpus.main() docstring for
+        list of accepted feature names.
+        n_vals -- list of n-values for which patterns will be extracted. Each n-value corresponds to the number of items
+        in a pattern.
+        EG: setting n_vals = [5, 6, 7] will extract all unique 5-grams , 6-grams , and 7-grams from the corpus,
+        i.e.: all unique patterns of 5-7 items in length.
     """
 
-    def __init__(self, m21_corpus):
-        self.corpus = m21_corpus
+    def __init__(self, corpus, feature, n_vals):
+        self.corpus = corpus
+        self.feature = feature
+        self.n_vals = n_vals
 
-    def generate_primary_feat_seqs(self):
-        """Derives primary feature sequence data for all melodies in corpus via Music21Corpus methods."""
-        self.corpus.read_midi_files_to_streams()
-        self.corpus.derive_feat_seqs()
-        self.corpus.combine_feat_seqs_and_titles()
+    def extract_ngrams(self):
+
+        """
+        Extracts all unique n-grams from a feature sequence corpus, for given feature and range of n-values.
+        Stores results in a Pandas dataframe with columns for n-gram frequency in each piece of music,
+        plus an aggregated corpus-level frequency column. Results are sorted by corpus-level frequency
+        and are stored as self.corpus.ngram_freq_corpus.
+        """
+
+        self.corpus.extract_corpus_ngrams(self.feature, self.n_vals)
+        self.corpus.create_corpus_level_ngrams_dataframe()
         return self.corpus
 
-    def setup_music_data_corpus(self):
-        """Converts self.corpus attribute from Music21Corpus to MusicDataCorpus object."""
-        self.corpus = MusicDataCorpus(self.corpus)
+    def calculate_tfidf(self):
+
+        """
+        This method calculates tf (term frequency), idf (inverse document frequency) and tfidf
+        (term frequency-inverse document frequency) values from the the output of RunNgramsTfidf.extract_ngrams().
+        tf-idf and idf values for all unique n-grams in the input corpus are stored in a Pandas dataframe with columns
+        containing tf-idf value per n-gram in each piece of music, plus an aggregated corpus-level idf column.
+        Results are sorted by idf and are stored at self.corpus.tfidf_corpus.
+        """
+
+        self.corpus.calculate_corpus_idf_values()
+        self.corpus.calculate_corpus_tfidf_values()
+        self.corpus.create_corpus_level_tfidf_dataframe()
         return self.corpus
 
-    def run_simple_secondary_feature_sequence_calculations(self):
-
-        """
-        Calculates simple secondary feature sequences at note event- and accent-level for all melodies
-        in Music21Corpus object.
-        """
-
-        self.corpus.rescale_corpus_durations()
-        self.corpus.rescale_corpus_onsets()
-        self.corpus.calc_corpus_intervals()
-        self.corpus.calc_corpus_parsons()
-        self.corpus.calc_corpus_parsons_cumsum()
-        return self.corpus
-
-    def run_key_invariant_sequence_calulations(self, roots_path):
-
-        """
-        Reads root data; converts root values to MIDI note numbers via lookup table; derives key-invariant pitch
-        and key invariant pitch class sequences. Runs at at note event- and accent-level for all
-        melodies in Music21Corpus object.
-        """
-
-        self.corpus.read_root_data(roots_path)
-        self.corpus.convert_roots_to_midi_note_nums()
-        self.corpus.assign_roots()
-        self.corpus.calc_key_invariant_pitches()
-        self.corpus.calc_pitch_classes()
-        return self.corpus
-
-    def run_duration_weighted_sequence_calculations(self, features):
-
-        """
-        Generates duration-weighted sequence for selected features / column names, which are passed in list
-        to 'features' arg. Runs on note event-level feature sequence data for all melodies in Music21Corpus object.
-        """
-
-        self.corpus.calc_duration_weighted_feat_seqs(features)
-        return self.corpus
-
-    def save_corpus(self, feat_seq_path, accents_path, duration_weighted_path):
-
-        """
-        Saves output corpus data using Music21Corpus.save_corpus_data_to_csv().
-
-        feat_seq_path -- path to directory for note-level feature sequence data files for all melodies in corpus
-        accents_path -- path to directory for accent-level feature sequence data files for all melodies in corpus
-        duration_weighted_path -- path to directory for duration-weighted data for all melodies in corpus
-        """
-
-        self.corpus.save_corpus_data_to_csv(feat_seq_path, accents_path, duration_weighted_path)
-        pass
+    def save_results(self, outpath, corpus_name):
+        """Saves results to file via NgramCorpus.save_corpus_data()."""
+        self.corpus.save_corpus_data(outpath, corpus_name)
 
 
 def main():
 
     """
-    Main function for setting up test subset of Ceol Rince na hEireann (CRE) corpus.
-
-    To run, first download the test dataset from Google Drive:
-    https://drive.google.com/drive/folders/1DTROUZeKHSs_Bqe0lsn2UXdfrW2IgBYi?usp=sharing;
-    Or the full Ceol Rince na hEireann corpus from GitHub:
-    https://github.com/danDiamo/music_pattern_analysis/tree/master/corpus
-
-    Next, point 'inpath' variable (below) to local location of 'midi' directory,
-    and 'roots_path' variable (below) to local location of 'roots.csv' file.
-
-    This function will generate sequences of the following primary musical features:
-    - 'MIDI_note': MIDI note number
-    - 'Onset': note-event onset (eighth notes)
-    - 'Duration': note-event duration (eighth notes)
-    - 'velocity': MIDI velocity per note-event
-    - 'interval': chromatic interval (relative to previous tone)
-    - 'parsons_code': simple contour (Parsons code)
-    - 'Parsons_cumsum': cumulative Parsons code contour
-    - 'chromatic_root': root (chromatic pitch class of )
-    - 'pitch': key-invariant pitch (relative to 4th octave MIDI numbers)
-    - 'pitch_class': key-invariant chromatic pitch class
-
-    This data is outputted at two levels for every melody in the corpus: per note-event and per accented note-event.
-    Duration-weighted sequences can also be derived for selected features,
-    with feature names passed as arguments to SetupCorpus.run_duration_weighted_sequence_calculations():
-    Per below, the defaults are 'pitch' and 'pitch_class'
+    Initializes RunNgramsTfidf class instance by passing the class three arguments: inpath, feature, and n_vals.
+    Docstring above for RunNgramsTfidf class contains information on feature and n_vals arguments.
+    NOTE: An ngram_extraction_tools.NgramCorpus object must be initialized as a preliminary step.
+    Per docstrings in ngram_tfidf_tools.py, it must be passed one argument, 'inpath', the path to a directory of
+    monophonic music files in feature sequence representation, each stored in an individual csv file.
+    The path to this directory is assigned to the 'inpath' variable below.
+    With an extract_ngrams.RunNgramsTfidf object set up, we call its extract_ngrams() and calculate_tfidf() methods, and
+    save the outputs to csv, giving:
+    (1) A corpus-level table of unique n-grams with n-gram frequency counts for each piece of music,
+     and for the entire corpus.
+    (2) A corpus-level table of unique n-grams with their tf-idf values for each piece of music,
+    and corpus-level idf values.
+    An excerpt of each is saved to csv for human inspection, while the entire dataframes are saved to feather.
+    The data contained in (2) above will be the input for the next phase of work on frequent pattern extraction and
+    similarity-based search.
     """
 
-    # TODO: Add cli to allow modification of paths and targeting of features for duration-weighting
-    inpath = "/Users/dannydiamond/NUIG/Polifonia/CRE_clean/MIDI"
-    m21_corpus = Music21Corpus(inpath)
-    corpus = SetupCorpus(m21_corpus)
-    corpus.generate_primary_feat_seqs()
-    corpus.setup_music_data_corpus()
-    corpus.run_simple_secondary_feature_sequence_calculations()
-    roots_path = "/Users/dannydiamond/NUIG/Polifonia/CRE_clean/roots.csv"
-    corpus.run_key_invariant_sequence_calulations(roots_path)
-    corpus.run_duration_weighted_sequence_calculations(['pitch', 'pitch_class'])
-    corpus.save_corpus(
-        feat_seq_path="/Users/dannydiamond/NUIG/Polifonia/CRE_clean/feat_seq_data/note",
-        accents_path="/Users/dannydiamond/NUIG/Polifonia/CRE_clean/feat_seq_data/accent",
-        duration_weighted_path="/Users/dannydiamond/NUIG/Polifonia/CRE_clean/feat_seq_data/duration_weighted"
-    )
-    return corpus
+    # TODO: Add CLI to allow modification of in/out paths, target feature and n_vals.
+    basepath = "./corpus/"
+    inpath = basepath + "/feat_seq_data/accent"
+    feature = "pitch_class"
+    n_vals = list(range(5, 10))
+    feat_seq_corpus = NgramCorpus(inpath)
+    ngram_corpus = SetupNgramsTfidf(feat_seq_corpus, feature, n_vals)
+    ngram_corpus.extract_ngrams()
+    ngram_corpus.calculate_tfidf()
+    ngram_corpus.save_results(outpath=basepath + "/ngrams",
+                              corpus_name='cre_pitch_class_accents')
+    return ngram_corpus
 
 
 if __name__ == "__main__":
