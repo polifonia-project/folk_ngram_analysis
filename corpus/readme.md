@@ -29,6 +29,8 @@ credits:
 
 Between 1963 and 1999, Irish State publishing companies Oifig an tSolatáthair and An Gúm issued five printed volumes of tunes from the collections of Breadán Breathnach (1912-1985) under the series title _Ceol Rince na hÉireann_ (Dance Music of Ireland, hereafter _CRÉ_). The five volumes of _CRÉ_ contain 1,208 traditional tunes, a subset of Breathnach's more extensive personal collection of 5,000+ melodies. The collection has been transcribed into ABC notation by American traditional music researcher Bill Black, and made freely available online via his [personal website][1]. Addition of alternative tune versions and variation in numbering of unique melodies has resulted in a total of 1,224 tunes in the Bill Black ABC corpus. This resource has been used in previous research work, for example it makes up part of a larger aggregated corpus used in the [_Tunepal_][2] Music Information Retrieval app. We have created a new cleaned and annotated MIDI version of the corpus, from which feature sequence data can be extracted and analysed via Polifonia's [FONN][3] music pattern analysis toolkit.
 
+NOTE: Please see [corpus_stats.ipynb][11] for a Jupyter notebook exploring the corpus data.
+
 
 ## About corpus pre-processing methodology
 
@@ -89,3 +91,4 @@ This project is licensed under the MIT License - see [LICENSE.md][10] file for d
 [8]: https://github.com/polifonia-project/folk_ngram_analysis/blob/master/README.md
 [9]: https://github.com/danDiamo/music_pattern_analysis/blob/master/setup_corpus/setup_corpus.py
 [10]: https://github.com/polifonia-project/folk_ngram_analysis/blob/master/corpus/license.md
+[11]: https://github.com/polifonia-project/folk_ngram_analysis/blob/master/corpus/corpus_stats.ipynb
