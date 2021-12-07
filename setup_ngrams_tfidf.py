@@ -96,8 +96,9 @@ def main():
     """
 
     # TODO: Add CLI to allow modification of in/out paths, target feature and n_vals.
-    basepath = "./corpus/"
+    basepath = "./corpus"
     inpath = basepath + "/feat_seq_data/accent"
+    print(inpath)
     feature = "pitch_class"
     n_vals = list(range(5, 10))
     feat_seq_corpus = NgramCorpus(inpath)
