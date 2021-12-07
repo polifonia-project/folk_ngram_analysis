@@ -25,7 +25,7 @@ import os
 import pandas as pd
 import traceback
 
-import constants
+import setup_corpus.constants as constants
 import utils
 
 pd.options.mode.chained_assignment = None
