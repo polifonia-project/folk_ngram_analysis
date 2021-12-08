@@ -252,7 +252,7 @@ def main():
 
     # TODO: Add CLI to allow modification of args.
     basepath = "./corpus"
-    inpath = basepath + "/ngrams/cre_pitch_class_accents_tfidf.ftr"
+    inpath = basepath + "/ngrams/cre_pitch_class_accents_ngrams_tfidf.ftr"
     pattern_search = NgramSimilarity(inpath)
     pattern_search.extract_candidate_ngrams("Lord McDonald's (reel)", n=6, mode='idx', indices=[0, 1])
     pattern_search.setup_test_corpus()
