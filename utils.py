@@ -36,8 +36,8 @@ def get_url_paths_for_online_midi_corpus(url):
 def read_csv(inpath):
 
     """
-    Reads csv file to Pandas dataframe. Returns a single-item dict, formatted per:
-    filename (key): dataframe (value).
+    Reads csv file to Pandas dataframe. Returns a two-tuple, formatted per:
+    (filename, dataframe).
     """
 
     data = pd.read_csv(inpath, index_col=0)
