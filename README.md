@@ -16,6 +16,8 @@ credits:
 - https://github.com/ashahidkhattak
 ---
 
+[![DOI](https://zenodo.org/badge/427469033.svg)](https://zenodo.org/badge/latestdoi/427469033)
+
 # FONN - FOlk N-gram aNalysis 
 
 *FONN* repo targets the goals of the Polifonia WP3 i.e., identification of patterns that are useful in detecting relationships between pieces of music, with particular focus on European musical heritage. At present, it includes scripts that make use of n-grams and Damerau-Levenshtein edit distance on monophonic Irish folk tunes.
