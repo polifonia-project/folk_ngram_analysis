@@ -3,8 +3,8 @@ id: folk_ngram_analysis
 name: FONN - FOlk N-gram aNalysis
 brief-description: Work-in-progress on pattern extraction and melodic similarity on a corpus of monophonic Irish folk tunes.
 type: Repository
-release-date: TBD
-release-number: v0.1-dev
+release-date: 8/12/2021
+release-number: v0.2-dev
 work-package: 
 - WP3
 licence:  CC By 4.0, https://creativecommons.org/licenses/by/4.0/
