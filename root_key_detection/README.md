@@ -7,15 +7,16 @@ brief-description: Work-in-progress on root key detection on a corpus of monopho
 
 type: Repository
 
-release-date: TBD
+release-date: 8/12/2021
 
-release-number: v0.1-dev
+release-number: v0.2-dev
 
 work-package: 
 - WP3
 licence: Public domain, https://unlicense.org
 links:
 - https://github.com/polifonia-project/folk_ngram_analysis/blob/master/root_key_detection/root_key_detection.py
+- https://zenodo.org/record/5768216#.YbEAbS2Q3T8
 
 credits:
 - https://github.com/danDiamo
