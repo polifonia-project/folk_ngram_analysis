@@ -7,7 +7,7 @@ release-date: TBD
 release-number: v0.1-dev
 work-package: 
 - WP3
-licence: Public domain, https://unlicense.org
+licence:  CC By 4.0, https://creativecommons.org/licenses/by/4.0/
 links:
 - https://github.com/polifonia-project/folk_ngram_analysis
 - https://github.com/danDiamo/music_ngram_analysis
