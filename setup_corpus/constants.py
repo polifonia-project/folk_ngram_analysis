@@ -70,3 +70,16 @@ def setup_lookup_table(data=None):
     print("\nSetting up lookup table for root assignment:")
     print(res.head(), '\n\n')
     return res
+
+
+def main():
+
+    setup_lookup_table()
+    setup_music21_lookup_table()
+
+
+if __name__ == "__main__":
+    main()
+else:
+    lookup_table = setup_lookup_table()
+    music21_lookup_table = setup_music21_lookup_table()

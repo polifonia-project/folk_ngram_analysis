@@ -120,7 +120,7 @@ def main():
     """
 
     # TODO: Add cli to allow modification of paths and targeting of features for duration-weighting
-    basepath = "./corpus"
+    basepath = "../corpus"
     inpath = basepath + "/MIDI"
     m21_corpus = Music21Corpus(inpath)
     corpus = SetupCorpus(m21_corpus)
