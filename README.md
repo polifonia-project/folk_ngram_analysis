@@ -10,10 +10,11 @@ work-package:
 licence:  CC By 4.0, https://creativecommons.org/licenses/by/4.0/
 links:
 - https://github.com/polifonia-project/folk_ngram_analysis
-- https://github.com/danDiamo/music_ngram_analysis
+- https://zenodo.org/record/5768216#.YbEAbS2Q3T8
 credits:
 - https://github.com/danDiamo
 - https://github.com/ashahidkhattak
+- https://github.com/jmmcd
 ---
 
 [![DOI](https://zenodo.org/badge/427469033.svg)](https://zenodo.org/badge/latestdoi/427469033)
