@@ -58,7 +58,7 @@ Running this file will take about 15 minutes. It will produce many csv files und
   2. Deriving secondary feature sequences from the primary features outputted by item above, including interval, key-invariant pitch, pitch class, and melodic contour represented in Parsons code.
 
 
-2- The ```./setup_ngrams_tfidf.py``` script
+2- The ```./setup_ngrams_tfidf.py```, ```./ngram_tfidf_tools.py``` scripts
 
 Again, this script will take about 25 minutes to run, so we check whether the output files already exist before running. For proper execution of this script, you need to set the path of ngram folder in ```./setup_corpus/setup_corpus.py``` file. Below is the relevant code:
 
