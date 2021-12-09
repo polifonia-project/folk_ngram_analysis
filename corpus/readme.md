@@ -31,6 +31,8 @@ Between 1963 and 1999, Irish State publishing companies Oifig an tSolatáthair a
 
 NOTE: Please see [corpus_stats.ipynb][11] for a Jupyter notebook exploring the corpus data.
 
+Deliverable 3.2 of the Polifonia project will describe the context and research in more detail. It will be published on [Cordis](https://cordis.europa.eu/project/id/101004746/it).
+
 
 ## About corpus pre-processing methodology
 

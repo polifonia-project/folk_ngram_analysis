@@ -33,3 +33,5 @@ This folder contains the Jupyter Notebook script for the root key detection task
 
 * 3- Create Random Forest models using different hyperparameters for achieving better results.
 
+
+Deliverable 3.2 of the Polifonia project will describe the context and research in more detail. It will be published on [Cordis](https://cordis.europa.eu/project/id/101004746/it).
