@@ -53,9 +53,7 @@ class Music21Corpus:
         self.melodies = None
         self.feat_seqs = None
         self.corpus = None
-        print(f"Input corpus contains {len(self.titles)} melodies:\n")
-        print(self.titles[:10], sep='\n')
-        print("...")
+        print(f"Input corpus contains {len(self.titles)} melodies.\n")
 
     def read_midi_files_to_streams(self):
         """Reads all MIDI files in 'inpath' directory to Music21 streams"""
