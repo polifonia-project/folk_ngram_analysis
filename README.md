@@ -30,7 +30,7 @@ credits:
 
 For component 2 documentation, covering the associated *Ceol Rince na hÉireann* MIDI corpus, please see: [./corpus/readme.md](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/corpus/readme.md).
 
-For component 3 documentation, covering work-in-progress on automatic detection of musical root for each tune in the corpus, please see: [/.root_key_detection/README.md](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/root_key_detection/README.md)
+For component 3 documentation, covering work-in-progress on automatic detection of musical root for each tune in the corpus, please see: [/.root_note_detection/README.md](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/root_note_detection/README.md)
 
 Deliverable 3.2 of the Polifonia project will describe the context and research (as opposed to the code). It will be published on [Cordis](https://cordis.europa.eu/project/id/101004746/it).
 
