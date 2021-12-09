@@ -25,7 +25,7 @@ credits:
 
 # Root Note Detection
 
-This folder contains the Jupyter Notebook script for the root note detection task. This folder contains two files. The one is Jupyter Notebook script and the other is the .csv file. The file read the CSV files and then perform the following steps:
+This folder contains the Jupyter Notebook script for the root note detection task. This folder contains two files. The one is Jupyter Notebook script and the other is the ```cre_root_detection.csv``` file. The jupyter file read the CSV file and then perform the following steps:
 
 * 1- Perform Exploratory Data Analysis, such as null value, classes count, box plot, correlations, etc. 
 
