@@ -15,7 +15,7 @@ work-package:
 - WP3
 licence: Public domain, https://unlicense.org
 links:
-- https://github.com/polifonia-project/folk_ngram_analysis/blob/master/root_note_detection/root_note_detection.py
+- https://github.com/polifonia-project/folk_ngram_analysis/blob/master/root_note_detection/root_note_detection.ipynb
 - https://zenodo.org/record/5768216#.YbEAbS2Q3T8
 
 credits:
