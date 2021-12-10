@@ -99,7 +99,7 @@ ngram_corpus.save_results(outpath=basepath + "/ngrams",
   pattern_search.extract_candidate_ngrams("Lord McDonald's (reel)", n=6, mode='idx', indices=\[0, 1])
   ``` 
 * * 1.3.2. With the patterns extracted in 1.3.1 as search terms, search the Feather tf-idf table created by 1.2.2 for occurrences of similar patterns, using the Damerau-Levenshtein edit distance algorithm. 
-* * 1.3.3. Work-in-progress: identify similar pieces of music by counting the occurrences of similar patterns per tune.
+* * 1.3.3. Work-in-progress: identify similar pieces of music by counting the occurrences of similar patterns per tune. Results are printed to console.
 
 
 ## 2. Ceol Rince na hÉireann (CRÉ) MIDI corpus 
