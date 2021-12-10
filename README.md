@@ -108,7 +108,8 @@ A new MIDI version of the existing *Ceol Rince na hÉireann* corpus of 1,224 mon
 * Highlights:
   * Corpus title: _Ceol Rince na hÉireann_
   * Source: Black, B 2020, [The Bill Black Irish tune archive homepage](http://www.capeirish.com/webabc), viewed 5 January 2021. 
-  * Contents: 1,224 traditional Irish dance tunes, each of which is represented as a monophonic MIDI file.
+    
+Contents: 1,224 traditional Irish dance tunes, each of which is represented as a monophonic MIDI file. Also included is roots.csv, a file giving the root note for every file in the corpus as a chromatic pitch class in integer notation.
   
 ## 3. Root Note detection 
 Work-in-progress on automatic detection of musical root for each tune in the corpus. Please see: [/.root_key_detection/README.md](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/root_note_detection/README.md).
