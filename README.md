@@ -33,7 +33,7 @@ NOTE: Deliverable 3.2 of the Polifonia project will describe the context and res
 2. **Ceol Rince na hÉireann (CRÉ) MIDI corpus**
    * 2.1. For the associated *Ceol Rince na hÉireann* MIDI corpus of 1,224 monophonic Irish traditional dance tunes, please see: [./corpus/readme.md](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/corpus/readme.md).
 3. **Root Note Detection**
-   3.1. Work-in-progress on automatic detection of musical root for each tune in the corpus, please see: [/.root_key_detection/README.md](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/root_key_detection/README.md)
+   * 3.1. Work-in-progress on automatic detection of musical root for each tune in the corpus, please see: [/.root_key_detection/README.md](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/root_key_detection/README.md)
 
 
 ## 1. FONN - Prerequisites 
@@ -50,18 +50,18 @@ Install the following libraries:
 
 ``` pip install -r requirements.txt ```
 
-## Execution and summary tasks performed by each Scripts
+## Execution and summary tasks performed by each script:
 
 ### 1.1. The ```./setup_corpus/setup_corpus.py``` script:
 
 Running this file will take about 15 minutes. It will produce many csv files under ```<basepath>/feat_seq_data/note```, ```<basepath>/feat_seq_data/accent```, ```<basepath>/feat_seq_data/duration_weighted```. To save time, we first check whether these files exist, and skip running the code if they do.
 
 * Perform Tasks:
-  * 1.1.1. Extraction of numeric feature sequences representing pitch, onset, duration, and velocity for all pieces of music in a corpus of monophonic MIDI files.
-  * 1.1.2. Deriving secondary feature sequences from the primary features outputted by item above, including interval, key-invariant pitch, pitch class, and melodic contour represented in Parsons code.
-  * 1.1.3. Filtering the feature sequence data produced by 1.1.1 and 1.1.2 to only include feature values for note events which occur on accented beats, creating 'accent-level' feature sequence data for each tune.
-  * 1.1.4. Duration-weighting selected feature sequences, which converts the feature sequences from feature value per note event to feature value per eighth note. By default this process is applied to pitch and pitch class data.
-  * 1.1.5 Save outputs. By default outputs are saved to subfolders of ```<basepath>```, per the code excerpt below:
+  * 1.1.1. Extract numeric feature sequences representing pitch, onset, duration, and velocity for all pieces of music in a corpus of monophonic MIDI files.
+  * 1.1.2. Derive secondary feature sequences from the primary features outputted by 1.1.1, including interval, key-invariant pitch, pitch class, and melodic contour represented in Parsons code.
+  * 1.1.3. Filter the feature sequence data produced by 1.1.1 and 1.1.2 to retain only values for note events which occur on accented beats, creating 'accent-level' feature sequence data for each tune.
+  * 1.1.4. Calculate duration-weighted sequences for selected feature(s). This involves converting the sequences from value per note event to value per eighth note. By default, this process is applied to pitch and pitch class data.
+  * 1.1.5 Save outputs. By default, outputs are saved to subfolders of ```<basepath>```, per the code excerpt below:
   
 ```corpus.save_corpus(
         feat_seq_path=basepath + "/feat_seq_data/note",
@@ -74,7 +74,7 @@ Running this file will take about 15 minutes. It will produce many csv files und
 The ```./setup_ngrams_tfidf.py```, which sets up classes and runs methods from ```./ngram_tfidf_tools.py```, will take about 25 minutes to run-- so we check whether the output files already exist before running. By default the script will write output to ```<basepath>/ngrams``` in the form of Feather (.ftr) asnd CSV data tables.
 
 * Perform Tasks:
-  * 1.2.1. Extraction of n-gram patterns for selected musical feature. So far, work-in-progress has extracted on n-grams for 3 <= n <= 12 on five feature sequences, including melodic contour, interval, pitch, pitch-class interval, and pitch class. The defaults settings, per the code block excerpted below from ```./setup_ngrams_tfidf.py``, will extract all n-grams for 5 <= n <= 10 from the accent-level pitch class sequence for each tune in the corpus (i.e.: all unique patterns between 5-10 accented notes in length).
+  * 1.2.1. Extract n-gram patterns for selected musical feature. So far, work-in-progress has extracted on n-grams for 3 <= n <= 12 on five feature sequences, including melodic contour, interval, pitch, pitch-class interval, and pitch class. The defaults settings, per the code block excerpted below from ```./setup_ngrams_tfidf.py```, will extract all n-grams for 5 <= n <= 10 from the accent-level pitch class sequence for each tune in the corpus (i.e.: all unique patterns between 5-10 accented notes in length).
   
 ```
 basepath = "./corpus"
@@ -82,7 +82,7 @@ basepath = "./corpus"
     feature = "pitch_class"
     n_vals = list(range(5, 10))
 ```
-* * 1.2.2 For every tune in the corpus, occurrences of the patterns identified are counted and ranked. Two corpus-level tables are compiled: one containing the frequency of each pattern in each tune across the corpus; the other containing the tf-idf value of of each pattern in each tune. By default both tables are saved to ```<basepath>/ngrams``` in Feather (.ftr) and CSV formats, per the code block below excerpted from ```./setup_ngrams_tfidf.py```:
+* * 1.2.2 Count and rank occurrences of the patterns identified in 1.2.1 in every tune in the corpus. Two corpus-level tables are compiled: one containing the frequency of each pattern in each tune across the corpus; the other containing the tf-idf value of each pattern in each tune. By default, both tables are saved to ```<basepath>/ngrams``` in Feather (.ftr) and CSV formats, per the code block below excerpted from ```./setup_ngrams_tfidf.py```:
    
 ```
 ngram_corpus.save_results(outpath=basepath + "/ngrams",
@@ -93,13 +93,13 @@ ngram_corpus.save_results(outpath=basepath + "/ngrams",
 ```./ngram_pattern_search.py``` contains exploratory work-in-progress on identifying similar between tunes based on similarity between their n-grams, as calculated using the Damerau-Levenshtein edit distance algorithm.
 
 * Perform Tasks:
-  * 1.3.1. A candidate tune is selected and its top-ranked n-gram(s) are extracted from the tf-idf Feather table created by 1.2. The default is to extract the top two 6-gram patterns as ranked by tf-idf, per the code block below:
+  * 1.3.1. Select a candidate tune from the tf-idf Feather table created in 1.2, and extract its top-ranked n-gram(s). The default is to extract the top two 6-gram patterns as ranked by tf-idf, per the code block below:
   
 ```
   pattern_search.extract_candidate_ngrams("Lord McDonald's (reel)", n=6, mode='idx', indices=\[0, 1])
   ``` 
-* * 1.3.2. With the patterns extracted in 1.3.1 as search terms, the Feather tf-idf table created by 1.2.2 is searched for occurrences of similar patterns, using the Damerau-Levenshtein edit distance algorithm. 
-* * 1.3.3. Work-in-progress: similar pieces of music are identified by counting the occurrences of similar patterns identified in 1.3.2.
+* * 1.3.2. With the patterns extracted in 1.3.1 as search terms, search the Feather tf-idf table created by 1.2.2 for occurrences of similar patterns, using the Damerau-Levenshtein edit distance algorithm. 
+* * 1.3.3. Work-in-progress: identify similar pieces of music by counting the occurrences of similar patterns per tune.
 
 
 ## 2. Ceol Rince na hÉireann (CRÉ) MIDI corpus 
