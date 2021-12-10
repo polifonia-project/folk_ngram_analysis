@@ -9,7 +9,7 @@ type: Repository
 
 release-date: 8/12/2021
 
-release-number: v0.3-dev
+release-number: v0.4-dev
 
 work-package: 
 - WP3
