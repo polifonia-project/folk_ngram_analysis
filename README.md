@@ -1,5 +1,5 @@
 ---
-id: folk_ngram_analysis
+component-id: folk_ngram_analysis
 name: FONN - FOlk N-gram aNalysis
 description: Work-in-progress on pattern extraction and melodic similarity tools, with an associated test corpus of monophonic Irish folk tunes.
 type: Repository

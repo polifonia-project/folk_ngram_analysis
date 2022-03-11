@@ -1,5 +1,5 @@
 ---
-id: root_note_detection
+component-id: root_note_detection
 
 name: Root Note Detection
 
