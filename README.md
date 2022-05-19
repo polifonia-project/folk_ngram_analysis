@@ -23,7 +23,7 @@ credits:
 
 FONN repo targets the goals of the Polifonia WP3 i.e., identification of patterns that are useful in detecting relationships between pieces of music, with particular focus on European musical heritage. At present, it includes scripts that make use of n-grams and Damerau-Levenshtein edit distance on monophonic Irish folk tunes.
 
-In v0.5dev the FONN toolkit has been comprehensively refactored for speed and memory performance. 
+In v0.5dev, the FONN toolkit has been comprehensively refactored for speed and memory performance. 
 FONN is now capable of ingesting and searching corpora of over 40,000 MIDI files, versus c. 1,000 MIDI files in v0.4dev).
 Speed to ingest the 1,200-tune *CRÉ* test corpus ([./corpus/readme.md](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/corpus/readme.md)), extract patterns and run similarity search has decreased from approx. 50 min n v0.4dev to under 5 min. See [./Demo.ipynb](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/Demo.ipynb) to explore tune similarity in the *CRÉ* corpus.
 
