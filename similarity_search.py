@@ -145,7 +145,8 @@ class PatternSimilarity:
         # store and print results:
         self.candidate_patterns = freq_ngrams
         print(f"\nFrequent n-gram pattern(s) extracted from {title}:")
-        print(self.candidate_patterns)
+        for pattern in self.candidate_patterns['ngram'].tolist():
+            print(pattern)
         return self.candidate_patterns
 
     def find_similar_patterns(self, edit_dist_threshold=None):

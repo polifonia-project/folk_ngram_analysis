@@ -81,16 +81,3 @@ def main():
 if __name__ == "__main__":
     main()
 
-
-class SetupCorpus:
-
-    """
-    SetupCorpus class sets up Music21Corpus and MusicDataCorpus objects, and runs their methods, creating tables of
-    primary and secondary feature sequence data at note event- and accent-level for every melody in an input corpus of
-    monophonic MIDI files. It allows generation of additional duration-weighted feature sequences, via
-    SetupCorpus.run_duration_weighted_sequence_calculations() method.
-    """
-
-
-if __name__ == "__main__":
-    main()
