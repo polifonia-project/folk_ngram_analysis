@@ -56,7 +56,7 @@ Install the following libraries:
 
 ## Execution and summary tasks performed by each script:
 
-### 1.1. The ```./setup_corpus/setup_corpus.py``` script:
+### 1.1. The ```./setup_corpus.py``` script:
 
 Running this file will produce many csv files under ```<basepath>/feat_seq_corpus/feat_seq```, ```<basepath>/feat_seq_corpus/feat_seq_accent```, ```<basepath>/feat_seq_corpus/duration_weighted```, ```<basepath>/feat_seq_corpus/duration_weighted_accents```. To save time, we first check whether these files exist, and skip running the code if they do.
 
