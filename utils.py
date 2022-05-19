@@ -18,11 +18,7 @@ def reformat_midi_filenames(indir):
 
 
 def get_url_paths_for_online_midi_corpus(url):
-
-    """
-    Returns a list of file paths when passed the url for a directory of online MIDI files.
-    """
-
+    """Returns a list of file paths when passed the url for a directory of online MIDI files."""
     response = requests.get(url)
     if response.ok:
         response_text = response.text
@@ -34,15 +30,9 @@ def get_url_paths_for_online_midi_corpus(url):
 
 
 def read_csv(inpath):
-
-    """
-    Reads csv file to Pandas dataframe. Returns a two-tuple, formatted per:
-    (filename, dataframe).
-    """
-
+    """Reads csv file to Pandas dataframe. Returns a two-tuple, formatted per: (filename, dataframe)."""
     data = pd.read_csv(inpath, index_col=0)
-    print(f"\nReading data from:\n{inpath}")
-    print(data.head())
+
     filename = inpath.split('/')[-1][:-4]
     return filename, data
 

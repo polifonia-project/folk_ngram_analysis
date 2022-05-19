@@ -10,13 +10,13 @@ setup_lookup_table() -- a function to convert NOTES_NAMES_NUMBERS constants dict
 flexible multi-directional lookups in corpus_processing_tools.py root assignment.
 """
 
-
+import numpy as np
 import pandas as pd
 
 MUSIC21_LOOKUP_TABLE = {
 
     'C': 0, 'C#': 1, 'D-': 1, 'D': 2, 'D#': 3, 'E-': 3, 'E': 4, 'F': 5, 'F#': 6,
-    'G-': 6, 'G': 7, 'G#': 8, 'A-': 8, 'A': 9, 'A#': 10, 'B-': 10, 'B': 11
+    'G-': 6, 'G': 7, 'G#': 8, 'A-': 8, 'A': 9, 'A#': 10, 'B-': 10, 'B': 11, '': np.NaN
 }
 
 NOTES_NAMES_MIDI_NUMBERS = {
@@ -59,7 +59,7 @@ def setup_lookup_table(data=None):
         data = NOTES_NAMES_MIDI_NUMBERS
     note_names = [key for key in data.keys()]
     fourth_oct_midi_nums = [(val[5]) for val in data.values()]
-    root_nums = [val % 12 for val in fourth_oct_midi_nums]
+    root_nums = [int(val % 12) for val in fourth_oct_midi_nums]
     lookup_data = {
         'note names': note_names,
         'midi num': fourth_oct_midi_nums,
