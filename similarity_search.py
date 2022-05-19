@@ -288,7 +288,7 @@ def main():
     res_path = basepath + "/results"
     pattern_search = PatternSimilarity(f_in)
     pattern_search.results_path = res_path
-    pattern_search.extract_candidate_patterns("Antrim Rose (reel)", n=6, mode='idx', indices=[0])
+    pattern_search.extract_candidate_patterns("Lord McDonald's (reel)", n=6, mode='max')
     pattern_search.find_similar_patterns(edit_dist_threshold=1)
     pattern_search.find_similar_tunes()
     pattern_search.compile_results_table()
