@@ -1,5 +1,5 @@
 """
-'pattern_corpus.py' is a module containing tools to extract n-gram patterns from a music corpus in
+'pattern_extraction.py' is a module containing tools to extract n-gram patterns from a music corpus in
 feature sequence representation (as outputted by 'corpus_processing_tools.py' module); calculate frequency and TF-IDF
 statistics for each pattern; and write the results to file in a sparse data table.
 
@@ -15,7 +15,7 @@ corpus.
 
 An PatternCorpus object automatically instantiates a TuneData object for each individual tune within the
 corpus. TuneData attributes and methods are used by PatternCorpus in pattern extraction and TF-IDF calculations.
-The 'pattern corpus' outputted by pattern_corpus.py provides the input for 'similarity_search.py'.
+The 'pattern corpus' outputted by pattern_extraction.py provides the input for 'similarity_search.py'.
 
 For more detail, please see docstrings below.
 """
