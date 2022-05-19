@@ -1,5 +1,5 @@
 """
-'similarity_search.py' contains PatternSimilarity class, which reads the output of pattern_corpus.py, a pkl
+'similarity_search.py' contains PatternSimilarity class, which reads the output of pattern_extraction.py, a pkl
 table containing:
 
 [rows] All unique n-gram patterns for a given musical feature and range of pattern lengths,
@@ -32,7 +32,7 @@ class PatternSimilarity:
     """
     An PatternSimilarity object is instantiated by passing a single argument, 'inpath', which is the path to a
     'pattern corpus' table of n-gram patterns, tf-idf, and idf values held in a pickle file
-    (as outputted by 'pattern_corpus.py').
+    (as outputted by 'pattern_extraction.py').
 
     Attributes:
 
@@ -72,7 +72,7 @@ class PatternSimilarity:
         Initializes PatternSimilarity class object.
 
         Args:
-            inpath -- path to pickled 'pattern corpus' Dataframe outputted by 'pattern_corpus.py'.
+            inpath -- path to pickled 'pattern corpus' Dataframe outputted by 'pattern_extraction.py'.
         """
 
         raw_data = pd.read_pickle(inpath)
