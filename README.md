@@ -21,7 +21,7 @@ credits:
 
 # FONN - FOlk _N_-gram aNalysis 
 
-FONN repo targets the goals of the Polifonia WP3 i.e., identification of patterns that are useful in detecting relationships between pieces of music, with particular focus on European musical heritage. At present, it includes scripts that make use of n-grams and Damerau-Levenshtein edit distance on monophonic Irish folk tunes.
+FONN repo targets the goals of Polifonia WP3, i.e.: identification of patterns that are useful in detecting relationships between pieces of music, with particular focus on European musical heritage. At present, it includes scripts that make use of n-grams and Damerau-Levenshtein edit distance to explore tune similarity within a coprus of monophonic Irish folk tunes.
 
 In v0.5dev, the FONN toolkit has been comprehensively refactored for speed and memory performance. 
 FONN is now capable of ingesting and searching corpora of over 40,000 MIDI files, versus c. 1,000 MIDI files in v0.4dev.
