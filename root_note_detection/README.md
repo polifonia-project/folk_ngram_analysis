@@ -7,7 +7,7 @@ brief-description: Work-in-progress on root note detection on a corpus of monoph
 
 type: Repository
 
-release-date: 19/05/2022
+release-date: 20/05/2022
 
 release-number: v0.5-dev
 
