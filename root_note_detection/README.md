@@ -1,5 +1,5 @@
 ---
-id: root_note_detection
+component-id: root_note_detection
 
 name: Root Note Detection
 
@@ -7,9 +7,9 @@ brief-description: Work-in-progress on root note detection on a corpus of monoph
 
 type: Repository
 
-release-date: 8/12/2021
+release-date: 20/05/2022
 
-release-number: v0.4-dev
+release-number: v0.5-dev
 
 work-package: 
 - WP3
@@ -27,11 +27,10 @@ credits:
 
 This folder contains the Jupyter Notebook script for the root note detection task. This folder contains two files. The one is Jupyter Notebook script and the other is the ```cre_root_detection.csv``` file. The jupyter file read the CSV file and then perform the following steps:
 
-* 1- Perform Exploratory Data Analysis, such as null value, classes count, box plot, correlations, etc. 
-
-* 2- Create Models such as Decision Tree using Gini and entropy and then computes its classification accuracy
-
-* 3- Create Random Forest models using different hyperparameters for achieving better results.
-
-
-Deliverable 3.2 of the Polifonia project will describe the context and research in more detail. It will be published on [Cordis](https://cordis.europa.eu/project/id/101004746/it).
+* 1- Performed Exploratory Data Analysis, such as null value, classes count, box plot, correlations, etc. 
+* 2- Global settings are defined to control feature selection
+* 3- Multiple dataset are created for model development and its evaluation
+* 4- Minority classes are balanced with help of SMOTE
+* 5- Classification report of state-of-the-art models for root note detection are generated for comparison
+* 6- Factorial design experimental setup is developed to evaluate different classification algorithms such as  Decision Tree, RandomForest, NaiveBayes 
+* 7- The best models are selected, and finally they are compared with SOA models.
