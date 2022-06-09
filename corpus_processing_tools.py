@@ -90,13 +90,13 @@ class Tune:
         """
         Calculates root note metrics accessible via music21 library:
 
-        1. Root information from music21 Stream
-        2. Final note of the tune
-        3. Krumhansl-Schmukler algorithm
-        4. Craig Sapp's 'simple weights'
-        5. Aarden Essen algorithm
-        6. Bellman-Budge algorithm
-        7. Temperley-Kostka-Payne algorithm
+        1. Pitch class of root note read from music21 key signature.
+        2. Pitch class of final note of the tune.
+        3. Pitch class of root as outputted by Krumhansl-Schmukler algorithm
+        4. Pitch class of root as outputted using Craig Sapp's 'simple weights'
+        5. Pitch class of root as outputted by Aarden Essen algorithm
+        6. Pitch class of root as outputted by Bellman-Budge algorithm
+        7. Pitch class of root as outputted by Temperley-Kostka-Payne algorithm
         
         Returns list of all results.
         """
@@ -392,15 +392,14 @@ class Corpus:
 
     def reformat_roots_table(self):
         """Renames columns in Corpus.roots Dataframe."""
-        self.roots.index.name = 'title'
-        self.roots.rename(columns={'root': 'as_transcribed'}, inplace=True)
+        self.roots.reset_index(inplace=True)
+        self.roots.rename(columns={self.roots.columns[0]: 'as transcribed'}, inplace=True)
         self.roots.dropna(inplace=True)
-        self.roots = self.roots.astype('int16')
 
     def save_roots_table(self):
-        """Writes Corpus.roots Dataframe to pkl and csv files at path specified in Corpus.roots_path attr."""
+        """Writes Corpus.roots Dataframe to csv file at path specified in Corpus.roots_path attr."""
+
         print(f"Saving corpus root metrics dataframe to: {self.roots_path}")
-        self.roots.to_pickle(self.roots_path)
         self.roots.to_csv(f"{self.roots_path[:-4]}.csv")
 
     def calc_intervals(self):
@@ -509,7 +508,7 @@ class Corpus:
         # read csv:
         if self.roots_path.endswith('.csv'):
             self.roots = pd.read_csv(self.roots_path, index_col=0)
-            self.roots.set_index('title', inplace=True)
+            # self.roots.set_index('title', inplace=True)
         # read pkl:
         elif self.roots_path.endswith('.pkl'):
             self.roots = pd.read_pickle(self.roots_path)
