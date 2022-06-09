@@ -25,9 +25,14 @@ credits:
 
 # Root Note Detection
 
-This folder contains the Jupyter Notebook script for the root note detection task. This folder contains two files. The one is Jupyter Notebook script and the other is the ```cre_root_detection.csv``` file. The jupyter file read the CSV file and then perform the following steps:
+The files in this folder are related to the Root note detection task. The notebook exploits monophonic Irish folk tunes processed data (that can be found in ```cre_root_detection.csv``` file) and with help of machine learning models predicts the Root note of a tune. Determination of the root note of each piece of music in the corpus under investigation is a key foundational step in FONN. Accurate root note data allows reliable calculation of key-invariant chromatic pitch class sequences, which have been the primary input for our pattern analysis and melodic similarity work.
 
-* 1- Performed Exploratory Data Analysis, such as null value, classes count, box plot, correlations, etc. 
+### Prerequisites
+This component requires the ```cre_root_detection.csv```. This file contains the processed data for each tune in the Ceol Rince na hÉireann (CRE) corpus. please see: [/.root_key_detection/cre_root_detection.csv](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/root_key_detection/cre_root_detection.csv)
+
+Following is the summary of the current work progress. The jupyter Demo file read the CSV file and then perform the following steps:
+
+* 1- Performed Exploratory Data Analysis, such as null value, classes count, correlations, etc. 
 * 2- Global settings are defined to control feature selection
 * 3- Multiple dataset are created for model development and its evaluation
 * 4- Minority classes are balanced with help of SMOTE
