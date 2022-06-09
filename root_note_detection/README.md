@@ -23,9 +23,13 @@ credits:
 - https://github.com/ashahidkhattak
 ---
 
+
+
 # Root Note Detection
 
 The files in this folder are related to the Root note detection task. The notebook exploits monophonic Irish folk tunes processed data (that can be found in ```cre_root_detection.csv``` file) and with help of machine learning models predicts the Root note of a tune. Determination of the root note of each piece of music in the corpus under investigation is a key foundational step in FONN. Accurate root note data allows reliable calculation of key-invariant chromatic pitch class sequences, which have been the primary input for our pattern analysis and melodic similarity work.
+
+NOTE: Deliverable 3.3 of the Polifonia project describes the context and research in more detail.
 
 ### Prerequisites
 This component requires the ```cre_root_detection.csv```. This file contains the processed data for each tune in the Ceol Rince na hÉireann (CRE) corpus. please see: [/.root_key_detection/cre_root_detection.csv](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/root_note_detection/cre_root_detection.csv)
