@@ -109,7 +109,7 @@ def main():
 
     """
     Main function. Converts a corpus of monophonic MIDI files to feature sequence representation via calc_feat_seqs()
-    function above.
+    above.
 
     Also calculates root note metric inputs for 'Root Note Detection' component at ./root_note_detection/ via
     calls in both calc_music21_root_metrics() and calc_feat_seqs() functions.

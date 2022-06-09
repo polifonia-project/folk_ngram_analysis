@@ -172,7 +172,7 @@ class Tune:
 
         In the corpora under investigation, MIDI velocity is used to indicate rhythm and structure following a
         consistent 'stress model' applied using ABC2MIDI in the preliminary conversion from ABC notation to MIDI format.
-        Following this model, all notes with MIDI velocity values above 80 are rhythmically-accented.
+        In this model, all notes with MIDI velocity values above 80 are rhythmically-accented.
         """
 
         # Filter sequence via MIDI velocity threshold:
