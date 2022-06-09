@@ -34,6 +34,10 @@ NOTE: Deliverable 3.3 of the Polifonia project describes the context and researc
 ### Prerequisites
 This component requires the ```cre_root_detection.csv```. This file contains the processed data for each tune in the Ceol Rince na hÉireann (CRE) corpus. please see: [/.root_key_detection/cre_root_detection.csv](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/root_note_detection/cre_root_detection.csv)
 
+
+In this deliverable, we employed a factorial design experiment for Decision Tree, Random Forest, and Naive Bayes algorithms. We used a comprehensive list of hyperparameters to select the top-performing models. We also conducted experiments using SMOTE to generate a synthetic balance dataset. Finally, evaluation was done on an unseen dataset, and the obtained results are superior to state-of-the-art models.
+
+
 Following is the summary of the current work progress. The jupyter Demo file read the CSV file and then perform the following steps:
 
 * 1- Performed Exploratory Data Analysis, such as null value, classes count, correlations, etc. 
@@ -43,3 +47,5 @@ Following is the summary of the current work progress. The jupyter Demo file rea
 * 5- Classification report of state-of-the-art models for root note detection are generated for comparison
 * 6- Factorial design experimental setup is developed to evaluate different classification algorithms such as  Decision Tree, RandomForest, NaiveBayes 
 * 7- The best models are selected, and finally they are compared with SOA models.
+
+
