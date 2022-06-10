@@ -17,7 +17,7 @@ credits:
 - https://github.com/jmmcd
 ---
 
-[![DOI](https://zenodo.org/badge/427469033.svg)](https://zenodo.org/badge/latestdoi/427469033)
+
 
 # FONN - FOlk _N_-gram aNalysis 
 
@@ -117,5 +117,20 @@ A new MIDI version of the existing *Ceol Rince na hÉireann* corpus of 1,224 mon
 Work-in-progress on automatic detection of musical root for each tune in the corpus. Please see: [/.root_key_detection/README.md](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/root_note_detection/README.md).
   This component contains one jupyter notebook script that makes use of  ```cre_root_detection.csv```, which is an expert-annotated file containing pitch class values assigned to each piece of music in the corpus by a variety of root-detection metrics. From this input, the script makes use of machine learning methods to classify the root note. The root note detection notebook can be accessed using this link: [/.root_note_detection/root_note_detection.ipynb](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/root_note_detection/root_note_detection.ipynb).
   
+##  Attribution
 
-  
+[![DOI](https://zenodo.org/badge/427469033.svg)](https://zenodo.org/badge/latestdoi/427469033)
+
+If you use the code in this repository, please cite this software as follow: 
+@software{danny_diamond_2022_6566379,
+  author       = {Danny Diamond and
+                  Abdul Shahid and
+                  James McDermott},
+  title        = {{polifonia-project/folk\_ngram\_analysis: FONN 
+                   v0.5dev}},
+  month        = may,
+  year         = 2022
+}
+
+## License
+This work is licensed under CC BY 4.0, https://creativecommons.org/licenses/by/4.0/
