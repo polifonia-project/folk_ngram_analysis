@@ -122,6 +122,7 @@ Work-in-progress on automatic detection of musical root for each tune in the cor
 [![DOI](https://zenodo.org/badge/427469033.svg)](https://zenodo.org/badge/latestdoi/427469033)
 
 If you use the code in this repository, please cite this software as follow: 
+```
 @software{danny_diamond_2022_6566379,
   author       = {Danny Diamond and
                   Abdul Shahid and
@@ -131,6 +132,7 @@ If you use the code in this repository, please cite this software as follow:
   month        = may,
   year         = 2022
 }
+```
 
 ## License
 This work is licensed under CC BY 4.0, https://creativecommons.org/licenses/by/4.0/
