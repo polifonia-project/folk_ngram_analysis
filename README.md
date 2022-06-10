@@ -27,7 +27,7 @@ In v0.5dev, the FONN toolkit has been comprehensively refactored for speed and m
 FONN is now capable of ingesting and searching corpora of over 40,000 MIDI files, versus c. 1,000 MIDI files in v0.4dev.
 Speed to ingest the 1,200-tune [*CRÉ* test corpus](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/corpus/readme.md), extract patterns and run similarity search has decreased from approx. 50 min n v0.4dev to under 5 min. See [./Demo.ipynb](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/Demo.ipynb) to explore tune similarity in the *CRÉ* corpus.
 
-NOTE: Deliverable 3.2 of the Polifonia project describes the context and research in more detail. It will be published on [Cordis](https://cordis.europa.eu/project/id/101004746/it).
+NOTE: Deliverable 3.3 of the Polifonia project describes the context and research in more detail. It will be published on [Cordis](https://cordis.europa.eu/project/id/101004746/it).
 
 ## In this strand of research we have created three Polifonia components:
 
@@ -38,7 +38,7 @@ NOTE: Deliverable 3.2 of the Polifonia project describes the context and researc
 2. **Ceol Rince na hÉireann (CRÉ) MIDI corpus**
    * 2.1. For the associated *Ceol Rince na hÉireann* MIDI corpus of 1,224 monophonic Irish traditional dance tunes, please see: [./corpus/readme.md](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/corpus/readme.md).
 3. **Root Note Detection**
-   * 3.1. Work-in-progress on automatic detection of musical root for each tune in the corpus, please see: [/.root_key_detection/README.md](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/root_key_detection/README.md)
+   * 3.1. Work-in-progress on automatic detection of musical root for each tune in the corpus, please see: [/.root_key_detection/README.md](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/root_note_detection/README.md)
 
 
 ## 1. FONN - Prerequisites 
