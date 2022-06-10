@@ -17,16 +17,17 @@ credits:
 - https://github.com/jmmcd
 ---
 
-[![DOI](https://zenodo.org/badge/427469033.svg)](https://zenodo.org/badge/latestdoi/427469033)
+
 
 # FONN - FOlk _N_-gram aNalysis 
 
-FONN repo targets the goals of the Polifonia WP3 i.e., identification of patterns that are useful in detecting relationships between pieces of music, with particular focus on European musical heritage. At present, it includes scripts that make use of n-grams and Damerau-Levenshtein edit distance on monophonic Irish folk tunes.
+FONN repo targets the goals of Polifonia WP3, i.e.: identification of patterns that are useful in detecting relationships between pieces of music, with particular focus on European musical heritage. At present, it includes scripts that make use of n-grams and Damerau-Levenshtein edit distance to explore tune similarity within a coprus of monophonic Irish folk tunes.
 
-In v0.5dev the toolkit has been comprehensively refactored for speed and memory performance. 
-It is now capable of ingesting corpora of over 40,000 tunes (versus c. 1,000 tunes for v0.4dev)
+In v0.5dev, the FONN toolkit has been comprehensively refactored for speed and memory performance. 
+FONN is now capable of ingesting and searching corpora of over 40,000 MIDI files, versus c. 1,000 MIDI files in v0.4dev.
+Speed to ingest the 1,200-tune [*CRÉ* test corpus](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/corpus/readme.md), extract patterns and run similarity search has decreased from approx. 50 min n v0.4dev to under 5 min. See [./Demo.ipynb](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/Demo.ipynb) to explore tune similarity in the *CRÉ* corpus.
 
-NOTE: Deliverable 3.2 of the Polifonia project describes the context and research in more detail. It will be published on [Cordis](https://cordis.europa.eu/project/id/101004746/it).
+NOTE: Deliverable 3.3 of the Polifonia project describes the context and research in more detail. It will be published on [Cordis](https://cordis.europa.eu/project/id/101004746/it).
 
 ## In this strand of research we have created three Polifonia components:
 
@@ -37,7 +38,7 @@ NOTE: Deliverable 3.2 of the Polifonia project describes the context and researc
 2. **Ceol Rince na hÉireann (CRÉ) MIDI corpus**
    * 2.1. For the associated *Ceol Rince na hÉireann* MIDI corpus of 1,224 monophonic Irish traditional dance tunes, please see: [./corpus/readme.md](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/corpus/readme.md).
 3. **Root Note Detection**
-   * 3.1. Work-in-progress on automatic detection of musical root for each tune in the corpus, please see: [/.root_key_detection/README.md](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/root_key_detection/README.md)
+   * 3.1. Work-in-progress on automatic detection of musical root for each tune in the corpus, please see: [/.root_key_detection/README.md](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/root_note_detection/README.md)
 
 
 ## 1. FONN - Prerequisites 
@@ -56,7 +57,7 @@ Install the following libraries:
 
 ## Execution and summary tasks performed by each script:
 
-### 1.1. The ```./setup_corpus/setup_corpus.py``` script:
+### 1.1. The ```./setup_corpus.py``` script:
 
 Running this file will produce many csv files under ```<basepath>/feat_seq_corpus/feat_seq```, ```<basepath>/feat_seq_corpus/feat_seq_accent```, ```<basepath>/feat_seq_corpus/duration_weighted```, ```<basepath>/feat_seq_corpus/duration_weighted_accents```. To save time, we first check whether these files exist, and skip running the code if they do.
 
@@ -116,5 +117,22 @@ A new MIDI version of the existing *Ceol Rince na hÉireann* corpus of 1,224 mon
 Work-in-progress on automatic detection of musical root for each tune in the corpus. Please see: [/.root_key_detection/README.md](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/root_note_detection/README.md).
   This component contains one jupyter notebook script that makes use of  ```cre_root_detection.csv```, which is an expert-annotated file containing pitch class values assigned to each piece of music in the corpus by a variety of root-detection metrics. From this input, the script makes use of machine learning methods to classify the root note. The root note detection notebook can be accessed using this link: [/.root_note_detection/root_note_detection.ipynb](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/root_note_detection/root_note_detection.ipynb).
   
+##  Attribution
 
-  
+[![DOI](https://zenodo.org/badge/427469033.svg)](https://zenodo.org/badge/latestdoi/427469033)
+
+If you use the code in this repository, please cite this software as follow: 
+```
+@software{danny_diamond_2022_6566379,
+  author       = {Danny Diamond and
+                  Abdul Shahid and
+                  James McDermott},
+  title        = {{polifonia-project/folk\_ngram\_analysis: FONN 
+                   v0.5dev}},
+  month        = may,
+  year         = 2022
+}
+```
+
+## License
+This work is licensed under CC BY 4.0, https://creativecommons.org/licenses/by/4.0/
