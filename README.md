@@ -33,7 +33,7 @@ NOTE: Deliverable 3.3 of the Polifonia project describes the context and researc
 
 ## FONN -- Polifonia components:
 
-1. **Pattern and Similarity Toolkit**
+1. **FONN - FOlk _N_-gram aNalysis**
    * 1.1. Tools for extraction of feature sequence data from MIDI files.
    * 1.2. Tools to extract, compile, and rank patterns in various musical features such as (chromatic) pitch, pitch class, and interval from musical feature sequence data. 
    * 1.3. Tools to explore similarity between tunes within the corpus via frequent and similar patterns. These resources are available in [root](https://github.com/polifonia-project/folk_ngram_analysis/tree/master/) folder. 
