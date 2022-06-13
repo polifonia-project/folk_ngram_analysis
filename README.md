@@ -123,14 +123,14 @@ Work-in-progress on automatic detection of musical root for each tune in the cor
 
 If you use the code in this repository, please cite this software as follow: 
 ```
-@software{danny_diamond_2022_6566379,
-  author       = {Danny Diamond and
-                  Abdul Shahid and
-                  James McDermott},
-  title        = {{polifonia-project/folk\_ngram\_analysis: FONN 
-                   v0.5dev}},
-  month        = may,
-  year         = 2022
+@software{diamond_fonn_2022,
+	address = {Galway, Ireland},
+	title = {{FONN} - {FOlk} {N}-gram {aNalysis}},
+	shorttitle = {{FONN}},
+	url = {https://github.com/polifonia-project/folk_ngram_analysis},
+	publisher = {National University of Ireland, Galway},
+	author = {Diamond, Danny and Shahid, Abdul and McDermott, James},
+	year = {2022},
 }
 ```
 
