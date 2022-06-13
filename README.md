@@ -62,7 +62,7 @@ To ensure FONN runs correctly, please install the following libraries:
 Running ```./setup_corpus/setup_corpus.py``` converts a monophonic MIDI corpus to feature sequence representation.
 By default this conversion script points to the provided test MIDI corpus at ```./corpus/MIDI``` and outputs feature sequence data to ```./corpus/feat_seq_corpus```, but these paths can be edited in ```./setup_corpus/setup_corpus.py``` main function .
 
-NOTE: ``./corpus``` should include a ```roots.csv``` file containing the root note of each MIDI file, represented as a chromatic [pitch class](https://en.wikipedia.org/wiki/Pitch_class) (an integer between 0 and 11). This is necessary to calculate secondary key-invariant feature sequences. A a ```roots.csv``` file is provided for the test corpus, and such a file must be provided for any other corpus on which the tools are to be used.
+NOTE: ```./corpus``` should include a ```roots.csv``` file containing the root note of each MIDI file, represented as a chromatic [pitch class](https://en.wikipedia.org/wiki/Pitch_class) (an integer between 0 and 11). This is necessary to calculate secondary key-invariant feature sequences. A a ```roots.csv``` file is provided for the test corpus, and such a file must be provided for any other corpus on which the tools are to be used.
 
 1.2. **Extracting patterns: pattern_extraction.py**
 
