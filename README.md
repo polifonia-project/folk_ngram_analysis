@@ -70,7 +70,7 @@ Running ```pattern_extraction.py``` extracts all patterns which occur at least o
 By default, running this file will extract all 3-7 item accent-level key-invariant pitch class patterns from the test corpus. 
 The default target fesature, pattern length, and level of granularity can all be changed in ```pattern_extraction.py``` main function.
 
-NOTE: 'accent-level' above referes to a higher level of granularity, in which the feature sequenc data is filtered to retain only data for note-events which occur on accented beats.
+NOTE: 'accent-level' above refers to a higher level of granularity, in which the feature sequenc data is filtered to retain only data for note-events which occur on accented beats.
 
 1.3. **Finding similar tunes: similarity_search.py**
 
