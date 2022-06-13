@@ -21,33 +21,33 @@ credits:
 
 # FONN - FOlk _N_-gram aNalysis 
 
-FONN repo targets the goals of Polifonia WP3, i.e.: identification of patterns that are useful in detecting relationships between pieces of music, with particular focus on European musical heritage. At present, it includes scripts that make use of n-grams and Damerau-Levenshtein edit distance to explore tune similarity within a coprus of monophonic Irish folk tunes.
+Targetting the goals of Polifonia WP3, FONN contains tools to extract patterns and detect similarity within a monophonic MIDI corpus. The software can be used on any monophonic MIDI corpus, though some of its functionality is tailored to Western European folk music in particular.
+
+The repo contains a fully functional work-in-progress version of the software, along with a cleaned and annotated MIDI test corpus.
 
 In v0.5dev, the FONN toolkit has been comprehensively refactored for speed and memory performance. 
 FONN is now capable of ingesting and searching corpora of over 40,000 MIDI files, versus c. 1,000 MIDI files in v0.4dev.
-Speed to ingest the 1,200-tune [*CRÉ* test corpus](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/corpus/readme.md), extract patterns and run similarity search has decreased from approx. 50 min n v0.4dev to under 5 min. See [./Demo.ipynb](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/Demo.ipynb) to explore tune similarity in the *CRÉ* corpus.
+Speed to ingest the 1,200-tune [*CRÉ* test corpus](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/corpus/readme.md), extract patterns and run similarity search has decreased from approx. 50 min n v0.4dev to under 5 min in the current release. 
+
+See [./Demo.ipynb](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/Demo.ipynb) to explore tune similarity in the *CRÉ* corpus.
 
 NOTE: Deliverable 3.3 of the Polifonia project describes the context and research in more detail. It will be published on [Cordis](https://cordis.europa.eu/project/id/101004746/it).
 
-## In this strand of research we have created three Polifonia components:
+## FONN -- Polifonia components:
 
-1. **Folk -gram aNalysis (FONN)**
-   * 1.1. Tools for extraction of feature sequence data from MIDI files -- these resources are available in [root](https://github.com/polifonia-project/folk_ngram_analysis/tree/master/) folder. 
+1. **FONN - FOlk _N_-gram aNalysis**
+   * 1.1. Tools for extraction of feature sequence data from MIDI files.
    * 1.2. Tools to extract, compile, and rank patterns in various musical features such as (chromatic) pitch, pitch class, and interval from musical feature sequence data. 
-   * 1.3. Tools to explore similarity between tunes within the corpus via frequent and similar patterns.
+   * 1.3. Tools to explore similarity between tunes within the corpus via frequent and similar patterns. These resources are available in [root](https://github.com/polifonia-project/folk_ngram_analysis/tree/master/) folder. 
 2. **Ceol Rince na hÉireann (CRÉ) MIDI corpus**
    * 2.1. For the associated *Ceol Rince na hÉireann* MIDI corpus of 1,224 monophonic Irish traditional dance tunes, please see: [./corpus/readme.md](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/corpus/readme.md).
 3. **Root Note Detection**
    * 3.1. Work-in-progress on automatic detection of musical root for each tune in the corpus, please see: [/.root_key_detection/README.md](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/root_note_detection/README.md)
 
 
-## 1. FONN - Prerequisites 
+## FONN - Requirements
 
-In ```./setup_corpus/setup_corpus.py``` file, first we need to assign the  ``` basepath ``` variable, which is the path to our working directory. 
-``` basepath ``` should contain a subdirectory a corpus of folk tunes in MIDI format, which should be assigned to ```inpath``` variable. 
-By default ``` basepath ``` is ```../corpus/```. If the corpus is elsewhere, change ```basepath ``` accordingly. The code will be writing outputs to subdirectories of ``` basepath ```. The ```corpus``` should include a ```roots.csv``` file containing the root note of each MIDI file, represented as a chromatic [pitch class](https://en.wikipedia.org/wiki/Pitch_class) (an integer between 0 and 11).
-
-Install the following libraries:
+To ensure FONN runs correctly, please install the following libraries:
 
 ``` pip install fastDamerauLevenshtein music21 numpy pandas tqdm ```
 
@@ -55,55 +55,33 @@ Install the following libraries:
 
 ``` pip install -r requirements.txt ```
 
-## Execution and summary tasks performed by each script:
+## 1. Pattern and Similarity Toolkit - running the tools
 
-### 1.1. The ```./setup_corpus.py``` script:
+1.1. **Reading a MIDI corpus: setup_corpus.py**
 
-Running this file will produce many csv files under ```<basepath>/feat_seq_corpus/feat_seq```, ```<basepath>/feat_seq_corpus/feat_seq_accent```, ```<basepath>/feat_seq_corpus/duration_weighted```, ```<basepath>/feat_seq_corpus/duration_weighted_accents```. To save time, we first check whether these files exist, and skip running the code if they do.
+Running ```./setup_corpus/setup_corpus.py``` converts a monophonic MIDI corpus to feature sequence representation.
+By default this conversion script points to the provided test MIDI corpus at ```./corpus/MIDI``` and outputs feature sequence data to ```./corpus/feat_seq_corpus```, but these paths can be edited in ```./setup_corpus/setup_corpus.py``` main function .
 
-* Perform Tasks:
-  * 1.1.1. Extract numeric feature sequences representing pitch, onset, duration, and velocity for all pieces of music in a corpus of monophonic MIDI files.
-  * 1.1.2. Derive secondary feature sequences from the primary features outputted by 1.1.1, including interval, key-invariant pitch, pitch class, and melodic contour represented in Parsons code.
-  * 1.1.3. Filter the feature sequence data produced by 1.1.1 and 1.1.2 to retain only values for note events which occur on accented beats, creating 'accent-level' feature sequence data for each tune.
-  * 1.1.4. Calculate duration-weighted sequences for selected feature(s). This involves converting the sequences from value per note event to value per eighth note. By default, this process is applied to pitch and pitch class data.
-  * 1.1.5 Save outputs. By default, outputs are saved to subfolders of ```<basepath>```, per the code excerpt below:
-  
-```corpus.save_corpus(
-        feat_seq_path=basepath + "/feat_seq_data/feat_seq",
-        accents_path=basepath + "/feat_seq_data/feat_seq_accent",
-        duration_weighted_path=basepath + "/feat_seq_data/duration_weighted",
-        duration_weighted_accents_path=basepath + "/feat_seq_data/duration_weighted_accents")
-  ```
+NOTE: ```./corpus``` should include a ```roots.csv``` file containing the root note of each MIDI file, represented as a chromatic [pitch class](https://en.wikipedia.org/wiki/Pitch_class) (an integer between 0 and 11). This is necessary to calculate secondary key-invariant feature sequences. A a ```roots.csv``` file is provided for the test corpus, and such a file must be provided for any other corpus on which the tools are to be used.
 
-### 1.2. The ```./pattern_extraction.py``` script
+1.2. **Extracting patterns: pattern_extraction.py**
 
-```./pattern_extraction.py``` sets up classes and runs methods from ```./ngram_tfidf_tools.py```. By default the script will write output to ```<basepath>/pattern_cprpus``` in the form of two sparse pandas Dataframes in Pickle (.pkl) format.
+Running ```pattern_extraction.py``` extracts all patterns which occur at least once in the corpus for a target musical feature (i.e. 'pitch', 'interval', 'pitch class', etc) at a selectable range of pattern lengths and level of graunlarity. A table is compiled, frequency and TF-IDF values are calculated, and the output is written to file under ```./corpus/pattern_corpus/```. 
+By default, running this file will extract all 3-7 item accent-level key-invariant pitch class patterns from the test corpus. 
+The default target fesature, pattern length, and level of granularity can all be changed in ```pattern_extraction.py``` main function.
 
-* Perform Tasks:
-  * 1.2.1. Extract n-gram patterns for selected musical feature. So far, work-in-progress has extracted on n-grams for 3 <= n <= 12 on five feature sequences, including melodic contour, interval, pitch, pitch-class interval, and pitch class. The defaults settings, per the code block excerpted below from ```./pattern_extraction.py```, will extract all n-grams for 3 <= n <= 7 (i.e.: all unique patterns between 3-7 accented notes in length) from the accent-level pitch class sequence for each tune in the corpus.
-  
-* * 1.2.2 Count and rank occurrences of the patterns identified in 1.2.1 in every tune in the corpus. Two sparse corpus-level tables are compiled: one containing the frequency of every pattern in each tune across the corpus; the other containing the tf-idf value of each pattern in every tune. By default, both tables are saved to ```<basepath>/pattern_corpus``` in Pickle (.pkl) format, per the code block below excerpted from ```./pattern_extraction.py```:
-   
-```
-basepath = "./corpus"
-    inpath = basepath + "/feat_seq_corpus/feat_seq_accents"
-    outpath = basepath + "/pattern_corpus"
-    feature = 'relative_pitch_class'
-    n_vals = [3, 4, 5, 6, 7]
-```
+NOTE: 'accent-level' above refers to a higher level of granularity, in which the feature sequenc data is filtered to retain only data for note-events which occur on accented beats.
 
-### 1.3. The ```./similarity_search.py``` script: 
-```./similarity_search.py``` contains exploratory work-in-progress on identifying similar between tunes based on similarity between their n-grams, as calculated using the Damerau-Levenshtein edit distance algorithm.
+1.3. **Finding similar tunes: similarity_search.py**
 
-* Perform Tasks:
-  * 1.3.1. Select a candidate tune from the tf-idf table created in 1.2, and extract its top-ranked n-gram(s). The default is to extract the top 6-gram patterns as ranked by tf-idf, per the code block below:
-  
-```
-  pattern_search.extract_candidate_patterns("Lord McDonald's (reel)", n=6, mode='max')
-  ``` 
-* * 1.3.2. With the patterns extracted in 1.3.1 as search terms, search the tf-idf table created by 1.2.2 for occurrences of similar patterns, using the Damerau-Levenshtein edit distance algorithm. 
-* * 1.3.3. Work-in-progress: identify similar pieces of music by counting the occurrences of similar patterns per tune. Results are printed to console and saved to a CSV table in ```./results`` subfolder.
+Running ```similarity_search.py``` firstly extracts significant pattern(s) as ranked by TF-IDF from a user-selectable candidate tune.
+Using these patterns as search terms, similar patterns are identified across the corpus via the Damerau-Levenshtein local alignment algorithm. 
 
+Tunes in the corpus which contain a high number of similar patterns are returned in a simple results table, displaying a count of similar patterns per tune. This table is written to csv. The effectiveness of a local pattern count as a metric of tune similarity is currently undergoing quantitative testing, evaluation, and methodological tuning. This release of the FONN Pattern and Similarity Toolkit provides a working version of the core methodology, whihc will be refined and expanded over the course of the Polifonia project.
+
+By default, ```Lord McDonald's (reel)``` is set as the search candidate tune, but this can be changed in ```similarity_search.py``` main function.
+
+NOTE: For a stepwise worked example, please see the included [demo](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/Demo.ipynb) notebook.
 
 ## 2. Ceol Rince na hÉireann (CRÉ) MIDI corpus 
 
@@ -123,14 +101,14 @@ Work-in-progress on automatic detection of musical root for each tune in the cor
 
 If you use the code in this repository, please cite this software as follow: 
 ```
-@software{danny_diamond_2022_6566379,
-  author       = {Danny Diamond and
-                  Abdul Shahid and
-                  James McDermott},
-  title        = {{polifonia-project/folk\_ngram\_analysis: FONN 
-                   v0.5dev}},
-  month        = may,
-  year         = 2022
+@software{diamond_fonn_2022,
+	address = {Galway, Ireland},
+	title = {{FONN} - {FOlk} {N}-gram {aNalysis}},
+	shorttitle = {{FONN}},
+	url = {https://github.com/polifonia-project/folk_ngram_analysis},
+	publisher = {National University of Ireland, Galway},
+	author = {Diamond, Danny and Shahid, Abdul and McDermott, James},
+	year = {2022},
 }
 ```
 
