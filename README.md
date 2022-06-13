@@ -27,7 +27,9 @@ The repo contains a fully functional work-in-progress version of the software, a
 
 In v0.5dev, the FONN toolkit has been comprehensively refactored for speed and memory performance. 
 FONN is now capable of ingesting and searching corpora of over 40,000 MIDI files, versus c. 1,000 MIDI files in v0.4dev.
-Speed to ingest the 1,200-tune [*CRÉ* test corpus](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/corpus/readme.md), extract patterns and run similarity search has decreased from approx. 50 min n v0.4dev to under 5 min in the current release. See [./Demo.ipynb](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/Demo.ipynb) to explore tune similarity in the *CRÉ* corpus.
+Speed to ingest the 1,200-tune [*CRÉ* test corpus](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/corpus/readme.md), extract patterns and run similarity search has decreased from approx. 50 min n v0.4dev to under 5 min in the current release. 
+
+See [./Demo.ipynb](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/Demo.ipynb) to explore tune similarity in the *CRÉ* corpus.
 
 NOTE: Deliverable 3.3 of the Polifonia project describes the context and research in more detail. It will be published on [Cordis](https://cordis.europa.eu/project/id/101004746/it).
 
