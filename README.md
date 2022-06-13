@@ -55,7 +55,7 @@ To ensure FONN runs correctly, please install the following libraries:
 
 ``` pip install -r requirements.txt ```
 
-## 1. Pattern and Similarity Toolkit - running the tools
+## 1. FONN - FOlk _N_-gram aNalysis: running the tools
 
 1.1. **Reading a MIDI corpus: setup_corpus.py**
 
