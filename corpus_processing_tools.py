@@ -358,8 +358,8 @@ class Corpus:
         # output of above loop held in dict with a key-val pair for each tune formatted per: tune title: root metrics.
         # this dict is then converted to a Dataframe.
         metrics_dict = dict(zip(self.titles, metrics_lst))
-        col_names = ['root', 'final_note', 'krumhansl_schmuckler', 'simple_weights', 'aarden_essen', 'bellman_budge',
-                     'temperley_kostka_payne']
+        col_names = ['root', 'final_note', 'Krumhansl-Schmuckler', 'simple weights', 'Aarden Essen', 'Bellman Budge',
+                     'Temperley Kostka Payne']
         roots = pd.DataFrame.from_dict(metrics_dict, orient='index', columns=col_names)
         self.roots = roots
 
