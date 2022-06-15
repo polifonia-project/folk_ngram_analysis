@@ -36,7 +36,7 @@ NOTE: Deliverable 3.3 of the Polifonia project describes the context and researc
 ## FONN -- Polifonia components:
 
 1. **FONN - FOlk _N_-gram aNalysis**
-   * 1.1. Tools for extraction of feature sequence data from MIDI files.
+   * 1.1. Tools for extraction of feature sequence data and root fdetection metrics from MIDI files.
    * 1.2. Tools to extract, compile, and rank patterns in various musical features such as (chromatic) pitch, pitch class, and interval from musical feature sequence data. 
    * 1.3. Tools to explore similarity between tunes within the corpus via frequent and similar patterns. These resources are available in [root](https://github.com/polifonia-project/folk_ngram_analysis/tree/master/) folder. 
 2. **Ceol Rince na hÉireann (CRÉ) MIDI corpus**
@@ -55,14 +55,16 @@ To ensure FONN runs correctly, please install the following libraries:
 
 ``` pip install -r requirements.txt ```
 
-## 1. Pattern and Similarity Toolkit - running the tools
+## 1. FONN - FOlk _N_-gram aNalysis: running the tools
 
 1.1. **Reading a MIDI corpus: setup_corpus.py**
 
 Running ```./setup_corpus/setup_corpus.py``` converts a monophonic MIDI corpus to feature sequence representation.
-By default this conversion script points to the provided test MIDI corpus at ```./corpus/MIDI``` and outputs feature sequence data to ```./corpus/feat_seq_corpus```, but these paths can be edited in ```./setup_corpus/setup_corpus.py``` main function .
+By default this conversion script reads the provided test MIDI corpus at ```./corpus/MIDI``` and outputs feature sequence data to ```./corpus/feat_seq_corpus```, but these paths can be edited in ```./setup_corpus/setup_corpus.py``` main function.
 
-NOTE: ```./corpus``` should include a ```roots.csv``` file containing the root note of each MIDI file, represented as a chromatic [pitch class](https://en.wikipedia.org/wiki/Pitch_class) (an integer between 0 and 11). This is necessary to calculate secondary key-invariant feature sequences. A a ```roots.csv``` file is provided for the test corpus, and such a file must be provided for any other corpus on which the tools are to be used.
+By default, this script also writes root note detection metrics to ```./root_note_detection/cre_root_detection.csv``` which provides the input data for component 3, Root Note Detection. Please see Root Note Detection [README](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/root_note_detection/README.md) for further information. 
+
+NOTE: ```./corpus``` must include a ```roots.csv``` file containing the root note of each MIDI file, represented as a chromatic [pitch class](https://en.wikipedia.org/wiki/Pitch_class) (an integer between 0 and 11). This is necessary to calculate secondary key-invariant feature sequences. A a ```roots.csv``` file is provided for the test corpus, and such a file must be provided for any other corpus on which the tools are to be used.
 
 1.2. **Extracting patterns: pattern_extraction.py**
 
@@ -91,9 +93,9 @@ A new MIDI version of the existing *Ceol Rince na hÉireann* corpus of 1,224 mon
   * Source: Black, B 2020, [The Bill Black Irish tune archive homepage](http://www.capeirish.com/webabc), viewed 5 January 2021.
   * Contents: 1,224 traditional Irish dance tunes, each of which is represented as a monophonic MIDI file. Also included is roots.csv, a file giving the root note for every file in the corpus as a chromatic pitch class in integer notation.
   
-## 3. Root Note detection 
+## 3. Root Note Detection 
 Work-in-progress on automatic detection of musical root for each tune in the corpus. Please see: [/.root_key_detection/README.md](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/root_note_detection/README.md).
-  This component contains one jupyter notebook script that makes use of  ```cre_root_detection.csv```, which is an expert-annotated file containing pitch class values assigned to each piece of music in the corpus by a variety of root-detection metrics. From this input, the script makes use of machine learning methods to classify the root note. The root note detection notebook can be accessed using this link: [/.root_note_detection/root_note_detection.ipynb](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/root_note_detection/root_note_detection.ipynb).
+  This component contains one jupyter notebook script that makes use of  ```cre_root_detection.csv```, which is a file containing pitch class values assigned to each piece of music in the corpus by a variety of root-detection metrics, outputted by ```setup_corpus.py```. From this input, the script makes use of machine learning methods to classify the root note. The root note detection notebook can be accessed using this link: [/.root_note_detection/root_note_detection.ipynb](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/root_note_detection/root_note_detection.ipynb).
   
 ##  Attribution
 
