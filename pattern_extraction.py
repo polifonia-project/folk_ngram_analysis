@@ -51,7 +51,7 @@ class PatternCorpus:
         which occur at least once in the corpus, the frequency of each pattern in each tune, and simple corpus-level
         statistics (frequency, document frequency, IDF) for each pattern.
         This Dataframe is created and populated by PatternCorpus.create_pattern_corpus() and
-        PatternCorpus.populate_pattern_corpus() methods.
+        PatternCorpus.populate_freq_corpus() methods.
 
         tfidf_corpus -- an equivalent Dataframe to pattern_corpus_freq, holding TF-IDF rather than frequency values for
         all n-gram pattern instances in the corpus.
@@ -97,6 +97,7 @@ class PatternCorpus:
                              "2. From a Corpus object stored in a pickle (.pkl) file.")
 
         self.pattern_corpus_freq = None
+        self.pattern_corpus_tf = None
         self.pattern_corpus_tfidf = None
         self.pattern_corpus_path = None
 
@@ -140,7 +141,7 @@ class PatternCorpus:
         print('\b\b')
         self.pattern_corpus_freq = corpus
 
-    def populate_pattern_corpus(self):
+    def populate_freq_corpus(self):
 
         """Expands the table of corpus-level patterns created in PatternCorpus.create_ngram-corpus() above:
         For every tune in the corpus this method adds a sparse column of pattern frequency counts, read from the
@@ -169,7 +170,7 @@ class PatternCorpus:
     def setup_tfidf_corpus(self):
 
         """This method reads a pickled PatternCorpus.pattern_corpus_freq object, removes all sparse frequency count
-        columns added by populate_pattern_corpus(), and assigns this dataframe to PatternCorpus.pattern_corpus_tfidf
+        columns added by populate_freq_corpus(), and assigns this dataframe to PatternCorpus.pattern_corpus_tfidf
         attr. TF-IDF columns can be appended by PatternCorpus.calculate_tfidf() below."""
 
         # read dataframe and remove frequency cols:
@@ -189,8 +190,28 @@ class PatternCorpus:
         for tune in tqdm(self.tunes, desc='Calculating TF-IDF values...'):
             tune.calculate_tfidf(self.pattern_corpus_tfidf)
 
-    def populate_tfidf_corpus(self):
+    def populate_term_freq_corpus(self):
+        """Appends TF values for each unique pattern in each tune to PatternCorpus.pattern_corpus_tf as a new
+                column."""
+        # for all tunes in corpus:
+        for tune in tqdm(self.tunes, desc='Populating TF-IDF corpus...'):
+            if tune.ngrams is not None:
+                # Append TF values for each tune to a new column in PatternCorpus.pattern_corpus_tf
+                # NaN values are filled with 0 and columns use pandas sparse dtype to save memory for large corpora.
+                # Note: TF values are saved as int to save memory. See TuneData.calculate_tfidf() for more info.
+                self.pattern_corpus_tf[f'{tune.title}'] = self.pattern_corpus_tf['ngram'].map(
+                    tune.ngrams.set_index('ngram')['tf']).fillna(0).astype('Sparse[int]')
 
+        # sort, print and write corpus-level Dataframe to file.
+        self.pattern_corpus_tf.sort_values(by='idf', inplace=True, ascending=False)
+        print('\b\b')
+        print("Populated Term Frequency corpus dataframe:")
+        print(self.pattern_corpus_tf.head())
+        print(self.pattern_corpus_tf.info())
+        self.pattern_corpus_tf.to_pickle(f"{self.pattern_corpus_path}/tf.pkl")
+
+
+    def populate_tfidf_corpus(self):
         """Appends TF-IDF values for each unique pattern in each tune to PatternCorpus.pattern_corpus_tfidf as a new
         column."""
         # for all tunes in corpus:
@@ -256,6 +277,8 @@ class TuneData:
 
     def extract_ngrams(self, feature, n_vals):
 
+        # TODO: Retain pattern onsets in tune-level datatables.
+
         """
         Extracts all unique n-gram patterns from a tune for a user-defined range of n-values in a user-selected
         musical feature. Returns output to TuneData.ngrams attr.
@@ -316,6 +339,8 @@ class TuneData:
             tfidf = (self.ngrams['tf'] * self.ngrams['idf']).fillna(0)
             # multiply TF-IDF values by 10**7 and convert from float to int to save memory.
             self.ngrams['tfidf'] = (tfidf * (10**7)).astype('int')
+            # do same for TF col:
+            self.ngrams['tf'] = (self.ngrams['tf'] * (10**7)).astype('int')
 
         return self.ngrams
 
@@ -342,7 +367,7 @@ def main():
     thesession = PatternCorpus(inpath)
     thesession.pattern_corpus_path = outpath
     thesession.create_pattern_corpus(feature, n_vals)
-    thesession.populate_pattern_corpus()
+    thesession.populate_freq_corpus()
     thesession.setup_tfidf_corpus()
     thesession.calculate_tfidf()
     thesession.populate_tfidf_corpus()
