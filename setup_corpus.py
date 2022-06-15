@@ -4,13 +4,19 @@ Flow control / corpus setup script, running tools from corpus_processing_tools.p
 This module's main() function extracts primary and secondary feature sequence data from a corpus
 of monophonic MIDI files, and saves the results for each to csv. It also extract root note detection metrics for input
 into 'Root Note Detection' component.
-For further information, please see docstrings below.
+
+Methods called below from corpus_processing _tools.py rely on abc2MIDI's 'beat model', which is used in the
+'abc_ingest.py' preprocessing script. This 'beat model' maps strongly-accented and accented notes to preset MIDI
+velocity values (105 and 95, respectively), which allows filtration of the input tune score data at accent-level.
+Accent-level data has been established in academic research on Irish, British, and North American folk musics as
+important in defining tune melodies, and is the focus of our pattern extraction and similarity tools.
+
 """
 
 from corpus_processing_tools import Corpus
 
 
-def calc_music21_root_metrics(inpath, outpath):
+def calc_music21_root_metrics(inpath, root_metrics_path):
 
     """
     Reads MIDI corpus to music21 stream format and calculates an initial set of root note detection metrics for each
@@ -31,26 +37,27 @@ def calc_music21_root_metrics(inpath, outpath):
 
     Args:
         inpath -- path to directory containing MIDI corpus.
-        outpath -- path to write root note detection metrics to csv.
+        root_metrics_path -- path to write root note detection metrics to csv.
     """
 
     cre_roots = Corpus(inpath)
     cre_roots.filter_empty_scores()
-    cre_roots.roots_path = outpath
+    cre_roots.root_metrics_path = root_metrics_path
     cre_roots.calculate_root_metrics()
     cre_roots.convert_note_names_to_pitch_classes()
-    cre_roots.save_roots_table()
+    cre_roots.save_root_metrics_table()
 
 
-def calc_feat_seqs(inpath, roots_path, outpath):
+def calc_feat_seqs(inpath, roots_path, root_metrics_path, outpath):
 
     """
     Calls all methods required to calculate primary, secondary, and duration-weighted feature sequences from MIDI
-    corpus. Writes three csv files for each tune in corpus, respectively containing:
+    corpus. Writes four csv files for each tune in corpus, respectively containing:
     1. Note-level feature sequence data.
     2. Accent-level feature sequence data
     3. Duration-weighted note-level feature sequence data for selected features
-    (per below, the defaults are 'midi_note', 'relative_pitch_class' and 'velocity')
+    4.Duration-weighted accent-level feature sequence data for selected features
+    (per below, for duration-weighted outputs the defaults are 'midi_note', 'relative_pitch_class' and 'velocity')
 
     Each outputted file contains sequences of the following musical features:
     - 'midi_note': MIDI note number
@@ -78,13 +85,20 @@ def calc_feat_seqs(inpath, roots_path, outpath):
 
     Args:
         inpath -- path to directory containing MIDI corpus.
-        roots_path -- path to root note data table in either csv or pkl format.
-        csv_outpath -- path under which corpus feature sequence data is written to csv.
+        roots_path -- path to external table of expert-annotated root data tabl, used for calculation of key-invariant
+        secondary feature sequences.
+        root_metrics_path -- path to write root note detection metrics (inputs for Root Note Detection component) to csv
+        csv_outpath -- path to write corpus feature sequence data to csv.
     """
 
+    # initialize corpus and assign paths:
     cre = Corpus(inpath)
-    cre.filter_empty_scores()
     cre.roots_path = roots_path
+    cre.csv_outpath = outpath
+    cre.root_metrics_path = root_metrics_path
+
+    # flow control
+    cre.filter_empty_scores()
     cre.calculate_feat_seqs()
     cre.calc_pitch_class_seqs()
     cre.calc_intervals()
@@ -98,11 +112,9 @@ def calc_feat_seqs(inpath, roots_path, outpath):
     cre.calc_parsons_cumsum()
     cre.calc_duration_weighted_feat_seqs(['midi_note', 'relative_pitch_class', 'velocity'])
     cre.calc_duration_weighted_accent_seqs()
-    cre.csv_outpath = outpath
     cre.save_feat_seq_data_to_csv()
     cre.find_most_freq_notes()
-    cre.reformat_roots_table()
-    cre.save_roots_table()
+    cre.save_root_metrics_table()
 
 
 def main():
@@ -117,15 +129,17 @@ def main():
     'inpath' variable below points to local location of MIDI corpus directory;
     'roots_path' variable points to local location of 'roots.csv' file as described in corpus_processing_tools.py
     docstrings;
-    'csv_outpath' variable points to directory at which output files will be written.
+    'root_metrics_path' variable points to location where table of root note detection metrics can be saved.
+    'csv_outpath' variable points to directory where output files will be written.
     """
 
     basepath = "./corpus"
     inpath = basepath + "/MIDI"
-    roots_path = basepath + "/root_note_detection/roots.csv"
+    roots_path = basepath + "/roots.csv"
+    root_metrics_path = basepath + "/metrics_for_root_note_detection.csv"
     csv_outpath = basepath + '/feat_seq_corpus'
-    calc_music21_root_metrics(inpath, roots_path)
-    calc_feat_seqs(inpath, roots_path, csv_outpath)
+    calc_music21_root_metrics(inpath, root_metrics_path)
+    calc_feat_seqs(inpath, roots_path, root_metrics_path, csv_outpath)
 
 
 if __name__ == "__main__":

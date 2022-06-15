@@ -237,9 +237,32 @@ class PatternSimilarity:
         self.results = results
 
     def count_pattern_instances_per_tune(self):
+        # TODO: Test!
+        # Note: for use on freq.pkl or tf.pkl inputs (will run on tfidf.pkl but results will not be valid!)
+        count = self.similar_tunes.sum(axis=1)
+        results = count.iloc[-1]
+        results = results.t
+        results.columns = ['count']
+        results['title'] = self.similar_tunes.columns
+
+        return results
+
+    def normalise_pattern_count_results(self):
+        # Express count as % of tune sequence detected as similar?
+        # Or simply noramlise count by number of patterns in tune.
+        # Or both?
         pass
 
-    def normalize_pattern_freq_counts(self):
+    def normalise_tune_similarity_results(self):
+        pass
+
+    def extract_structural_patterns(self):
+        pass
+
+    def extract_k_medoids_patterns(self):
+        pass
+
+    def validate_results(self):
         pass
 
 
@@ -289,7 +312,7 @@ def main():
     res_path = basepath + "/results"
     pattern_search = PatternSimilarity(f_in)
     pattern_search.results_path = res_path
-    pattern_search.extract_candidate_patterns("Lord McDonald's (reel)", n=6, mode='max')
+    pattern_search.extract_candidate_patterns("LordMcDonaldsreel", n=6, mode='idx', indices=[0])
     pattern_search.find_similar_patterns(edit_dist_threshold=1)
     pattern_search.find_similar_tunes()
     pattern_search.compile_results_table()

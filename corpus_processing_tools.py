@@ -46,7 +46,7 @@ pd.options.mode.chained_assignment = None
 class Tune:
     
     """
-    Tune class objects represent a single tune in feature sequence format. An object of class can be instantiated
+    Tune class objects represent a single tune in feature sequence format. A Tune object can be instantiated
     via the 'inpath' argument, which must point to a single monophonic MIDI file. In our usage, Tune objects are
     automatically created in bulk at corpus-level when a Corpus object is instantiated.
 
@@ -77,6 +77,7 @@ class Tune:
         self.title = inpath.split('/')[-1][:-4]
         # automatically read MIDI data to music21 Stream on instantiation:
         self.score = music21.converter.parse(f"{self.inpath}")
+        self.filtered_score = None
         self.feat_seq = None
         self.feat_seq_accents = None
         self.duration_weighted = None
@@ -129,6 +130,26 @@ class Tune:
         self.score = None
 
         return root_metrics
+
+    def filter_music21_score(self, thresh):
+
+        """Filters self.score, retaining only accented notes via an adjustable beat strength threshold.
+
+        args:
+            thresh -- threshold music21 Note.beatStrength attr value by which the score is filtered. Only Note objects
+            with beatStrength >= thresh will be retained in the filtered output.
+
+        To filter and extract heavily-accented notes (i.e.: the most prominent note in each bar) from a score,
+        set thresh=1
+        To filter and extract accented notes (i.e.: one note per beat) from a score, set thresh=0.5
+        """
+
+        filtered_score = music21.stream.Stream()
+        for idx, note in enumerate(self.score.recurse().notes):
+            if note.isNote and float(note.beatStrength) >= thresh:
+                filtered_score.append(note)
+        self.score = filtered_score
+        return self.score
 
     def convert_to_feature_sequence_repr(self):
         
@@ -329,13 +350,16 @@ class Corpus:
         self.roots = None
         self.roots_lookup = None
         self.roots_path = None
+        self.root_metrics = None
+        self.root_metrics_path = None
         self.pkl_outpath = None
         self.csv_outpath = None
 
     def filter_empty_scores(self):
 
         """The Session corpus contains some 'experimental' pieces of music which are simply blank scores.
-        This method filters out such scores before feature sequence calculations."""
+        This method filters out such scores before feature sequence calculations.
+        """
 
         for tune in self.tunes:
             if len(tune.score) == 0:
@@ -358,10 +382,28 @@ class Corpus:
         # output of above loop held in dict with a key-val pair for each tune formatted per: tune title: root metrics.
         # this dict is then converted to a Dataframe.
         metrics_dict = dict(zip(self.titles, metrics_lst))
-        col_names = ['root', 'final_note', 'Krumhansl-Schmuckler', 'simple weights', 'Aarden Essen', 'Bellman Budge',
+        col_names = ['as transcribed', 'final note', 'Krumhansl-Schmuckler', 'simple weights', 'Aarden Essen', 'Bellman Budge',
                      'Temperley Kostka Payne']
         roots = pd.DataFrame.from_dict(metrics_dict, orient='index', columns=col_names)
-        self.roots = roots
+        self.root_metrics = roots
+
+    def filter_music21_scores(self, thresh=0.5):
+
+        """
+        Runs Tune.filter_music21_scores() for each Tune object in Corpus.tunes. This filters Tune.score by an
+        adjustable beat strength threshold value, retaining only rhythmically-accented notes.
+
+        args:
+            thresh -- threshold music21 Note.beatStrength attr value by which the score is filtered. Only Note objects
+            with beatStrength >= thresh will be retained in the filtered output.
+
+        To filter and extract heavily-accented notes (i.e.: the most prominent note in each bar) from a score,
+        set thresh=1
+        To filter and extract accented notes (i.e.: one note per beat) from a score, set thresh=0.5
+        """
+
+        for tune in tqdm(self.tunes, desc=f'Filtering music21 scores by beat strength = {thresh}'):
+            tune.filter_music21_score(thresh)
 
     def calculate_feat_seqs(self):
 
@@ -377,7 +419,7 @@ class Corpus:
 
     def convert_note_names_to_pitch_classes(self):
 
-        """If Corpus.roots dataframe contains root note names formatted per music21
+        """If Corpus.root_metrics dataframe contains root note names formatted per music21
         standard (i.e.: "G-" = G natural; "G#" = G sharp), this method will convert them to to integer chromatic pitch
         classes (values from 0-11), via constants.music21_lookup_table Dataframe."""
 
@@ -385,22 +427,16 @@ class Corpus:
         print(f"Converting note names to integer pitch classes...\n")
         # lookup numeric root values & map to new column:
         lookup = dict(zip(constants.music21_lookup_table['note name'], constants.music21_lookup_table['pitch class']))
-        self.roots = self.roots.replace(lookup).astype('int16')
-        print(self.roots.head())
-        print(self.roots.info())
+        self.root_metrics = self.root_metrics.replace(lookup).astype('int16')
+        print(self.root_metrics.head())
+        print(self.root_metrics.info())
         print('\n')
 
-    def reformat_roots_table(self):
-        """Renames columns in Corpus.roots Dataframe."""
-        self.roots.reset_index(inplace=True)
-        self.roots.rename(columns={self.roots.columns[0]: 'as transcribed'}, inplace=True)
-        self.roots.dropna(inplace=True)
+    def save_root_metrics_table(self):
+        """Writes Corpus.roots Dataframe to csv file at path specified in Corpus.root_metrics_path attr."""
 
-    def save_roots_table(self):
-        """Writes Corpus.roots Dataframe to csv file at path specified in Corpus.roots_path attr."""
-
-        print(f"Saving corpus root metrics dataframe to: {self.roots_path}")
-        self.roots.to_csv(f"{self.roots_path[:-4]}.csv")
+        print(f"Saving corpus root metrics dataframe to: {self.root_metrics_path}")
+        self.root_metrics.to_csv(self.root_metrics_path)
 
     def calc_intervals(self):
         """Applies Tune.calc_intervals() to all Tune objects in Corpus.tunes"""
@@ -460,39 +496,16 @@ class Corpus:
             else:
                 freq_weighted_accents.append(tune.duration_weighted_accents.mode()['dur_weighted_midi_note'][0] % 12)
 
-        # # Add values calculated above to self.roots dataframe:
-        self.roots['freq note'] = freq_notes
-        self.roots['freq acc'] = freq_accents
-        self.roots['freq weighted note'] = freq_weighted_notes
-        self.roots['freq weighted acc'] = freq_weighted_accents
-        self.roots = self.roots.astype('int16', errors='ignore', copy='False')
+        # Add values calculated above to self.root_metrics dataframe:
+        self.root_metrics = pd.read_csv(self.root_metrics_path)
+        self.root_metrics['freq note'] = freq_notes
+        self.root_metrics['freq acc'] = freq_accents
+        self.root_metrics['freq weighted note'] = freq_weighted_notes
+        self.root_metrics['freq weighted acc'] = freq_weighted_accents
+        self.root_metrics = self.root_metrics.astype('int16', errors='ignore', copy='False')
         print("\nFinal root detection metrics table:\n")
-        print(self.roots.head())
-        print(self.roots.info())
-
-    def append_expert_assigned_root_values(self, path):
-
-        """Reads expert-assigned root values from an external csv file, containing one root note value
-        (chromatic pitch class) per tune. This data can be appended to Corpus.roots dataframe, and
-        used as an additional input for root_note_detection component.
-
-        Args:
-            path -- path to csv roots file. File must contain a table with a row for every tune in the corpus. Columns
-            must be labelled 'title' (containing the title of each tune) and 'expert assigned'
-            (containing expert-assigned root values as chromatic pitch classes).
-
-        NOTE: currently not in use."""
-
-        expert_assigned_roots = pd.read_csv(path)
-        expert_assigned_roots.set_index('title', inplace=True, drop=True)
-        expert_assigned_roots['expert assigned'] = pd.to_numeric(expert_assigned_roots['expert assigned'])
-        expert_assigned_roots['expert assigned'] = expert_assigned_roots['expert assigned'].round()
-        print("\nReading expert-assigned root data:")
-        print(expert_assigned_roots.head())
-        print("\nAppending expert-assigned root data to root detection metrics table:")
-        self.roots = self.roots.join(expert_assigned_roots)
-        print(self.roots.head())
-        return self.roots
+        print(self.root_metrics.head())
+        print(self.root_metrics.info())
 
     def read_root_data(self):
 
@@ -549,6 +562,8 @@ class Corpus:
     def assign_roots(self):
 
         """Maps MIDI root value for every Tune in Corpus.tunes from 'midi_root' column in Corpus.roots_lookup table"""
+
+        self.roots_lookup.set_index('title', inplace=True)
 
         for tune in tqdm(self.tunes, desc='Mapping root values to all tunes in corpus from Corpus.roots_lookup'):
             # lookup root value from self.roots_lookup by tune title:
