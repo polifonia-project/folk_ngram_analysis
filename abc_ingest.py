@@ -1,16 +1,16 @@
 """
-abc_ingest.py calls abc2MIDI command-line tool and uses it to create an individual MIDI file for each tune in a
-monophonic ABC Notation corpus. An ABC Notation corpus is a single file containing scores for one or more tunes in ABC
-(.abc) format.
+'abc_ingest.py' calls abc2MIDI command-line tool and uses it to create an individual MIDI file for each tune in a
+monophonic ABC Notation corpus. This preprocessing step allows FONN feature sequence extraction and
+pattern similarity tools to be used on ABC format input corpora.
 
+An ABC Notation corpus is a single file containing scores for one or more tunes in ABC (.abc) format.
 For more information on ABC Notation, please see:
+
+https://ifdo.ca/~seymour/runabc/top.html [info on abc2MIDI packages and versions]
+https://abcmidi.sourceforge.io [abc2MIDI docs]
 
 NOTE: This script requires prior instillation of the abc2MIDI external dependency. An up-to-date version of
 the abc2MIDI package can be directly downloaded and installed via https://ifdo.ca/~seymour/runabc/abcMIDI-2022.06.14.zip
-
-For further information please see:
-https://ifdo.ca/~seymour/runabc/top.html [info on abc2MIDI packages and versions]
-https://abcmidi.sourceforge.io [abc2MIDI docs]
 """
 
 import os
