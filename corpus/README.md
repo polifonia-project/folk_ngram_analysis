@@ -19,7 +19,7 @@ credits:
 ---
 
 
-## About dataset 
+## About the dataset 
 
 **Corpus title:** _Ceol Rince na hÉireann_
 
@@ -69,12 +69,25 @@ corpus/
 - To convert corpus form ABC Notation to MIDI format, please download the corpus data and run FONN [abc_ingest.py](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/abc_ingest.py) script. Please see [FONN README.md](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/README.md) for further information. 
 
 - To extract feature sequence data from the MIDI corpus, please download the corpus data and run FONN [setup_corpus.py](https://github.com/danDiamo/music_pattern_analysis/blob/master/setup_corpus.py) script. Please see [FONN README.md](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/README.md) for further information.
-
-
-## License
-This project is licensed under the MIT License - see [LICENSE.md](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/corpus/license.md) file for details
  
 
 ## Attribution
+
+If you use the code in this repository, please cite this software as follow: 
+```
+@software{diamond_fonn_2022,
+	address = {Galway, Ireland},
+	title = {{FONN} - {FOlk} {N}-gram {aNalysis}},
+	shorttitle = {{FONN}},
+	url = {https://github.com/polifonia-project/folk_ngram_analysis},
+	publisher = {National University of Ireland, Galway},
+	author = {Diamond, Danny and Shahid, Abdul and McDermott, James},
+	year = {2022},
+}
+```
+
+## License
+
+This work is licensed under CC BY 4.0, https://creativecommons.org/licenses/by/4.0/
 
 
