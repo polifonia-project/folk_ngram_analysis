@@ -103,7 +103,7 @@ Using these patterns as search terms, similar patterns are identified across the
 
 - Tunes in the corpus which contain a high number of similar patterns are returned in a simple results table, displaying a count of similar patterns per tune. This table is written to csv. The effectiveness of a local pattern count as a metric of tune similarity is currently undergoing quantitative testing, evaluation, and methodological tuning. This release of the FONN Pattern and Similarity Toolkit provides a working version of the core methodology, whihc will be refined and expanded over the course of the Polifonia project.
 
-By default, `````` is set as the search candidate tune, but this can be changed in ```similarity_search.py``` main function.
+By default, ```LordMcDonaldsreel``` is set as the search candidate tune, but this can be changed in ```similarity_search.py``` main function.
 
 
 
