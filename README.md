@@ -42,7 +42,10 @@ NOTE: Deliverable 3.3 of the Polifonia project describes the context and researc
 1. **FONN - FOlk _N_-gram aNalysis**
    * 1.1. Tools for extraction of feature sequence data and root detection metrics from MIDI files.
    * 1.2. Tools to extract, compile, and rank patterns in various musical features such as (chromatic) pitch, pitch class, and interval from musical feature sequence data. 
-   * 1.3. Tools to explore similarity between tunes within the corpus via frequent and similar patterns. These resources are available in [root](https://github.com/polifonia-project/folk_ngram_analysis/tree/master/) folder. 
+   * 1.3. Tools to explore similarity between tunes within the corpus via frequent and similar patterns. 
+   
+NOTE: 1.1-1.3 are available in [root](https://github.com/polifonia-project/folk_ngram_analysis/tree/master/) folder. 
+   
 2. **Ceol Rince na hÉireann (CRÉ) MIDI corpus**
    * 2.1. For the associated *Ceol Rince na hÉireann* MIDI corpus of 1,224 monophonic Irish traditional dance tunes, please see: [./corpus/readme.md](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/corpus/readme.md).
 3. **Root Note Detection**
