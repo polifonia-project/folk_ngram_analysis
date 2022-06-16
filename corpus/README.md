@@ -1,10 +1,10 @@
 ---
 component-id: cre_corpus
 name: Ceol Rince na hÉireann MIDI corpus
-brief-description: A corpus of 1,224 monophonic instrumental Irish traditional dance tunes.
+brief-description: A corpus of 1,195 monophonic instrumental Irish traditional dance tunes.
 type: Corpus
-release-date: 8/12/2021
-release-number: v0.4-dev
+release-date: 15/06/2022
+release-number: v0.6-dev
 work-package: 
 - WP3
 licence: CC BY 4.0, https://creativecommons.org/licenses/by/4.0/
