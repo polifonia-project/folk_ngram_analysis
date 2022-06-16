@@ -60,8 +60,8 @@ corpus/
 - ```corpus``` directory contains roots.csv, this README.md, and a LICENSE.md file.
 
 - Roots.csv holds two columns with one row per each MIDI file in the corpus:
-  -'title': MIDI file title
-  -'root': expert-assigned root note of each melody, represented as a [chromatic pitch class](https://en.wikipedia.org/wiki/Pitch_class) (i.e.: An integer value from C=0 through B=11). 
+  - 'title': MIDI file name (tune title)
+  - 'root': expert-assigned root note of each melody, represented as a [chromatic pitch class](https://en.wikipedia.org/wiki/Pitch_class) (i.e.: An integer value from C=0 through B=11). 
 
 <img width="400" alt="image" src="https://user-images.githubusercontent.com/78231894/142916162-9ace1c42-ceae-412f-95df-98ce34acd359.png">
 <br><br>
