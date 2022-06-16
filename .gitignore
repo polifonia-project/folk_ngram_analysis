@@ -1,5 +1,6 @@
 /.idea
 /.DS_Store
 /corpus/.DS_Store
+/corpus/MIDI/.DS_Store
 /.ipynb_checkpoints
 *.pyc
