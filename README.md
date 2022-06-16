@@ -114,7 +114,7 @@ By default, ```LordMcDonaldsreel``` is set as the search candidate tune, but thi
 * Highlights:
   * Corpus title: _Ceol Rince na hÉireann_
   * Source: Black, B 2020, [The Bill Black Irish tune archive homepage](http://www.capeirish.com/webabc), viewed 5 January 2021.
-  * Contents: 1,195 traditional Irish dance tunes, each of which is represented as a monophonic MIDI file. Also included is roots.csv, a file giving the expert-annotated root note for every file in the corpus as a chromatic integer pitch class.
+  * Contents: 1,195 traditional Irish dance tunes, each of which is represented as a monophonic MIDI file. Also included is ```roots.csv```, a file giving the expert-annotated root note for every file in the corpus as a chromatic integer pitch class.
   
 ## 3. Root Note Detection 
 
