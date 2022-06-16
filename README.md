@@ -46,8 +46,8 @@ NOTE: Deliverable 3.3 of the Polifonia project describes the context and researc
    
 NOTE: 1.1-1.3 are available in [root](https://github.com/polifonia-project/folk_ngram_analysis/tree/master/) folder. 
    
-2. **Ceol Rince na hÉireann (CRÉ) MIDI corpus**
-   * 2.1. For the associated *Ceol Rince na hÉireann* MIDI corpus of 1,224 monophonic Irish traditional dance tunes, please see: [./corpus/readme.md](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/corpus/readme.md).
+2. **Ceol Rince na hÉireann (CRÉ) corpus**
+   * 2.1. For the associated *Ceol Rince na hÉireann* corpus of 1,195 monophonic Irish traditional dance tunes in ABC and MIDI formats, please see: [./corpus/readme.md](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/corpus/readme.md).
 3. **Root Note Detection**
    * 3.1. Work-in-progress on automatic detection of musical root for each tune in the corpus, please see: [/.root_key_detection/README.md](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/root_note_detection/README.md)
 
