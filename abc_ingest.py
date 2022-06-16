@@ -32,13 +32,15 @@ def create_midi_corpus_from_abc(abc_filename='CRE_clean.abc'):
     """
 
     # Run abc2MIDI:
-    print("Running abc2MIDI command-line tool to covert ABC Notation corpus to MIDI format...")
+    print("Running abc2MIDI command-line tool...")
     create_midi = subprocess.run(["abc2midi", abc_filename, "-t", "-n", "100"], cwd="./corpus/abc", capture_output=True)
     # Reformat and print output
     raw_stdout = str(create_midi.stdout)
     formatted_stdout = list(raw_stdout.split("\\n"))
-    for line in formatted_stdout:
-        print(line)
+
+    # for line in formatted_stdout:
+    #     print(line)
+
     # Print any errors and exit status:
     if create_midi.stderr:
         print(create_midi.stderr)
