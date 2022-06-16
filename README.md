@@ -27,8 +27,8 @@ The repo contains a fully functional work-in-progress version of the software, a
 
 In v0.5dev, the FONN toolkit has been comprehensively refactored for speed and memory performance. 
 FONN is now capable of ingesting and searching corpora of over 40,000 MIDI files, versus c. 1,000 MIDI files in v0.4dev.
-Speed to ingest the 1,200-tune test corpus, extract patterns and run similarity search has decreased from approx. 50 min n v0.4dev to under 5 min in the current release. 
-In addition to MID, FONN now can also ingest ABC Notation corpora.
+Speed to ingest the 1,200-tune test corpus, extract patterns and run similarity search has decreased from approx. 50 min n v0.4dev to under 5 min in the current release.<br> 
+In addition to MIDI, FONN now can also ingest ABC Notation corpora.
 
 See [./fonn_demo.ipynb](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/fonn_demo.ipynb) to explore pattern extraction and tune similarity in the supplied *Ceol Rince a hÉireann (CRÉ)* corpus using the FONN toolkit.
 
