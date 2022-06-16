@@ -67,7 +67,7 @@ To ensure FONN runs correctly, please install the following libraries:
 
 NOTE: The *CRÉ* corpus is provided in both ABC Notation and MIDI formats in [./corpus](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/corpus/) subdirectory, along with a demo Jupyter notebook and README.
 
-- To ingest a corpus in ABC Notation format, first install the abc2MIDI external dependency, which can be downloaded directly [here]([https://ifdo.ca/~seymour/runabc/top.html](https://ifdo.ca/~seymour/runabc/abcMIDI-2022.06.14.zip). For information on abc2MIDI documentation, please see the project [documentation](https://abcmidi.sourceforge.io).
+- To ingest a corpus in ABC Notation format, first install the abc2MIDI external dependency, which can be downloaded directly [here](https://ifdo.ca/~seymour/runabc/top.html](https://ifdo.ca/~seymour/runabc/abcMIDI-2022.06.14.zip). For information on abc2MIDI documentation, please see the project [documentation](https://abcmidi.sourceforge.io).
 
 - Convert from ABC Notation to MIDI by running the ```./abc_ingest.py``` script. This preliminary step uses abc2MIDI to encode a specific 'beat model' into the MIDI output, which is used later in the workflow to filter data for rhythmically-accented notes. Such higher-level data is of particular interest in the study of Irish and related European & North American folk musics.
 
