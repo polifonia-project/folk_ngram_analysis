@@ -57,7 +57,7 @@ corpus/
 
 ```
 
-- The [corpus](https://github.com/polifonia-project/folk_ngram_analysis/tree/master/corpus) root directory contains a [roots.csv](https://github.com/danDiamo/music_pattern_analysis/blob/master/corpus/roots.csv) file, this README.md, and a LICENSE.md file.
+- The [corpus](https://github.com/polifonia-project/folk_ngram_analysis/tree/master/corpus) root directory contains roots.csv, this README.md, and a LICENSE.md file.
 
 - Roots.csv holds two columns with one row per each MIDI file in the corpus:
   -'title': MIDI file title
