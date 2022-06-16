@@ -21,7 +21,7 @@ credits:
 
 # FONN - FOlk _N_-gram aNalysis 
 
-Targetting the goals of Polifonia WP3, FONN contains tools to extract patterns and detect similarity within a monophonic MIDI corpus. Although some of FONN's functionality is tailored to Western European folk music in particular, the software can be used on any monophonic corpora in MIDI or ABC Notation formats.
+Targetting the goals of Polifonia WP3, FONN contains tools to extract patterns and detect similarity within a monophonic music corpus. Although some of FONN's functionality is tailored to Western European folk music in particular, the software can be used on any monophonic corpora in MIDI or ABC Notation formats.
 
 The repo contains a fully functional work-in-progress version of the software, along with a cleaned and annotated test corpus, which is available in both ABC Notation and MIDI formats at [./corpus](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/corpus/).
 
