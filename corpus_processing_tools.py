@@ -131,26 +131,6 @@ class Tune:
 
         return root_metrics
 
-    def filter_music21_score(self, thresh):
-
-        """Filters self.score, retaining only accented notes via an adjustable beat strength threshold.
-
-        args:
-            thresh -- threshold music21 Note.beatStrength attr value by which the score is filtered. Only Note objects
-            with beatStrength >= thresh will be retained in the filtered output.
-
-        To filter and extract heavily-accented notes (i.e.: the most prominent note in each bar) from a score,
-        set thresh=1
-        To filter and extract accented notes (i.e.: one note per beat) from a score, set thresh=0.5
-        """
-
-        filtered_score = music21.stream.Stream()
-        for idx, note in enumerate(self.score.recurse().notes):
-            if note.isNote and float(note.beatStrength) >= thresh:
-                filtered_score.append(note)
-        self.score = filtered_score
-        return self.score
-
     def convert_to_feature_sequence_repr(self):
         
         """
