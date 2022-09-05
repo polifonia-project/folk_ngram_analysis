@@ -4,7 +4,7 @@ name: Ceol Rince na hÉireann MIDI corpus
 brief-description: A corpus of 1,195 monophonic instrumental Irish traditional dance tunes.
 type: Corpus
 release-date: 15/06/2022
-release-number: v0.6-dev
+release-number: v0.7.0.1-dev
 work-package: 
 - WP3
 licence: CC BY 4.0, https://creativecommons.org/licenses/by/4.0/
@@ -25,11 +25,11 @@ credits:
 
 **Source:** [Black, B 2020, _The Bill Black Irish tune archive homepage_, viewed 5 January 2021.](http://www.capeirish.com/webabc)
 
-**Contents:** 1,195 traditional Irish dance tunes, represented in [MIDI](https://github.com/polifonia-project/folk_ngram_analysis/tree/master/cre_corpus/MIDI) and [ABC Notation](https://github.com/polifonia-project/folk_ngram_analysis/tree/master/cre_corpus/abc).
+**Contents:** 1,195 traditional Irish dance tunes, represented in [MIDI](https://github.com/polifonia-project/folk_ngram_analysis/tree/master/corpus/MIDI) and [ABC Notation](https://github.com/polifonia-project/folk_ngram_analysis/tree/master/corpus/abc).
 
 Between 1963 and 1999, Irish State publishing companies Oifig an tSolatáthair and An Gúm issued five printed volumes of tunes from the collections of Breadán Breathnach (1912-1985) under the series title _Ceol Rince na hÉireann_ (Dance Music of Ireland, hereafter _CRÉ_). The five volumes of _CRÉ_ contain 1,208 traditional tunes, a subset of Breathnach's more extensive personal collection of 5,000+ melodies. The collection has been transcribed into ABC notation by American traditional music researcher Bill Black, and made freely available online via his [personal website]((http://www.capeirish.com/webabc)). Addition of alternative tune versions and variation in numbering of unique melodies has resulted in a total of 1,224 tunes in the Bill Black ABC corpus. This resource has been used in previous research work, for example it makes up part of a larger aggregated corpus used in the [_Tunepal_](https://tunepal.org/index.html) Music Information Retrieval app. We have created a new cleaned and annotated version of the corpus, from which feature sequence data can be extracted and analysed via Polifonia's [FONN](https://github.com/polifonia-project/folk_ngram_analysis) music pattern analysis toolkit.
 
-NOTE: Please see [corpus_demo.ipynb](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/cre_corpus/corpus_demo.ipynb) for a Jupyter notebook exploring the corpus data.
+NOTE: Please see [corpus_demo.ipynb](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/corpus/corpus_demo.ipynb) for a Jupyter notebook exploring the corpus data.
 
 Deliverable 3.3 of the Polifonia project will describe the context and research in more detail. It will be published on [Cordis](https://cordis.europa.eu/project/id/101004746/it).
 
@@ -40,7 +40,7 @@ Bill Black's ABC version of the _CRÉ_ collection has been manually edited and a
 * Removal of alternative tune versions, so that the ABC collection more accurately reflects the original print collection.
 * Removal of non-valid ABC notation characters.
 * Editing of repeat markers to ensure accurate MIDI output.
-* Manual assignment of root note (as chromatic pitch class) for every piece of music in the corpus. This data is stored in [roots.csv]( https://github.com/polifonia-project/folk_ngram_analysis/tree/master/cre_corpus/roots.csv), which is used to derive key-invariant  secondary feature sequence data from the MIDI files.
+* Manual assignment of root note (as chromatic pitch class) for every piece of music in the corpus. This data is stored in [roots.csv]( https://github.com/polifonia-project/folk_ngram_analysis/tree/master/corpus/roots.csv), which is used to derive key-invariant  secondary feature sequence data from the MIDI files.
 
 
 ## Description of the data

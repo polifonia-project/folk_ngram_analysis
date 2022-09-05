@@ -4,7 +4,7 @@ name: FONN - FOlk N-gram aNalysis
 description: Work-in-progress on pattern extraction and melodic similarity tools, with an associated test corpus of monophonic Irish folk tunes.
 type: Repository
 release-date: 15/06/2022
-release-number: v0.6-dev
+release-number: v0.7.0.1-dev
 work-package: 
 - WP3
 licence:  CC BY 4.0, https://creativecommons.org/licenses/by/4.0/
@@ -21,18 +21,17 @@ credits:
 
 # FONN - FOlk _N_-gram aNalysis 
 
-Targetting the goals of Polifonia WP3, FONN contains tools to extract patterns and detect similarity within a monophonic MIDI corpus. Although some of FONN's functionality is tailored to Western European folk music in particular, the software can be used on any monophonic corpora in MIDI or ABC Notation formats.
+- Targetting the goals of Polifonia WP3, FONN contains tools to extract patterns and detect similarity within a monophonic music corpus. Although some of FONN's functionality is tailored to Western European folk music in particular, the software can be used on any monophonic corpora in MIDI or ABC Notation formats.
 
-The repo contains a fully functional work-in-progress version of the software, along with a cleaned and annotated test corpus, which is available in both ABC Notation and MIDI formats at [./corpus](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/cre_corpus/).
+- The repo contains a fully functional work-in-progress version of the software, along with a cleaned and annotated test corpus, which is available in both ABC Notation and MIDI formats at [./corpus](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/corpus/).
 
-In v0.5dev, the FONN toolkit has been comprehensively refactored for speed and memory performance. 
-FONN is now capable of ingesting and searching corpora of over 40,000 MIDI files, versus c. 1,000 MIDI files in v0.4dev.
-Speed to ingest the 1,200-tune test corpus, extract patterns and run similarity search has decreased from approx. 50 min n v0.4dev to under 5 min in the current release. 
-In addition to MID, FONN now can also ingest ABC Notation corpora.
+- In v0.5dev, the FONN toolkit has been comprehensively refactored for speed and memory performance: FONN is now capable of ingesting and searching corpora of over 40,000 MIDI files, versus c. 1,000 MIDI files in v0.4dev.Speed to ingest the 1,200-tune test corpus, extract patterns and run similarity search has decreased from approx. 50 min n v0.4dev to under 5 min in the current release.
+
+- In addition to MIDI, FONN now can also ingest ABC Notation corpora.
 
 See [./fonn_demo.ipynb](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/fonn_demo.ipynb) to explore pattern extraction and tune similarity in the supplied *Ceol Rince a hÉireann (CRÉ)* corpus using the FONN toolkit.
 
-See [./corpus/corpus_demo.ipynb](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/cre_corpus/corpus_demo.ipynb) to explore the *CRÉ* corpus data.
+See [./corpus/corpus_demo.ipynb](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/corpus/corpus_demo.ipynb) to explore the *CRÉ* corpus data.
 
 NOTE: Deliverable 3.3 of the Polifonia project describes the context and research in more detail. It will be published on [Cordis](https://cordis.europa.eu/project/id/101004746/it).
 
@@ -47,7 +46,7 @@ NOTE: Deliverable 3.3 of the Polifonia project describes the context and researc
 NOTE: 1.1-1.3 are available in [root](https://github.com/polifonia-project/folk_ngram_analysis/tree/master/) folder. 
    
 2. **Ceol Rince na hÉireann (CRÉ) corpus**
-   * 2.1. For the associated *Ceol Rince na hÉireann* corpus of 1,195 monophonic Irish traditional dance tunes in ABC and MIDI formats, please see: [./corpus/readme.md](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/cre_corpus/readme.md).
+   * 2.1. For the associated *Ceol Rince na hÉireann* corpus of 1,195 monophonic Irish traditional dance tunes in ABC and MIDI formats, please see: [./corpus/readme.md](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/corpus/readme.md).
 3. **Root Note Detection**
    * 3.1. Work-in-progress on automatic detection of musical root for each tune in the corpus, please see: [/.root_key_detection/README.md](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/root_note_detection/README.md)
 
@@ -65,7 +64,7 @@ To ensure FONN runs correctly, please install the following libraries:
 
 ## FONN - preliminary setup for ABC corpora
 
-NOTE: The *CRÉ* corpus is provided in both ABC Notation and MIDI formats in [./corpus](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/cre_corpus/) subdirectory, along with a demo Jupyter notebook and README.
+NOTE: The *CRÉ* corpus is provided in both ABC Notation and MIDI formats in [./corpus](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/corpus/) subdirectory, along with a demo Jupyter notebook and README.
 
 - To ingest a corpus in ABC Notation format, first install the abc2MIDI external dependency, which can be downloaded directly [here](https://ifdo.ca/~seymour/runabc/abcMIDI-2022.06.14.zip). For information on abc2MIDI, please see the project [documentation](https://abcmidi.sourceforge.io).
 
@@ -109,7 +108,7 @@ By default, ```LordMcDonaldsreel``` is set as the search candidate tune, but thi
 
 ## 2. Ceol Rince na hÉireann (CRÉ) MIDI corpus 
 
-- A new version of the previously-existing *Ceol Rince na hÉireann* corpus, containing 1,195 monophonic Irish traditional dance tunes. the corpus in provided in ABC Notation and in MIDI. Please see: [./corpus/readme.md](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/cre_corpus/README.md) for more information.
+- A new version of the previously-existing *Ceol Rince na hÉireann* corpus, containing 1,195 monophonic Irish traditional dance tunes. the corpus in provided in ABC Notation and in MIDI. Please see: [./corpus/readme.md](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/corpus/README.md) for more information.
 
 * Highlights:
   * Corpus title: _Ceol Rince na hÉireann_
