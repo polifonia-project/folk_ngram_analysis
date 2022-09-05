@@ -9,7 +9,7 @@ import requests
 
 
 def reformat_midi_filenames(indir):
-    """Strips special characters and spaces from filenames in input MIDI corpus"""
+    """Strips special characters and spaces from filenames in input MIDI cre_corpus"""
     for root, dirs, filenames in os.walk(os.path.abspath(indir)):
         for filename in filenames:
             alnum_name = [ch for ch in filename[:-4] if ch.isalnum()]
@@ -61,6 +61,31 @@ def remove_cols_from_dataframe(df, col_names):
     df.drop(col_names, axis=1, inplace=True)
     print(df.head())
     return df
+
+
+def calculate_tune_lengths(target_dir):
+    print("Calculating tune lengths:")
+
+    results = {}
+
+    for file_name in os.listdir(target_dir):
+        file_path = f"{target_dir}/{file_name}"
+        tune_title = file_name[:-4]
+        with open(file_path) as content:
+            counter = len(content.readlines()) - 1
+        results[tune_title] = counter
+
+    formatted_results = pd.DataFrame()
+    formatted_results['title'] = results.keys()
+    formatted_results['length'] = results.values()
+    formatted_results.set_index('title', drop=True, inplace=True)
+
+    final_output = formatted_results.T
+    # final_output.reset_index(inplace=True, drop=True)
+    final_output = final_output.rename_axis(None, axis=1)
+    print(final_output)
+    return final_output
+
 
 
 def main():

@@ -1,21 +1,21 @@
 """
-'pattern_extraction.py' is a module containing tools to extract n-gram patterns from a music corpus in
+'pattern_extraction.py' is a module containing tools to extract n-gram patterns from a music cre_corpus in
 feature sequence representation (as outputted by 'corpus_processing_tools.py' module); calculate frequency and TF-IDF
 statistics for each pattern; and write the results to file in a sparse data table.
 
 This module contains two classes, PatternCorpus and TuneData.
 
 PatternCorpus class allows extraction of all unique n-gram patterns over a user-selectable range of pattern lengths
-(n-values) from an input corpus of monophonic tunes in feature sequence format.
+(n-values) from an input cre_corpus of monophonic tunes in feature sequence format.
 PatternCorpus takes a directory of csv files as input, with each file containing feature sequence representation of a
 monophonic tune. PatternCorpus can concatenate this data into a sparse high-level pandas Dataframe holding all unique
-patterns which occur at least once in the corpus. It can also calculate simple statistics
+patterns which occur at least once in the cre_corpus. It can also calculate simple statistics
 (frequency, document frequency) for each pattern, and can calculate TF-IDF values for each pattern instance across the
-corpus.
+cre_corpus.
 
 An PatternCorpus object automatically instantiates a TuneData object for each individual tune within the
-corpus. TuneData attributes and methods are used by PatternCorpus in pattern extraction and TF-IDF calculations.
-The 'pattern corpus' outputted by pattern_extraction.py provides the input for 'similarity_search.py'.
+cre_corpus. TuneData attributes and methods are used by PatternCorpus in pattern extraction and TF-IDF calculations.
+The 'pattern cre_corpus' outputted by pattern_extraction.py provides the input for 'similarity_search.py'.
 
 For more detail, please see docstrings below.
 """
@@ -28,35 +28,38 @@ import numpy as np
 import pandas as pd
 from tqdm import tqdm
 
+from collections import defaultdict
 from utils import read_csv
+
+pd.options.mode.chained_assignment = None
 
 
 class PatternCorpus:
 
     """
-    A PatternCorpus object allows extraction of n-gram patters from an input corpus of monophonic melodies in feature
+    A PatternCorpus object allows extraction of n-gram patters from an input cre_corpus of monophonic melodies in feature
     sequence representation. An PatternCorpus object is instantiated by passing a file path ('inpath' arg).
-    'inpath' must point either to a corpus directory containing at least one feature sequence csv file, or to a pickled
+    'inpath' must point either to a cre_corpus directory containing at least one feature sequence csv file, or to a pickled
      Corpus object, both of which can be outputted by corpus_processing_tools.py.
 
 
     Attributes:
 
         tunes -- providing an 'inpath' argument automatically instantiates a TuneData object for each tune in the input
-        corpus, and populates it with feature sequence data. These objects are store in a list at 'tunes' attr.
+        cre_corpus, and populates it with feature sequence data. These objects are store in a list at 'tunes' attr.
         If instantiating an PatternCorpus from a pickled Corpus object, a 'target' arg must also be provided.
         This specifies which Corpus attr to read, as explained below in '__init__' docstring.
 
-        pattern_corpus_freq -- Empty attr which will hold a corpus-level sparse dataframe of all unique n-gram patterns
-        which occur at least once in the corpus, the frequency of each pattern in each tune, and simple corpus-level
+        pattern_corpus_freq -- Empty attr which will hold a cre_corpus-level sparse dataframe of all unique n-gram patterns
+        which occur at least once in the cre_corpus, the frequency of each pattern in each tune, and simple cre_corpus-level
         statistics (frequency, document frequency, IDF) for each pattern.
         This Dataframe is created and populated by PatternCorpus.create_pattern_corpus() and
         PatternCorpus.populate_freq_corpus() methods.
 
         tfidf_corpus -- an equivalent Dataframe to pattern_corpus_freq, holding TF-IDF rather than frequency values for
-        all n-gram pattern instances in the corpus.
-        pattern_corpus_freq -- Empty attr to hold a corpus-level Dataframe of all unique n-gram patterns which occur
-        at least once in the corpus.
+        all n-gram pattern instances in the cre_corpus.
+        pattern_corpus_freq -- Empty attr to hold a cre_corpus-level Dataframe of all unique n-gram patterns which occur
+        at least once in the cre_corpus.
         pattern_corpus_path -- path at which n-gram pattern frequency and TF-IDF corpora are written to pkl.
     """
 
@@ -78,7 +81,7 @@ class PatternCorpus:
             4. Duration-weighted accent-level feature sequence data (target='duration_weighted_accents')
         """
 
-        # if 'inpath' points to a corpus of csv files:
+        # if 'inpath' points to a cre_corpus of csv files:
         if os.path.isdir(inpath):
             # list csv files in 'inpath' dir and read each to a pandas Dataframe using utils.read_csv():
             inpaths = (f"{inpath}/{file}" for file in os.listdir(inpath) if file.endswith(".csv"))
@@ -100,17 +103,19 @@ class PatternCorpus:
         self.pattern_corpus_tf = None
         self.pattern_corpus_tfidf = None
         self.pattern_corpus_path = None
+        self.location_corpus = None
+        self.location_corpus_path = None
 
     def create_pattern_corpus(self, feature, n_vals):
 
         """
         Calls TuneData.extract_ngrams() which extracts and counts all unique n-grams patterns from each tune in the
-        corpus, storing the results at TuneData.ngrams attr.
-        These outputs are concatenated into a single corpus-level Dataframe, indexing and counting occurrences of all
-        unique n-gram patterns which occur at least once in the corpus.
+        cre_corpus, storing the results at TuneData.ngrams attr.
+        These outputs are concatenated into a single cre_corpus-level Dataframe, indexing and counting occurrences of all
+        unique n-gram patterns which occur at least once in the cre_corpus.
 
         This method also calculates simple high-level statistics for each
-        pattern (frequency, document frequency and IDF) and appends as columns to the corpus-level Dataframe, which is
+        pattern (frequency, document frequency and IDF) and appends as columns to the cre_corpus-level Dataframe, which is
         stored at PatternCorpus.pattern_corpus_freq attr.
 
         Args:
@@ -121,49 +126,55 @@ class PatternCorpus:
 
         # call TuneData.extract_ngrams() for each tune:
         ngrams = [tune.extract_ngrams(feature, n_vals) for tune in self.tunes]
-        # concat results into corpus-level dataframe of all n-grams and their frequencies in each tune:
+        # concat results into cre_corpus-level dataframe of all n-grams and their frequencies in each tune:
         corpus = pd.concat(ngrams)
-        # calc doc freq values & add as col:
+        # calc doc freq values:
         doc_freq = corpus['ngram'].value_counts()
-        # group rows on 'ngram' col. Doing so aggregates the freq and doc_freq values for all duplicate n-grams.
-        # Now we have a corpus-level dataframe of all unique n-grams, their corpus-level frequencies and doc frequencies
+        # group rows on 'ngram' col. Doing so aggregates doc freq values for all unique n-grams per tune.
         corpus = corpus.groupby(["ngram"]).sum(min_count=1)
-        corpus['doc_freq'] = doc_freq
+        # Add 'doc freq' col:
+        corpus['doc freq'] = doc_freq
+        # Now we have a cre_corpus-level dataframe of all unique n-grams, their cre_corpus-level frequencies and doc frequencies
         # calc idf values and add as col:
         corpus['idf'] = np.log((len(doc_freq) / doc_freq) + 1).round(decimals=5)
         # sort
-        corpus.sort_values(by='doc_freq', inplace=True, ascending=False)
+        corpus.sort_values(by='doc freq', inplace=True, ascending=False)
         corpus.reset_index(inplace=True)
         print('\b\b')
-        print("Initial n-gram corpus data:")
+        print("Initial n-gram cre_corpus data:")
         print(corpus.head())
         print(corpus.info())
         print('\b\b')
         self.pattern_corpus_freq = corpus
 
-    def populate_freq_corpus(self):
+    def populate_freq_corpus(self, filter_threshold=None):
 
-        """Expands the table of corpus-level patterns created in PatternCorpus.create_ngram-corpus() above:
-        For every tune in the corpus this method adds a sparse column of pattern frequency counts, read from the
+        """Expands the table of cre_corpus-level patterns created in PatternCorpus.create_ngram-cre_corpus() above:
+        For every tune in the cre_corpus this method adds a sparse column of pattern frequency counts, read from the
         TuneData.ngrams attr of each TuneData object listed in PatternCorpus.tunes. Output is stored at
         PatternCorpus.pattern_corpus_freq attr and written to pkl."""
 
-        # for all tunes in corpus:
+        # for all tunes in cre_corpus:
         for tune in tqdm(self.tunes, desc='Extracting n-gram patterns...'):
-            if tune.ngrams is not None:
+            if tune.ngrams_count is not None:
                 # Append n-gram frequency counts for each tune to a new column in PatternCorpus.pattern_corpus_freq
                 # NaN values are filled with 0 and columns use pandas sparse dtype to save memory for large corpora:
                 self.pattern_corpus_freq[f'{tune.title}'] = self.pattern_corpus_freq['ngram'].map(
-                    tune.ngrams.set_index('ngram')['freq']).fillna(0).astype('Sparse[int]')
+                    tune.ngrams_count.set_index('ngram')['freq']).fillna(0).astype('Sparse[int]')
 
         print('\b\b')
-        print("Populated n-gram corpus dataframe:")
+        print("Populated n-gram cre_corpus dataframe:")
         print(self.pattern_corpus_freq.head())
         print(self.pattern_corpus_freq.info())
         print('\b\b')
+
+        if filter_threshold:
+            self.pattern_corpus_freq = self.pattern_corpus_freq[self.pattern_corpus_freq["freq"] > filter_threshold]
+
         # write output:
         if not os.path.isdir(self.pattern_corpus_path):
             os.makedirs(self.pattern_corpus_path)
+        self.pattern_corpus_freq.set_index('ngram', drop=True, inplace=True)
         self.pattern_corpus_freq.to_pickle(f"{self.pattern_corpus_path}/freq.pkl")
         self.pattern_corpus_freq = None
 
@@ -175,61 +186,92 @@ class PatternCorpus:
 
         # read dataframe and remove frequency cols:
         self.pattern_corpus_freq = pd.read_pickle(f"{self.pattern_corpus_path}/freq.pkl")
-        self.pattern_corpus_tfidf = self.pattern_corpus_freq[['ngram', 'freq', 'doc_freq', 'idf']]
+        self.pattern_corpus_tfidf = self.pattern_corpus_freq[['ngram', 'freq', 'doc freq', 'idf']]
         # manually clear memory:
         self.pattern_corpus_freq = None
         return self.pattern_corpus_tfidf
 
     def calculate_tfidf(self):
 
-        """For every tune in the corpus, this method calls TuneData.calculate_tfidf(), which calculates TF-IDF values
+        """For every tune in the cre_corpus, this method calls TuneData.calculate_tfidf(), which calculates TF-IDF values
         for all unique patterns occurring at least once in the tune.
-        Results for each tune are stored at TuneData.ngrams attr, and can be concatenated into a corpus-level table via
+        Results for each tune are stored at TuneData.ngrams attr, and can be concatenated into a cre_corpus-level table via
         PatternCorpus.populate_tfidf_corpus() below."""
 
         for tune in tqdm(self.tunes, desc='Calculating TF-IDF values...'):
             tune.calculate_tfidf(self.pattern_corpus_tfidf)
 
-    def populate_term_freq_corpus(self):
+    def populate_term_freq_corpus(self, filter_threshold=None):
         """Appends TF values for each unique pattern in each tune to PatternCorpus.pattern_corpus_tf as a new
                 column."""
-        # for all tunes in corpus:
-        for tune in tqdm(self.tunes, desc='Populating TF-IDF corpus...'):
-            if tune.ngrams is not None:
+        # for all tunes in cre_corpus:
+        for tune in tqdm(self.tunes, desc='Populating TF-IDF cre_corpus...'):
+            if tune.ngrams_count is not None:
                 # Append TF values for each tune to a new column in PatternCorpus.pattern_corpus_tf
                 # NaN values are filled with 0 and columns use pandas sparse dtype to save memory for large corpora.
                 # Note: TF values are saved as int to save memory. See TuneData.calculate_tfidf() for more info.
                 self.pattern_corpus_tf[f'{tune.title}'] = self.pattern_corpus_tf['ngram'].map(
-                    tune.ngrams.set_index('ngram')['tf']).fillna(0).astype('Sparse[int]')
+                    tune.ngrams_count.set_index('ngram')['tf']).fillna(0).astype('Sparse[int]')
 
-        # sort, print and write corpus-level Dataframe to file.
+        if filter_threshold:
+            self.pattern_corpus_tf = self.pattern_corpus_tf[self.pattern_corpus_tf["freq"] > filter_threshold]
+
+        # sort, print and write cre_corpus-level Dataframe to file.
         self.pattern_corpus_tf.sort_values(by='idf', inplace=True, ascending=False)
         print('\b\b')
-        print("Populated Term Frequency corpus dataframe:")
+        print("Populated Term Frequency cre_corpus dataframe:")
         print(self.pattern_corpus_tf.head())
         print(self.pattern_corpus_tf.info())
         self.pattern_corpus_tf.to_pickle(f"{self.pattern_corpus_path}/tf.pkl")
 
 
-    def populate_tfidf_corpus(self):
+    def populate_tfidf_corpus(self, filter_threshold=None):
         """Appends TF-IDF values for each unique pattern in each tune to PatternCorpus.pattern_corpus_tfidf as a new
         column."""
-        # for all tunes in corpus:
-        for tune in tqdm(self.tunes, desc='Populating TF-IDF corpus...'):
-            if tune.ngrams is not None:
+        # for all tunes in cre_corpus:
+        for tune in tqdm(self.tunes, desc='Populating TF-IDF cre_corpus...'):
+            if tune.ngrams_count is not None:
                 # Append TF_IDF values for each tune to a new column in PatternCorpus.pattern_corpus_tfidf
                 # NaN values are filled with 0 and columns use pandas sparse dtype to save memory for large corpora.
                 # Note: TF-IDF values are saved as int to save memory. See TuneData.calculate_tfidf() for more info.
                 self.pattern_corpus_tfidf[f'{tune.title}'] = self.pattern_corpus_tfidf['ngram'].map(
-                    tune.ngrams.set_index('ngram')['tfidf']).fillna(0).astype('Sparse[int]')
+                    tune.ngrams_count.set_index('ngram')['tfidf']).fillna(0).astype('Sparse[int]')
 
-        # sort, print and write corpus-level Dataframe to file.
+        if filter_threshold:
+            self.pattern_corpus_tfidf = self.pattern_corpus_tfidf[self.pattern_corpus_tfidf["freq"] > filter_threshold]
+
+        # sort, print and write cre_corpus-level Dataframe to file.
         self.pattern_corpus_tfidf.sort_values(by='idf', inplace=True, ascending=False)
         print('\b\b')
-        print("Populated TF-IDF corpus dataframe:")
+        print("Populated TF-IDF cre_corpus dataframe:")
         print(self.pattern_corpus_tfidf.head())
         print(self.pattern_corpus_tfidf.info())
         self.pattern_corpus_tfidf.to_pickle(f"{self.pattern_corpus_path}/tfidf.pkl")
+
+
+    def calculate_locations(self):
+
+        for tune in tqdm(self.tunes, desc='Calculating pattern location values...'):
+            tune.extract_ngram_locations()
+
+    def populate_location_corpus(self, filter_threshold=None):
+
+        self.location_corpus = self.pattern_corpus_freq[['ngram', 'freq', 'doc freq', 'idf']]
+
+        for tune in tqdm(self.tunes, desc='Populating pattern locations...'):
+            if tune.ngrams_count is not None:
+                self.location_corpus[f'{tune.title}'] = self.location_corpus['ngram'].map(
+                    tune.locations.set_index('ngram')['locations']).astype(pd.SparseDtype("object", np.nan))
+
+        if filter_threshold:
+            self.location_corpus = self.location_corpus[self.location_corpus["freq"] > filter_threshold]
+
+        self.location_corpus.reset_index(inplace=True, drop=True)
+        self.location_corpus.sort_values(by='freq', inplace=True, ascending=False)
+        print("Populated pattern locations dataframe:")
+        print(self.location_corpus.head())
+        print(self.location_corpus.info())
+        self.location_corpus.to_pickle(f"{self.pattern_corpus_path}/locations.pkl")
 
 
 class TuneData:
@@ -273,11 +315,11 @@ class TuneData:
         self.feat_seq_data = feat_seq[1]    # data from input feature sequence data filename
         self.feature = None                 # The musical feature under investigation (eg: 'pitch_class')
         self.n_vals = None                  # The n-values for which patterns are to be extracted
-        self.ngrams = None                  # Will hold a dataframe of pattern results
+        self.ngrams = None
+        self.ngrams_count = None            # Will hold a dataframe of pattern results
+        self.locations = None
 
     def extract_ngrams(self, feature, n_vals):
-
-        # TODO: Retain pattern onsets in tune-level datatables.
 
         """
         Extracts all unique n-gram patterns from a tune for a user-defined range of n-values in a user-selected
@@ -293,28 +335,31 @@ class TuneData:
         self.n_vals = n_vals
         # load in feature sequence data, and clear memory after loading:
         target_feat_seq = self.feat_seq_data[feature].dropna()
-        self.feat_seq_data = None
         # extract n-grams:
         ngrams = (tuple((target_feat_seq[i:i+n])) for n in self.n_vals for i in range(len(target_feat_seq)-n+1))
+        self.ngrams = list(ngrams)
         # count and rank n-grams in dict:
-        ngram_count = collections.Counter(ngrams)
+        ngrams_count = collections.Counter(self.ngrams)
         # store n-grams and counts in dataframe:
-        ngrams = pd.DataFrame.from_dict(ngram_count, orient='index')
-        ngrams.reset_index(inplace=True)
+        res = pd.DataFrame.from_dict(ngrams_count, orient='index')
+        res.reset_index(inplace=True)
 
         # The following try-except block is a hold-over from efforts at optimization, may no longer be necessary:
         # It filters out empty dataframes for 'experimental' pieces such as John Cage's 4'33, which have no musical
         # content
         try:
-            ngrams.columns = ['ngram', 'freq']
+            res.columns = ['ngram', 'freq']
         except ValueError:
-            ngrams = None
+            res = None
 
-        # assign n-gram pattern dataframe to self.ngrams attr:
-        if ngrams is not None:
-            self.ngrams = ngrams
+        # assign n-gram pattern dataframe to self.ngrams_count attr:
+        if res is not None:
+            self.ngrams_count = res
+        else:
+            print(self.title)
+            pass
 
-        return self.ngrams
+        return self.ngrams_count
 
     def calculate_tfidf(self, lookup_table):
 
@@ -323,26 +368,38 @@ class TuneData:
 
         Args:
             lookup_table -- A Dataframe containing idf values for all unique patterns occurring in the tune.
-            When called within an PatternCorpus class object, this arg is assigned to the corpus-level patterns table at
+            When called within an PatternCorpus class object, this arg is assigned to the cre_corpus-level patterns table at
             PatternCorpus.pattern_corpus_freq.
         """
 
         # Find and skip any empty TuneData.ngrams dataframes:
-        if self.ngrams is None or self.ngrams.empty:
+        if self.ngrams_count is None or len(self.ngrams_count) < 2:
             pass
         else:
             # Calculate and append 'tf' column:
-            self.ngrams['tf'] = self.ngrams['freq'] / self.ngrams['freq'].sum()
+            self.ngrams_count['tf'] = self.ngrams_count['freq'] / self.ngrams_count['freq'].sum()
             # Pull in idf column values from lookup Dataframe:
-            self.ngrams['idf'] = self.ngrams['ngram'].map(lookup_table.set_index(['ngram'])['idf'])
+            self.ngrams_count['idf'] = self.ngrams_count['ngram'].map(lookup_table.set_index(['ngram'])['idf'])
             # multiply the two above to give TF-IDF values:
-            tfidf = (self.ngrams['tf'] * self.ngrams['idf']).fillna(0)
+            tfidf = (self.ngrams_count['tf'] * self.ngrams_count['idf']).fillna(0)
             # multiply TF-IDF values by 10**7 and convert from float to int to save memory.
-            self.ngrams['tfidf'] = (tfidf * (10**7)).astype('int')
+            self.ngrams_count['tfidf'] = (tfidf * (10**7)).astype('int')
             # do same for TF col:
-            self.ngrams['tf'] = (self.ngrams['tf'] * (10**7)).astype('int')
+            self.ngrams_count['tf'] = (self.ngrams_count['tf'] * (10**7)).astype('int')
 
-        return self.ngrams
+        return self.ngrams_count
+
+    def extract_ngram_locations(self):
+
+        tally = defaultdict(list)
+        for i, item in enumerate(self.ngrams):
+            tally[item].append(i)
+
+        ngrams = list(tally.keys())
+        locations = list(tally.values())
+        res_df = pd.DataFrame([ngrams, locations]).T
+        res_df.columns = ['ngram', 'locations']
+        self.locations = res_df
 
 
 def main():
@@ -351,15 +408,15 @@ def main():
     Extracts patterns and calculates frequency & TF-IDF values for accent-level pitch class patterns between 3-7
     items in length. Outputs two sparse panda Dataframes:
 
-    1. A corpus-level table of unique n-grams with n-gram frequency counts for each piece of music,
-     and for the entire corpus.
-    2. A corpus-level table of unique n-grams with their tf-idf values for each piece of music,
-    and corpus-level idf values.
+    1. A cre_corpus-level table of unique n-grams with n-gram frequency counts for each piece of music,
+     and for the entire cre_corpus.
+    2. A cre_corpus-level table of unique n-grams with their tf-idf values for each piece of music,
+    and cre_corpus-level idf values.
 
     These tables are written to pkl format for input into 'similarity_search.py' pattern search tools.
     """
 
-    basepath = "./corpus"
+    basepath = "./cre_corpus"
     inpath = basepath + "/feat_seq_corpus/feat_seq_accents"
     outpath = basepath + "/pattern_corpus"
     feature = 'relative_pitch_class'

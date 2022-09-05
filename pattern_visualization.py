@@ -14,7 +14,7 @@ def read_csv(inpath):
 
 
 def extract_frequent_ngrams(df):
-    # function opens accent-level n-grams dataframe for a single tune in the corpus
+    # function opens accent-level n-grams dataframe for a single tune in the cre_corpus
     # it sorts the table rows by tf-idf. n-gram column values are extracted for all rows containing the maximum tf-idf
     # value in the table.
     df.sort_values(by=['tf_idf'], axis=0, ascending=False, inplace=True)

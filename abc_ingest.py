@@ -1,9 +1,9 @@
 """
 'abc_ingest.py' calls abc2MIDI command-line tool and uses it to create an individual MIDI file for each tune in a
-monophonic ABC Notation corpus. This preprocessing step allows FONN feature sequence extraction and
+monophonic ABC Notation cre_corpus. This preprocessing step allows FONN feature sequence extraction and
 pattern similarity tools to be used on ABC format input corpora.
 
-An ABC Notation corpus is a single file containing scores for one or more tunes in ABC (.abc) format.
+An ABC Notation cre_corpus is a single file containing scores for one or more tunes in ABC (.abc) format.
 For more information on ABC Notation, please see:
 
 https://ifdo.ca/~seymour/runabc/top.html [info on abc2MIDI packages and versions]
@@ -22,18 +22,23 @@ import subprocess
 def create_midi_corpus_from_abc(abc_filename='CRE_clean.abc'):
 
     """
-    Runs abc2MIDI to extract an individual MIDI file for every tune in an ABC corpus file stored in './corpus/abc' dir.
-    Output MIDI files are saved to '.corpus/MIDI' dir.
+    Runs abc2MIDI to extract an individual MIDI file for every tune in an ABC cre_corpus file stored in './cre_corpus/abc' dir.
+    Output MIDI files are saved to '.cre_corpus/MIDI' dir.
 
     Args:
-        abc_filename -- Name of ABC corpus file to be processed. Default is 'CRE_clean.abc' which points to the included
-        'Ceol Rince na hEireann' sample corpus. If working with external data, copy ABC corpus to './corpus/abc' dir and
+        abc_filename -- Name of ABC cre_corpus file to be processed. Default is 'CRE_clean.abc' which points to the included
+        'Ceol Rince na hEireann' sample cre_corpus. If working with external data, copy ABC cre_corpus to './cre_corpus/abc' dir and
         assign 'abc_filename' to file name.
     """
 
     # Run abc2MIDI:
     print("Running abc2MIDI command-line tool...")
-    create_midi = subprocess.run(["abc2midi", abc_filename, "-t", "-n", "100"], cwd="./corpus/abc", capture_output=True)
+    create_midi = subprocess.run(
+        ["abc2midi", abc_filename, "-t", "-n", "-NGRA", "-Q", "252"],
+        cwd="./cre_corpus/abc",
+        capture_output=True
+    )
+
     # Reformat and print output
     raw_stdout = str(create_midi.stdout)
     formatted_stdout = list(raw_stdout.split("\\n"))
@@ -46,10 +51,10 @@ def create_midi_corpus_from_abc(abc_filename='CRE_clean.abc'):
         print(create_midi.stderr)
     print('exit status:', create_midi.returncode)
 
-    # create "./corpus/midi" dir:
-    midi_path = "./corpus/midi"
-    abc_path = "./corpus/abc"
-    # Move MIDI files to "./corpus/midi" dir:
+    # create "./cre_corpus/midi" dir:
+    midi_path = "cre_corpus/midi"
+    abc_path = "cre_corpus/abc"
+    # Move MIDI files to "./cre_corpus/midi" dir:
     if not os.path.isdir(midi_path):
         os.makedirs(midi_path)
     else:

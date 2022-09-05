@@ -3,18 +3,18 @@
 table containing:
 
 [rows] All unique n-gram patterns for a given musical feature and range of pattern lengths,
-which occur at least once in a given feature sequence format music corpus.
+which occur at least once in a given feature sequence format music cre_corpus.
 
-[cols]: tf-idf values for each piece of music in the corpus; plus a single corpus-level idf column.
+[cols]: tf-idf values for each piece of music in the cre_corpus; plus a single cre_corpus-level idf column.
 
 EG: All accent-level 'pitch_class' feature patterns of 3-7 note-events in length which occur at least once, extracted
-from the MIDI Ceol Rince na hEireann corpus at ./corpus/MIDI.
+from the MIDI Ceol Rince na hEireann cre_corpus at ./cre_corpus/MIDI.
 
 Such a table allows us read tf-idf value per n-gram per piece of music, and, from this input data,
 PatternSimilarity can perform the following tasks:
 
 -Extract most frequent n-gram(s) (as ranked by tf-idf) from a single piece of music.
--Find all similar patterns across the corpus via Damerau-Levenshtein distance.
+-Find all similar patterns across the cre_corpus via Damerau-Levenshtein distance.
 -[Work-in-progress] Identify pieces of music which contain the highest number of similar patterns to the candidate.
 """
 
@@ -24,6 +24,8 @@ from fastDamerauLevenshtein import damerauLevenshtein
 import pandas as pd
 from tqdm import tqdm
 
+from utils import calculate_tune_lengths
+
 pd.options.mode.chained_assignment = None
 
 
@@ -31,7 +33,7 @@ class PatternSimilarity:
 
     """
     An PatternSimilarity object is instantiated by passing a single argument, 'inpath', which is the path to a
-    'pattern corpus' table of n-gram patterns, tf-idf, and idf values held in a pickle file
+    'pattern cre_corpus' table of n-gram patterns, tf-idf, and idf values held in a pickle file
     (as outputted by 'pattern_extraction.py').
 
     Attributes:
@@ -72,7 +74,7 @@ class PatternSimilarity:
         Initializes PatternSimilarity class object.
 
         Args:
-            inpath -- path to pickled 'pattern corpus' Dataframe outputted by 'pattern_extraction.py'.
+            inpath -- path to pickled 'pattern cre_corpus' Dataframe outputted by 'pattern_extraction.py'.
         """
 
         raw_data = pd.read_pickle(inpath)
@@ -81,11 +83,17 @@ class PatternSimilarity:
         self.candidate_patterns = None
         self.n = None
         self.similar_patterns = None
+        self.pattern_results_path = None
         self.similar_tunes = None
-        self.results = None
-        self.results_path = None
+        self.pattern_presence_results = None
+        self.presence_results_path = None
+        self.freq_count_results_results = None
+        self.freq_count_results_path = None
+        self.tune_lengths = None
 
     def extract_candidate_patterns(self, title, n=None, mode=None, indices=None):
+
+        # TODO: Refactor for performance
 
         """
         Extracts frequent n-gram pattern(s) of length 'n' items for a target piece of music.
@@ -111,22 +119,30 @@ class PatternSimilarity:
         NOTE: This method will be augmented with n-gram pattern clustering functionality in future work.
         """
 
-        # read corpus-level pattern TF-IDF table and drop unused columns:
-        filtered_corpus = self.pattern_corpus
-        if 'freq' and 'doc_freq' in filtered_corpus.columns:
-            filtered_corpus.drop(['freq', 'doc_freq'], axis=1, inplace=True)
+        # read and filter cre_corpus-level pattern data:
+        print("Reading input data...")
+        print(self.pattern_corpus.head())
+        print("Filtering input data...")
         # set parameters from args
         self.title = title
         self.n = n
-        # find col corresponding to target tune; assign col name to 'title' attr:
-        for col_name in tqdm(filtered_corpus.columns, desc='Locating candidate tune in pattern corpus...'):
-            if col_name.startswith(self.title):
-                target_col = col_name
-        # filter table to retain only patterns for n-gram patterns of length n:
         filtered_corpus = self.pattern_corpus[self.pattern_corpus['ngram'].apply(lambda x: len(x) == self.n)]
+        print(filtered_corpus.head())
+
+        if 'freq' and 'doc_freq' in filtered_corpus.columns:
+            filtered_corpus.drop(['freq', 'doc_freq'], axis=1, inplace=True)
+        print(filtered_corpus.info())
+        print(filtered_corpus.head())
+
+        # find col corresponding to target tune; assign col name to 'title' attr:
+        for col_name in tqdm(filtered_corpus.columns, desc='Locating candidate tune in pattern cre_corpus...'):
+            if col_name == self.title:
+                print(f'Target tune detected: {col_name}')
+                target_col = col_name
+
         # 'max' mode:
         if mode == 'max':
-            print("'max' mode selected -- extracting top pattern(s) as ranked by TF-IDF...")
+            print("'max' mode selected -- extracting max pattern(s) as ranked by TF-IDF...")
             # convert target col from sparse to dense dtype --
             # this reformatting is necessary for input into pandas' max() function below:
             filtered_corpus[target_col] = filtered_corpus[target_col].to_numpy(dtype='int16')
@@ -135,7 +151,7 @@ class PatternSimilarity:
                                                                  filtered_corpus[target_col].max()]
         # 'idx' mode:
         elif mode == 'idx':
-            print("'idx' mode selected -- extracting pattern(s) as ranked by TF-IDF according to their indices...")
+            print("'idx' mode selected -- extracting TF-IDF pattern(s) by index...")
             # sort by tfidf in descending order and re-index:
             filtered_corpus.sort_values(by=[target_col], ascending=False, inplace=True)
             filtered_corpus.reset_index(inplace=True, drop=True)
@@ -166,11 +182,11 @@ class PatternSimilarity:
 
         # list search term patterns:
         search_term_patterns = self.candidate_patterns['ngram'].tolist()
-        # set up new 1-column Dataframe containing all patterns in corpus. The search terms will be tested for
-        # similarity with every  pattern in the corpus, and results will be appended to the Dataframe:
+        # set up new 1-column Dataframe containing all patterns in cre_corpus. The search terms will be tested for
+        # similarity with every  pattern in the cre_corpus, and results will be appended to the Dataframe:
         pattern_similarity_table = self.pattern_corpus[['ngram']]
 
-        # Calculate Damerau-Levenshtein distances between search term patterns and all patterns in corpus:
+        # Calculate Damerau-Levenshtein distances between search term patterns and all patterns in cre_corpus:
         for search_term in search_term_patterns:
             edit_dists = [
                 damerauLevenshtein(search_term, pattern, similarity=False) for pattern in tqdm
@@ -187,7 +203,10 @@ class PatternSimilarity:
         retained.reset_index(inplace=True)
         # Print & return results:
         print(f"\n{len(retained)} Similar patterns detected:")
+        retained.rename(columns={retained.columns[1]: 'DL distance'}, inplace=True)
+        retained.sort_values(by='DL distance', inplace=True)
         print(retained.head())
+        self.write_results_to_file(retained, self.pattern_results_path, label='patterns')
         self.similar_patterns = retained
         return self.similar_patterns
 
@@ -205,56 +224,101 @@ class PatternSimilarity:
         Work-in-progress involves evaluation of the effectiveness of this count as an indicator of similarity between
         the tunes in the filtered table and the candidate tune.
         """
-        print("\nSearching corpus for similar tunes...\n")
+        print("\nSearching cre_corpus for similar tunes...\n")
         # filter self.pattern_corpus, retaining only rows for similar n-grams:
         lookup_df = self.pattern_corpus[self.pattern_corpus['ngram'].isin(self.similar_patterns['ngram'])]
         # drop 'ngram' & 'idf' columns
         lookup_df.drop(['ngram', 'idf'], axis=1, inplace=True)
         # drop all zero-value columns (i.e.: all tunes in which no similar patterns occur):
         self.similar_tunes = lookup_df.loc[:, (lookup_df != 0).any(axis=0)]
+        self.similar_tunes.drop(labels=['freq', 'doc_freq'], axis=1, inplace=True)
         return self.similar_tunes
 
-    def compile_results_table(self):
+    def calculate_tune_lengths(self, feat_seq_path):
+
+        # TODO: Test
+
+        self.tune_lengths = calculate_tune_lengths(feat_seq_path)
+
+    def calc_pattern_presence_results(self, normalize=True):
+
+        # TODO: test new normalization block
 
         """Counts the number of non-zero values in each column of 'similar_tunes' Dataframe outputted by
-        PatternSimilarity.find_similar_tunes() above.
+        PatternSimilarity.find_similar_tunes() above (i.e.: counts the number of tunes in which a pattern appears)
 
         # NOTE: The frequency of occurrences of each similar n-gram per tune is not yet included in calculations."""
 
-        # convert 'similar_tunes' to Boolean Dataframe:
-        count = self.similar_tunes.astype(bool).sum(axis=0)
-        results = count.to_frame().reset_index()
+        print("Compiling pattern presence data...")
+        # convert 'similar_tunes' to Boolean type:
+        similar_tunes = self.similar_tunes.astype(bool)
+        # add summing row
+        presence = similar_tunes.sum(axis=0)
+        presence.name = 'pattern presence'
+        similar_tunes = similar_tunes.append(presence)
+
+        if normalize is True:
+            print("Normalising presence data...")
+            tune_lengths = self.tune_lengths
+            similar_tunes = pd.concat([similar_tunes, tune_lengths], axis=0)
+            # TODO: Check how rows are identifed here -- this approach is for cols
+            results = (similar_tunes['pattern_presence'] / similar_tunes['length']).to_frame().reset_index()
+            results.columns = ['title', 'normalized pattern presence']
+        else:
+            results = presence.to_frame().reset_index()
+            results.columns = ['title', 'pattern presence']
         # Reformat / rename cols and sort:
-        results.columns = ['title', 'count']
-        results.sort_values(by=['count'], ascending=False, inplace=True)
+        results.sort_values(by=results.columns[1], ascending=False, inplace=True)
         results.reset_index(inplace=True, drop=True)
+
         # Print and save results:
-        print(f"Similarity results for {self.title}:")
+        print(f"Similarity results for {self.title} (pattern presence):")
         print(results.head())
-        if not os.path.isdir(self.results_path):
-            os.makedirs(self.results_path)
-        results.loc[:100].to_csv(f"{self.results_path}/{self.title}_results.csv")
-        self.results = results
+        self.write_results_to_file(results, self.presence_results_path, label='presence')
+        self.pattern_presence_results = results
 
-    def count_pattern_instances_per_tune(self):
-        # TODO: Test!
-        # Note: for use on freq.pkl or tf.pkl inputs (will run on tfidf.pkl but results will not be valid!)
-        count = self.similar_tunes.sum(axis=1)
-        results = count.iloc[-1]
-        results = results.t
-        results.columns = ['count']
-        results['title'] = self.similar_tunes.columns
+    def calc_freq_count_results(self, normalize=True):
 
-        return results
+        """
+        Calculates sum for each column of 'similar_tunes' Dataframe (i.e.: counts the number of times a pattern appears)
+        """
 
-    def normalise_pattern_count_results(self):
-        # Express count as % of tune sequence detected as similar?
-        # Or simply noramlise count by number of patterns in tune.
-        # Or both?
-        pass
+        # TODO: test new normalization block
 
-    def normalise_tune_similarity_results(self):
-        pass
+        # Note: for use on freq.pkl or tf.pkl inputs (will run on tfidf.pkl but results will not be valid as tfidf
+        # values can be summed but the summed output is not interpretable.
+        similar_tunes = self.similar_tunes
+        # add summing row:
+        count = similar_tunes.sum(axis=0)
+        count.name = 'sum'
+        similar_tunes = similar_tunes.append(count)
+
+        if normalize is True:
+            # TODO: check the below process for logical errors.
+            # read tune lengths:
+            tune_lengths = self.tune_lengths
+            similar_tunes = pd.concat([similar_tunes, tune_lengths], axis=0)
+            results = (similar_tunes['sum'] / similar_tunes['length']).to_frame().reset_index()
+            results.columns = ['title', 'freq']
+        else:
+            results = count.to_frame().reset_index()
+            results.columns = ['title', 'count']
+
+        # sort
+        results.sort_values(by=results.columns[1], ascending=False, inplace=True)
+
+        # Print and save results:
+        print(f"Similarity results for {self.title}")
+        print("(frequency)" if "freq" in results.columns else "(count)")
+        print(results.head())
+        self.write_results_to_file(results, self.freq_count_results_path, label='freq' if normalize is True else 'count')
+
+        return self.freq_count_results_results
+
+    def write_results_to_file(self, results, path, label):
+        if not os.path.isdir(path):
+            os.makedirs(path)
+        results.to_csv(f"{path}/{self.title}_{label}.csv")
 
     def extract_structural_patterns(self):
         pass
@@ -263,6 +327,7 @@ class PatternSimilarity:
         pass
 
     def validate_results(self):
+        # TODO: move to separate file?
         pass
 
 
@@ -288,7 +353,7 @@ def main():
     indices -- list of integers corresponding to PatternSimilarity.test_corpus dataframe indices.
 
     PatternSimilarity.setup_test_corpus()
-    Filters corpus Dataframe to include patterns of length n±1.
+    Filters cre_corpus Dataframe to include patterns of length n±1.
 
     PatternSimilarity.find_similar_patterns()
     Finds similar patterns to candidate pattern via Damerau-Levenshtein edit distance.
@@ -297,22 +362,22 @@ def main():
     1 can prove more effective.
 
     PatternSimilarity.find_similar_tunes()
-    Filters the corpus for pieces of music which include similar patterns to candidate.
+    Filters the cre_corpus for pieces of music which include similar patterns to candidate.
     Counts occurrences of similar patterns per piece of music and returns ranked table.
     Saves table to csv.
     
     :returns: PatternSimilarity.results
     
     This is an initial work-in-progress metric of similarity between the search candidate and other pieces of music in
-    the corpus. Evaluation and work on additional metrics is ongoing.
+    the cre_corpus. Evaluation and work on additional metrics is ongoing.
     """
 
-    basepath = "./corpus"
+    basepath = "./cre_corpus"
     f_in = basepath + "/pattern_corpus/tfidf.pkl"
     res_path = basepath + "/results"
     pattern_search = PatternSimilarity(f_in)
     pattern_search.results_path = res_path
-    pattern_search.extract_candidate_patterns("LordMcDonaldsreel", n=6, mode='idx', indices=[0])
+    pattern_search.extract_candidate_patterns("LordMcDonaldsreel", n=6, mode='idx', indices=[])
     pattern_search.find_similar_patterns(edit_dist_threshold=1)
     pattern_search.find_similar_tunes()
     pattern_search.compile_results_table()

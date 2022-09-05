@@ -1,7 +1,7 @@
 """
-Flow control / corpus setup script, running tools from corpus_processing_tools.py module.
+Flow control / cre_corpus setup script, running tools from corpus_processing_tools.py module.
 
-This module's main() function extracts primary and secondary feature sequence data from a corpus
+This module's main() function extracts primary and secondary feature sequence data from a cre_corpus
 of monophonic MIDI files, and saves the results for each to csv. It also extract root note detection metrics for input
 into 'Root Note Detection' component.
 
@@ -18,8 +18,10 @@ from corpus_processing_tools import Corpus
 
 def calc_music21_root_metrics(inpath, root_metrics_path):
 
+    # TODO: refactor to separate file.
+
     """
-    Reads MIDI corpus to music21 stream format and calculates an initial set of root note detection metrics for each
+    Reads MIDI cre_corpus to music21 stream format and calculates an initial set of root note detection metrics for each
     tune, which are saved to csv.
 
     Further root detection metrics, which are dependant on secondary feature sequence data, can be calculated and
@@ -36,7 +38,7 @@ def calc_music21_root_metrics(inpath, root_metrics_path):
     - 'temperley_kostka_payne': pitch class of root as outputted by Temperley-Kostka-Payne algorithm
 
     Args:
-        inpath -- path to directory containing MIDI corpus.
+        inpath -- path to directory containing MIDI cre_corpus.
         root_metrics_path -- path to write root note detection metrics to csv.
     """
 
@@ -52,7 +54,7 @@ def calc_feat_seqs(inpath, roots_path, root_metrics_path, outpath):
 
     """
     Calls all methods required to calculate primary, secondary, and duration-weighted feature sequences from MIDI
-    corpus. Writes four csv files for each tune in corpus, respectively containing:
+    cre_corpus. Writes four csv files for each tune in cre_corpus, respectively containing:
     1. Note-level feature sequence data.
     2. Accent-level feature sequence data
     3. Duration-weighted note-level feature sequence data for selected features
@@ -84,14 +86,14 @@ def calc_feat_seqs(inpath, roots_path, root_metrics_path, outpath):
     These values are appended to Corpus.roots Dataframe in columns named per the above, and saved to csv.
 
     Args:
-        inpath -- path to directory containing MIDI corpus.
+        inpath -- path to directory containing MIDI cre_corpus.
         roots_path -- path to external table of expert-annotated root data tabl, used for calculation of key-invariant
         secondary feature sequences.
         root_metrics_path -- path to write root note detection metrics (inputs for Root Note Detection component) to csv
-        csv_outpath -- path to write corpus feature sequence data to csv.
+        csv_outpath -- path to write cre_corpus feature sequence data to csv.
     """
 
-    # initialize corpus and assign paths:
+    # initialize cre_corpus and assign paths:
     cre = Corpus(inpath)
     cre.roots_path = roots_path
     cre.csv_outpath = outpath
@@ -120,20 +122,20 @@ def calc_feat_seqs(inpath, roots_path, root_metrics_path, outpath):
 def main():
 
     """
-    Main function. Converts a corpus of monophonic MIDI files to feature sequence representation via calc_feat_seqs()
+    Main function. Converts a cre_corpus of monophonic MIDI files to feature sequence representation via calc_feat_seqs()
     above.
 
     Also calculates root note metric inputs for 'Root Note Detection' component at ./root_note_detection/ via
     calls in both calc_music21_root_metrics() and calc_feat_seqs() functions.
 
-    'inpath' variable below points to local location of MIDI corpus directory;
+    'inpath' variable below points to local location of MIDI cre_corpus directory;
     'roots_path' variable points to local location of 'roots.csv' file as described in corpus_processing_tools.py
     docstrings;
     'root_metrics_path' variable points to location where table of root note detection metrics can be saved.
     'csv_outpath' variable points to directory where output files will be written.
     """
 
-    basepath = "./corpus"
+    basepath = "./cre_corpus"
     inpath = basepath + "/MIDI"
     roots_path = basepath + "/roots.csv"
     root_metrics_path = basepath + "/metrics_for_root_note_detection.csv"
