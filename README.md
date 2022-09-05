@@ -23,7 +23,7 @@ credits:
 
 - Targetting the goals of Polifonia WP3, FONN contains tools to extract patterns and detect similarity within a monophonic music corpus. Although some of FONN's functionality is tailored to Western European folk music in particular, the software can be used on any monophonic corpora in MIDI or ABC Notation formats.
 
-- The repo contains a fully functional work-in-progress version of the software, along with a cleaned and annotated test corpus, which is available in both ABC Notation and MIDI formats at [./corpus](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/corpus/).
+- The repo contains a fully functional work-in-progress version of the software, along with a cleaned and annotated test corpus, which is available in both ABC Notation and MIDI formats at [./corpus](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/cre_corpus/).
 
 - In v0.5dev, the FONN toolkit has been comprehensively refactored for speed and memory performance: FONN is now capable of ingesting and searching corpora of over 40,000 MIDI files, versus c. 1,000 MIDI files in v0.4dev.Speed to ingest the 1,200-tune test corpus, extract patterns and run similarity search has decreased from approx. 50 min n v0.4dev to under 5 min in the current release.
 
@@ -31,7 +31,7 @@ credits:
 
 See [./fonn_demo.ipynb](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/fonn_demo.ipynb) to explore pattern extraction and tune similarity in the supplied *Ceol Rince a hÉireann (CRÉ)* corpus using the FONN toolkit.
 
-See [./corpus/corpus_demo.ipynb](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/corpus/corpus_demo.ipynb) to explore the *CRÉ* corpus data.
+See [./cre_corpus/corpus_demo.ipynb](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/cre_corpus/corpus_demo.ipynb) to explore the *CRÉ* corpus data.
 
 NOTE: Deliverable 3.3 of the Polifonia project describes the context and research in more detail. It will be published on [Cordis](https://cordis.europa.eu/project/id/101004746/it).
 
@@ -46,7 +46,7 @@ NOTE: Deliverable 3.3 of the Polifonia project describes the context and researc
 NOTE: 1.1-1.3 are available in [root](https://github.com/polifonia-project/folk_ngram_analysis/tree/master/) folder. 
    
 2. **Ceol Rince na hÉireann (CRÉ) corpus**
-   * 2.1. For the associated *Ceol Rince na hÉireann* corpus of 1,195 monophonic Irish traditional dance tunes in ABC and MIDI formats, please see: [./corpus/readme.md](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/corpus/readme.md).
+   * 2.1. For the associated *Ceol Rince na hÉireann* corpus of 1,195 monophonic Irish traditional dance tunes in ABC and MIDI formats, please see: [./cre_corpus/readme.md](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/cre_corpus/readme.md).
 3. **Root Note Detection**
    * 3.1. Work-in-progress on automatic detection of musical root for each tune in the corpus, please see: [/.root_key_detection/README.md](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/root_note_detection/README.md)
 
@@ -64,7 +64,7 @@ To ensure FONN runs correctly, please install the following libraries:
 
 ## FONN - preliminary setup for ABC corpora
 
-NOTE: The *CRÉ* corpus is provided in both ABC Notation and MIDI formats in [./corpus](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/corpus/) subdirectory, along with a demo Jupyter notebook and README.
+NOTE: The *CRÉ* corpus is provided in both ABC Notation and MIDI formats in [./corpus](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/cre_corpus/) subdirectory, along with a demo Jupyter notebook and README.
 
 - To ingest a corpus in ABC Notation format, first install the abc2MIDI external dependency, which can be downloaded directly [here](https://ifdo.ca/~seymour/runabc/abcMIDI-2022.06.14.zip). For information on abc2MIDI, please see the project [documentation](https://abcmidi.sourceforge.io).
 
@@ -78,7 +78,7 @@ NOTE: The *CRÉ* corpus is provided in both ABC Notation and MIDI formats in [./
 1.1. **Reading a MIDI corpus: setup_corpus.py**
 
 - Running ```./setup_corpus.py``` converts a monophonic MIDI corpus to feature sequence representation.
-By default this conversion script reads the *CRÉ* MIDI corpus at ```./corpus/MIDI``` and outputs feature sequence data to ```./corpus/feat_seq_corpus```. Input and output paths can be edited if desired via ```./setup_corpus/setup_corpus.py``` main function.
+By default this conversion script reads the *CRÉ* MIDI corpus at ```./cre_corpus/MIDI``` and outputs feature sequence data to ```./cre_corpus/feat_seq_corpus```. Input and output paths can be edited if desired via ```./setup_corpus/setup_corpus.py``` main function.
 
 - ```./corpus``` must include a ```roots.csv``` file containing the root note of each MIDI file, represented as a chromatic [pitch class](https://en.wikipedia.org/wiki/Pitch_class) (an integer between 0 and 11). This is necessary to calculate secondary key-invariant feature sequences later in the workflow. An expert-annotated ```roots.csv``` file is provided for the test corpus.
 
@@ -87,7 +87,7 @@ By default this conversion script reads the *CRÉ* MIDI corpus at ```./corpus/MI
 
 1.2. **Extracting patterns: pattern_extraction.py**
 
-- Running ```pattern_extraction.py``` extracts all patterns which occur at least once in the corpus for a target musical feature (i.e. 'pitch', 'interval', 'pitch class', etc) at a user-selectable range of pattern lengths and level of graunlarity. A table is compiled, frequency and TF-IDF values are calculated, and the output is written to file in ```./corpus/pattern_corpus/``` subdirectory.
+- Running ```pattern_extraction.py``` extracts all patterns which occur at least once in the corpus for a target musical feature (i.e. 'pitch', 'interval', 'pitch class', etc) at a user-selectable range of pattern lengths and level of graunlarity. A table is compiled, frequency and TF-IDF values are calculated, and the output is written to file in ```./cre_corpus/pattern_corpus/``` subdirectory.
 
 - By default, running this file will extract all 3-7 item accent-level key-invariant pitch class patterns from the test corpus. 
 The default target fesature, pattern length, and level of granularity can all be changed in ```pattern_extraction.py``` main function.
@@ -108,7 +108,7 @@ By default, ```LordMcDonaldsreel``` is set as the search candidate tune, but thi
 
 ## 2. Ceol Rince na hÉireann (CRÉ) MIDI corpus 
 
-- A new version of the previously-existing *Ceol Rince na hÉireann* corpus, containing 1,195 monophonic Irish traditional dance tunes. the corpus in provided in ABC Notation and in MIDI. Please see: [./corpus/readme.md](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/corpus/README.md) for more information.
+- A new version of the previously-existing *Ceol Rince na hÉireann* corpus, containing 1,195 monophonic Irish traditional dance tunes. the corpus in provided in ABC Notation and in MIDI. Please see: [./cre_corpus/readme.md](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/cre_corpus/README.md) for more information.
 
 * Highlights:
   * Corpus title: _Ceol Rince na hÉireann_
