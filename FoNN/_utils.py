@@ -1,4 +1,4 @@
-"""This file holds utility functions for 'music_pattern_analysis' repository"""
+"""This file holds FoNN module utility/helper functions"""
 
 from collections import Counter
 
@@ -8,6 +8,21 @@ import pandas as pd
 import requests
 
 
+def concatenate_abc_files(in_path=None, outfile_name=None):
+    """If reading a corpus from an input folder containing multiple ABC files, this helper function can be used to
+    concatenate the ABC files."""
+
+    concatenated = open(in_path + f'/{outfile_name}.abc', 'w')
+
+    for file in os.listdir(in_path):
+        if (file.endswith('.abc') and not file.startswith('.') and file != f"{outfile_name}.abc"):
+            with open(in_path + '/' + file, 'r') as raw:
+                contents = raw.read()
+                concatenated.write(contents)
+    concatenated.close()
+    return concatenated
+
+
 def reformat_midi_filenames(indir):
     """Strips special characters and spaces from filenames in input MIDI cre_corpus"""
     for root, dirs, filenames in os.walk(os.path.abspath(indir)):
@@ -15,6 +30,7 @@ def reformat_midi_filenames(indir):
             alnum_name = [ch for ch in filename[:-4] if ch.isalnum()]
             reformatted_name = f"{''.join(alnum_name)}.mid"
             os.rename(src=os.path.join(root, filename), dst=os.path.join(root, reformatted_name))
+    return None
 
 
 def get_url_paths_for_online_midi_corpus(url):
@@ -38,54 +54,22 @@ def read_csv(inpath):
 
 
 def write_to_csv(df, outpath, filename):
+    "Writes Pandas dataframes to csv and creates subdirectories."
     os.makedirs(outpath, exist_ok=True)
     df.to_csv(f"{outpath}/{filename}.csv", encoding='utf-8')
     return None
 
-def extract_feature_sequence(df, seq):
-    return df[seq].to_numpy()
-
-
-def filter_dataframe(df, seq, threshold=80):
-    return df[df[seq] > threshold]
-
 
 def find_most_frequent_value_in_seq(df, seq):
-    hist = Counter(extract_feature_sequence(df, seq))
+    """Returns the most frequent element in a sequence"""
+
+    # extract feature sequence
+    feature_sequence = df[seq].to_numpy()
+    # create histogram of element occurrences
+    hist = Counter(feature_sequence)
     # return only the dict key with the max associated value:
     res = max(hist.items(), key=lambda x: x[1])
     return res[0]
-
-
-def remove_cols_from_dataframe(df, col_names):
-    df.drop(col_names, axis=1, inplace=True)
-    print(df.head())
-    return df
-
-
-def calculate_tune_lengths(target_dir):
-    print("Calculating tune lengths:")
-
-    results = {}
-
-    for file_name in os.listdir(target_dir):
-        file_path = f"{target_dir}/{file_name}"
-        tune_title = file_name[:-4]
-        with open(file_path) as content:
-            counter = len(content.readlines()) - 1
-        results[tune_title] = counter
-
-    formatted_results = pd.DataFrame()
-    formatted_results['title'] = results.keys()
-    formatted_results['length'] = results.values()
-    formatted_results.set_index('title', drop=True, inplace=True)
-
-    final_output = formatted_results.T
-    # final_output.reset_index(inplace=True, drop=True)
-    final_output = final_output.rename_axis(None, axis=1)
-    print(final_output)
-    return final_output
-
 
 
 def main():
