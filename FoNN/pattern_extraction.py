@@ -47,7 +47,7 @@ class NgramPatternCorpus:
     Attributes:
         feature -- a single input feature name selected from FEATURES
         in_dir -- path to dir containing csv feature sequence files representing each tune in a music corpus, as
-        outputted by corpus_processing_tools.py
+        outputted by feature_sequence_extraction_tools.py
         out_dir -- directory to write output files
         name -- Corpus name. Derived automatically from in_dir directory name
         data -- input data read from csv files

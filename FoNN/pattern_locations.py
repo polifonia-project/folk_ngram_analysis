@@ -20,7 +20,7 @@ def read_tune_paths(root_dir):
 
 def read_tune_data(filepath, feature):
     """Extract data for target musical feature from csv music data files.
-    For comprehensive list of musical feature names and explanations please see corpus_processing_tools.py docstring."""
+    For comprehensive list of musical feature names and explanations please see feature_sequence_extraction_tools.py docstring."""
 
     # read csv colunm names and check that a column corresponding to target feature is present
     with open(filepath) as data:
