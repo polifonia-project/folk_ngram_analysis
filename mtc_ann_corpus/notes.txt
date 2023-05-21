@@ -1,0 +1,10 @@
+Subdirectory '../mtc_ann_corpus/midi' contains a copy of the Meetrens Tune Collection Annotated Corpus (MTC-ANN)
+v2.0 in MIDI format, downloaded from www.liederenbank.nl/mtc on 29 November 2021.
+All other corpus data is derived from this original input.
+
+Feature sequence data extracted at (duration-weighted) note-level.
+Patterns extracted for 3 <= n <= 12 at both levels.
+
+Locations and KG data processed per:
+Patterns and pattern locations extracted for 4 <= n <= 6 at (duration-weighted) note-level.
+Pattern corpus filtered to remove patterns occurring less than 2 times in total.
