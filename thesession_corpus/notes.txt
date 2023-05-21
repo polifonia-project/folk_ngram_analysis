@@ -1,0 +1,11 @@
+Subdirectory '../thesession_corpus/abc' contains a data dump of The Session corpus (www.thesession.org)
+in ABC Notation format, which was downloaded from https://github.com/adactio/TheSession-data on 13 December 2021.
+All other corpus data is derived from this original input.
+
+Default ABC --> MIDI conversion via FoNN.abc_ingest.py
+Feature sequence data extracted at (duration-weighted) note-level and accent-level.
+Patterns extracted for 3 <= n <= 12 at both levels.
+
+Locations and KG data processed per:
+Patterns and pattern locations extracted for 4 <= n <= 6 at  accent-levels.
+Pattern corpus filtered to remove patterns occurring less than 2 times in total.
