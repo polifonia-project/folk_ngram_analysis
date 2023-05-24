@@ -34,11 +34,11 @@ def read_tune_data(filepath, feature):
     return np.genfromtxt(filepath, dtype='int16', delimiter=',', usecols=target_col, skip_header=1)
 
 
-def extract_ngrams(data, n_vals):
+def extract_ngrams(data, n):
     """Extract n-grams from feature data extracted via read_tune_data()"""
     # remove NaN values from input data
     data = data[~np.isnan(data)]
-    return (tuple((data[i:i + n])) for n in n_vals for i in range(len(data) - n + 1))
+    return (tuple((data[i:i + n])) for i in range(len(data) - n + 1))
 
 
 def find_ngram_indices(ngrams):
@@ -67,21 +67,23 @@ root_dir = '/Users/dannydiamond/NUIG/Polifonia/MTC/MTC-ANN-2.0/mtc_ann_feat_seq_
 # select musical feature
 feature = 'diatonic_scale_degree'
 # define n-values (range of pattern lengths)
-n_vals = list(range(4, 6))
+
 
 # run
-results = {}
-tune_paths = read_tune_paths(root_dir)
-for path in tune_paths:
-    title = read_tune_title(path)
-    data = read_tune_data(path, feature)
-    ngrams = list(extract_ngrams(data, n_vals))
-    indices = find_ngram_indices(ngrams)
-    results[title] = dict(indices)
+for n in (4, 5, 6):
+    results = {}
+    tune_paths = read_tune_paths(root_dir)
+    for path in tune_paths:
+        title = read_tune_title(path)
+        data = read_tune_data(path, feature)
+        ngrams = list(extract_ngrams(data, n))
+        indices = find_ngram_indices(ngrams)
+        results[title] = dict(indices)
 
-# # store output as pickle
-out_dir = '/Users/dannydiamond/NUIG/Polifonia/MTC/MTC-ANN-2.0/mtc_ann_feat_seq_corpus/locations/'
-out_file = 'dw_locations.pkl'
-out_path = f"{out_dir}/{out_file}"
-with open(out_path, 'wb') as f_out:
-    pickle.dump(results, f_out)
+    # # store output as pickle
+    out_dir = '/Users/dannydiamond/NUIG/Polifonia/MTC/MTC-ANN-2.0/mtc_ann_feat_seq_corpus/locations/'
+    out_file = f'dw_locations{n}.pkl'
+    out_path = f"{out_dir}/{out_file}"
+    print(results)
+    with open(out_path, 'wb') as f_out:
+        pickle.dump(results, f_out)

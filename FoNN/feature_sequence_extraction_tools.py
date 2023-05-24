@@ -1,3 +1,5 @@
+# TODO: Check Corpus docstrings
+
 """
 Feature sequence data represents each note in a symbolic music document via numerical feature values, such
 as: (midi_note_num: 68, onset: 10, duration: 2)
@@ -25,7 +27,7 @@ Secondary feature sequences calculable via Tune and Corpus classes:
 -- 'diatonic_scale_degree': Diatonic pitch class relative to the root note or tonal centre of the input sequence.
 -- 'chromatic_interval': Change in chromatic pitch between two successive notes in the input sequence
 -- 'diatonic_interval': Change in diatonic pitch between two successive notes in the input sequence
--- 'parsons_code': simple melodic contour. Please see Tune.calc_parsons_codes() docstring for detailed explanation.
+-- 'parsons_code': simple melodic contour. Please see Tune.extract_parsons_codes() docstring for detailed explanation.
 -- 'parsons_cumsum': cumulative Parsons code values.
 
 These classes also allow:
@@ -97,7 +99,7 @@ class Tune:
         return [val for attr, val in _attrs if isinstance(val, pd.DataFrame)]
 
     def extract_root(self):
-        """Populates chromatic_root and diatonic_root atts using music21"""
+        """Populates chromatic_root and diatonic_root atts using key signature information read from MIDI via music21"""
         score = self.score
         # Parse score for music21 Key objects and extract their tonics:
         roots = [key.tonic for key in score.recurse().getElementsByClass(music21.key.Key)]
@@ -105,7 +107,7 @@ class Tune:
         self.chromatic_root = int(roots[0].ps) if roots != [] else 7
         self.diatonic_root = roots[0].diatonicNoteNum if roots != [] else 5
 
-    def music21_streams_to_feature_sequence_converter(self):
+    def convert_music21_streams_to_feature_sequences(self):
 
         """
         Generator function. Extracts primary feature sequence data from music21 Stream representation of a tune.
@@ -157,13 +159,13 @@ class Tune:
                 note.volume.velocity if not note.isRest else 0,  # MIDI velocity
             ])
 
-    def create_feature_sequence(self):
+    def extract_primary_feature_sequences(self):
 
-        """Extracts feat_seq data using music21_streams_to_feature_sequence_converter() generator function.
+        """Extracts primary feature sequences via convert_music21_streams_to_feature_sequences() generator function.
         Formats output and stores in pandas DataFrame at feat_seq attr."""
 
         # Add data for each note to 'feat_seq_data' dict:
-        feat_seq_data = self.music21_streams_to_feature_sequence_converter()
+        feat_seq_data = self.convert_music21_streams_to_feature_sequences()
         # convert to DataFrame
         output = pd.DataFrame(feat_seq_data, columns=["midi_note_num",
                                                       "diatonic_note_num",
@@ -224,43 +226,70 @@ class Tune:
         # Filter feature sequence data via MIDI velocity threshold:
         self.feat_seq_accents = feat_seq[feat_seq['velocity'] > thresh].reset_index()
 
-    def add_chromatic_scale_degree(self):
+    def extract_relative_chromatic_pitches(self):
 
-        """Derives chromatic scale degree values from pitch sequence, adds as new column to feat_seq and 
-        feat_seq_accents DataFrames."""
+        """
+        Uses chromatic root value assigned by Corpus.assign_roots() method to extract key-invariant chromatic pitch
+        sequence of pitches relative to the root. Applies to bot note- and accent-level feature sequence DataFrames.
+        """
+
+        # select all feature sequence DataFrames from Tune instance attrs:
+        targets = self._get_attrs()
+        chromatic_root = self.chromatic_root
+        for t in targets:
+            t['relative_chromatic_pitch'] = (t['midi_note_num'] - chromatic_root).astype('int8')
+
+    def extract_chromatic_scale_degrees(self):
+
+        """
+        Derives chromatic scale degree values from relative pitch sequence for note- and accent-level feature
+        sequence DataFrames.
+        """
 
         # select all feature sequence DataFrames from Tune instance attrs:
         targets = self._get_attrs()
         for t in targets:
             t['chromatic_scale_degree'] = (t['relative_chromatic_pitch'] % 12).astype('int8')
 
-    def calc_chromatic_intervals(self):
-        """Calculates chromatic interval sequences; adds as new column to feat_seq and feat_seq_accents DataFrames."""
+    def extract_chromatic_intervals(self):
+        """Extracts chromatic interval sequences for note- and accent-level feature sequence DataFrames."""
         targets = [i for i in self._get_attrs()]
         for t in targets:
             t['chromatic_interval'] = (t['midi_note_num'] - t['midi_note_num'].shift(1)).fillna(0).astype('int8')
+            
+    def extract_relative_diatonic_pitches(self):
 
-    def calc_diatonic_pitch_class(self):
-        """Calculates diatonic pitch class sequences; adds as new column to feat_seq and feat_seq_accents DataFrames."""
+        """
+        Uses diatonic root value assigned by Corpus.assign_roots() method to extract key-invariant diatonic pitch 
+        sequences for note- and accent-level feature sequence DataFrames..
+        """
+
+        # select all feature sequence DataFrames from Tune instance attrs:
+        targets = self._get_attrs()
+        diatonic_root = self.diatonic_root
+        for t in targets:
+            t['relative_diatonic_pitch'] = (t['diatonic_note_num'] - diatonic_root).astype('int8')
+
+    def extract_diatonic_pitch_classes(self):
+        """Extracts diatonic pitch class sequences for note- and accent-level feature sequence DataFrames."""
         targets = self._get_attrs()
         for t in targets:
             t["diatonic_pitch_class"] = (t["diatonic_note_num"] % 7).astype('int8')
 
-    def calc_diatonic_intervals(self):
-        """Calculates diatonic interval sequences; adds as new column to feat_seq and feat_seq_accents DataFrames."""
+    def extract_diatonic_intervals(self):
+        """Extracts diatonic interval sequences for note- and accent-level feature sequence DataFrames."""
         targets = self._get_attrs()
         for t in targets:
             t['diatonic_interval'] = (t['diatonic_note_num'] - t['diatonic_note_num'].shift(1)).fillna(0).astype('int8')
 
-    def calc_diatonic_scale_degrees(self):
-        """Calculates diatonic scale degree sequences; 
-        adds as new column to feat_seq and feat_seq_accents DataFrames."""
+    def extract_diatonic_scale_degrees(self):
+        """Extracts diatonic scale degree sequences for note- and accent-level feature sequence DataFrames."""
         targets = self._get_attrs()
         for t in targets:
             t['diatonic_scale_degree'] = ((t['relative_diatonic_pitch'] % 7) + 1).astype('int8')
 
-    def add_bar_count(self):
-        """Adds bar numbers as new column to feat_seq and feat_seq_accents DataFrames."""
+    def extract_bar_count(self):
+        """Adds bar numbers to note- and accent-level feature sequence DataFrames."""
         # Note: Due to its reliance on ABC Notation beat stress modelling, this method only works on IDI files outputted
         # by abc_ingest.py 
         targets = self._get_attrs()
@@ -270,8 +299,11 @@ class Tune:
             t['bar_count'] = bar_lines.cumsum().astype('int16')
 
     def strip_anacrusis(self):
-        """Applies heuristic to check if first bar is less than 1/2 the length of second bar.
-        If so, first bar is taken as a pickup or anacrusis and removed from feat_seq and feat_seq_accents DataFrames."""
+
+        """
+        Applies heuristic to check if first bar is less than 1/2 the length of second bar.
+        If so, first bar is taken as a pickup or anacrusis and removed from note- and accent-level feature sequence data
+        """
 
         targets = self._get_attrs()
         for t in targets:
@@ -284,10 +316,10 @@ class Tune:
             t['bar_count'] = np.where(t['bar_count'].values[0] == 1, t['bar_count'] - 1, t['bar_count'])
 
     @staticmethod
-    def calc_parsons_codes(*feat_seqs):
+    def extract_parsons_codes(*feat_seqs):
 
         """
-        Calculates Parsons code sequences for feature sequence DataFrames passed as inputs; adds output as new 
+        Extracts Parsons code sequences for feature sequence DataFrames passed as inputs; adds output as new 
         Dataframe columns.
         
         Parsons code is a simple representation of melodic contour, formulated by Denys Parsons:
@@ -310,12 +342,15 @@ class Tune:
             # set first Parsons code value to 0
             data.loc[0, 'parsons_code'] = 0
             data.dropna(inplace=True)
-        
 
     @staticmethod
-    def calc_parsons_cumsum(*feat_seqs):
-        """Calculates cumulative Parsons code sequence values; adds output as new 
-        Dataframe columns."""
+    def extract_parsons_cumsum(*feat_seqs):
+
+        """
+        Extracts cumulative Parsons code sequence values;
+        adds output to note- and accent-level feature sequence DataFrames.
+        """
+
         for data in feat_seqs:
             # Calculate Parsons code coumsum:
             data['parsons_cumsum'] = data['parsons_code'].cumsum().astype('int8')
@@ -323,7 +358,7 @@ class Tune:
     def apply_duration_weighting(self, features: list = None):
 
         """
-        Calculates duration-weighted sequence for selected features and returns output to pandas DataFrame at
+        Extracts duration-weighted sequence for selected features and returns output to pandas DataFrame at
         duration_weighted attr.
 
         Duration weighting re-indexes sequence data, converting from feature value per note event to
@@ -435,13 +470,19 @@ class Corpus:
             tune.filter_score_by_beat_strength(thresh)
 
     def convert_scores_to_feat_seqs(self, level=None):
-        """Runs Tune.create_feature_sequence() to extract feature sequence data for all Tune objects in Corpus.tunes"""
+
+        """
+        Runs Tune.extract_primary_feature_sequences() to extract feature sequence data for all Tune objects in
+        Corpus.tunes
+        """
+
         for tune in tqdm(self.tunes, desc=f'Calculating {level}-level feature sequences from music21 scores'):
-            tune.create_feature_sequence(level=level)
+            tune.extract_primary_feature_sequences(level=level)
 
     def filter_feat_seq_accents(self, thresh=80, by=None):
 
-        """For all Tune objects in Corpus.tunes, this method filters Tune.feat_seq to create Tune.feat_seq_accents 
+        """
+        For all Tune objects in Corpus.tunes, this method filters Tune.feat_seq to create Tune.feat_seq_accents
         attr. User can select whether to filter via velocity [for ABC inputs] or 
         beat strength [for MIDI inputs]. Default is via velocity.
         
@@ -454,60 +495,73 @@ class Corpus:
                 tune.filter_feat_seq_by_velocity(thresh=thresh)
         elif by == 'beat_strength':
             for tune in tqdm(self.tunes, desc=f'Filtering accent-level feature sequence data by music21 beatStrength'):
-                tune.filter_feat_seq_by_beat_strength(thresh=thresh)
+                tune.filter_score_by_beat_strength(thresh=thresh)
 
-    def calc_diatonic_intervals(self):
+    def extract_diatonic_intervals(self):
         
-        """Runs Tune.calc_diatonic_intervals() to add diatonic interval sequences to feature sequence data for every 
+        """Runs Tune.extract_diatonic_intervals() to add diatonic interval sequences to feature sequence data for every 
         Tune object in Corpus.tunes."""
         
         for tune in tqdm(self.tunes, desc='Calculating diatonic interval sequences'):
-            tune.calc_diatonic_intervals()
+            tune.extract_diatonic_intervals()
 
-    def calc_diatonic_pitch_class_seqs(self):
+    def extract_relative_diatonic_pitch_seqs(self):
 
-        """Runs Tune.calc_diatonic_pitch_class() to add diatonic pitch class sequences to feature sequence data for 
+        """Runs Tune.extract_relative_diatonic_pitches() to add relative diatonic pitch sequences to feature sequence data
+        for every Tune object in Corpus.tunes."""
+
+        for tune in tqdm(self.tunes, desc='Calculating relative diatonic pitch sequences'):
+            tune.extract_relative_diatonic_pitches()
+
+    def extract_diatonic_pitch_class_seqs(self):
+
+        """Runs Tune.extract_diatonic_pitch_classes() to add diatonic pitch class sequences to feature sequence data for
         all Tune objects in Corpus.tunes."""
         
         for tune in tqdm(self.tunes, desc='Calculating diatonic pitch class sequences'):
-            tune.calc_diatonic_pitch_class()
+            tune.extract_diatonic_pitch_classes()
 
-    def calc_diatonic_scale_degree_seqs(self):
+    def extract_diatonic_scale_degree_seqs(self):
 
-        """Runs Tune.calc_diatonic_scale_degrees() to add diatonic scale degree sequences to feature sequence data for 
+        """Runs Tune.extract_diatonic_scale_degrees() to add diatonic scale degree sequences to feature sequence data for 
                 all Tune objects in Corpus.tunes."""
         
         for tune in tqdm(self.tunes, desc='Calculating diatonic scale degree sequences'):
-            tune.calc_diatonic_scale_degrees()
+            tune.extract_diatonic_scale_degrees()
 
-    def calc_chromatic_intervals(self):
-        """Runs Tune.calc_chromatic_intervals() to add chromatic interval sequences to feature sequence data for 
+    def extract_chromatic_intervals(self):
+        """Runs Tune.extract_chromatic_intervals() to add chromatic interval sequences to feature sequence data for 
                 all Tune objects in Corpus.tunes."""
         for tune in tqdm(self.tunes, desc='Calculating chromatic interval sequences'):
-            tune.calc_chromatic_intervals()
+            tune.extract_chromatic_intervals()
 
-    def calc_chromatic_scale_degree_seqs(self):
+    def extract_relative_chromatic_pitch_seqs(self):
+        """Runs Tune.extract_relative_chromatic_pitches() for all Tune objects in Corpus.tunes."""
+        for tune in tqdm(self.tunes, desc='Calculating relative chromatic pitch sequences'):
+            tune.extract_relative_chromatic_pitches()
+
+    def extract_chromatic_scale_degree_seqs(self):
          
-        """Runs Tune.add_chromatic_scale_degree() to add chromatic scale degree sequences to feature sequence data for 
+        """Runs Tune.extract_chromatic_scale_degrees() to add chromatic scale degree sequences to feature sequence data for
                 all Tune objects in Corpus.tunes."""
          
         for tune in tqdm(self.tunes, desc='Calculating chromatic scale degree sequences'):
-            tune.add_chromatic_scale_degree()
+            tune.extract_chromatic_scale_degrees()
 
-    def calc_parsons_codes(self):
-        """Applies Tune.calc_parsons_codes() and Tune.calc_parsons_cumsum() to all Tune objects in Corpus.tunes"""
+    def extract_parsons_codes(self):
+        """Applies Tune.extract_parsons_codes() and Tune.extract_parsons_cumsum() to all Tune objects in Corpus.tunes"""
         for tune in tqdm(self.tunes, desc='Calculating cumulative Parsons code sequences'):
             if tune.feat_seq_accents is not None:
-                tune.calc_parsons_codes(tune.feat_seq, tune.feat_seq_accents)
-                tune.calc_parsons_cumsum(tune.feat_seq, tune.feat_seq_accents)
+                tune.extract_parsons_codes(tune.feat_seq, tune.feat_seq_accents)
+                tune.extract_parsons_cumsum(tune.feat_seq, tune.feat_seq_accents)
             else:
-                tune.calc_parsons_codes(tune.feat_seq)
-                tune.calc_parsons_cumsum(tune.feat_seq)
+                tune.extract_parsons_codes(tune.feat_seq)
+                tune.extract_parsons_cumsum(tune.feat_seq)
 
-    def add_bar_numbers(self):
-        """Runs Tune.add_bar_count() to add bar numbers to feature sequence data for all Tune objects in Corpus.tunes"""
+    def extract_bar_numbers(self):
+        """Runs Tune.extract_bar_count() to add bar numbers to feature sequence data for all Tune objects in Corpus.tunes"""
         for tune in tqdm(self.tunes, desc='Adding bar numbers to feature sequence data'):
-            tune.add_bar_count()
+            tune.extract_bar_count()
 
     def strip_anacruses(self):
 
@@ -516,7 +570,7 @@ class Corpus:
 
         return [tune.strip_anacrusis() for tune in tqdm(self.tunes, desc='Removing anacruses (pick-up measures)')]
 
-    def calc_duration_weighted_feat_seqs(self, features):
+    def extract_duration_weighted_feat_seqs(self, features):
 
         """
         Runs Tune.apply_duration_weighting() for all Tune objects in Corpus.tunes.
@@ -536,19 +590,28 @@ class Corpus:
         Tune.duration_weighted to csv files in the appropriate folders."""
 
         # create subdirectories under location set by Corpus.csv_outpath attr (if they don't already exist):
-        os.makedirs(f"{self.csv_outpath}/feat_seq/")
-        os.makedirs(f"{self.csv_outpath}/feat_seq_accents/")
-        os.makedirs(f"{self.csv_outpath}/duration_weighted/")
+        # note-level output data
+        note_level_results_dir = f"{self.csv_outpath}/feat_seq_note"
+        if not os.path.isdir(note_level_results_dir):
+            os.makedirs(note_level_results_dir)
+        # accent-level output data
+        accent_level_results_dir = f"{self.csv_outpath}/feat_seq_accents"
+        if not os.path.isdir(accent_level_results_dir):
+            os.makedirs(accent_level_results_dir)
+        # duration-weighted output data
+        duration_weighted_results_dir = f"{self.csv_outpath}/feat_seq_duration_weighted"
+        if not os.path.isdir(duration_weighted_results_dir):
+            os.makedirs(duration_weighted_results_dir)
 
         # write data to file:
         for tune in tqdm(self.tunes, desc='Saving feature sequence data to csv'):
             if tune.feat_seq is not None and len(tune.feat_seq) > 2:
                 tune.feat_seq.rename_axis('index').astype('int16', errors='ignore')
-                tune.feat_seq.to_csv(f"{self.csv_outpath}/feat_seq_note/{tune.title}.csv")
+                tune.feat_seq.to_csv(f"{note_level_results_dir}/{tune.title}.csv")
             if tune.feat_seq_accents is not None and len(tune.feat_seq_accents) > 2:
-                tune.feat_seq_accents.to_csv(f"{self.csv_outpath}/feat_seq_acc/{tune.title}.csv")
+                tune.feat_seq_accents.to_csv(f"{accent_level_results_dir}/{tune.title}.csv")
             if tune.duration_weighted is not None and len(tune.duration_weighted) > 2:
-                tune.duration_weighted.to_csv(f"{self.csv_outpath}/feat_seq_dw/{tune.title}.csv")
+                tune.duration_weighted.to_csv(f"{duration_weighted_results_dir}/{tune.title}.csv")
 
     @staticmethod
     def midi_ingest_factory(inpath):
@@ -562,7 +625,7 @@ class Corpus:
                 tune = Tune(f"{inpath}/{file}")
                 if len(tune.score) != 0:
                     tune.extract_root()
-                    tune.create_feature_sequence()
+                    tune.extract_primary_feature_sequences()
                     del tune.score
                     yield tune
                 else:

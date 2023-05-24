@@ -8,7 +8,7 @@ corpus_setup_tools.py.
 For a user-selectable musical feature and level of data granularity,
 NgramPatternCorpus class extracts and represents all local patterns between 3 and 12 elements in length,
  which occur at least once in the corpus. The number of occurrences of each pattern in each tune is calculated and
- stored in a sparse matrix (NgramPatternCorpus.freq). A weighted version of this data is also calculated, which holds
+ stored in a sparse matrix (NgramPatternCorpus.pattern_frequency_matrix). A weighted version of this data is also calculated, which holds
  TF-IDF values for each pattern in each tune rather than raw occurrence counts (NgramPatternCorpus.freq). This helps
  suppress the prominence of frequent-but-insignificant 'stop word' patterns. These matrices are core requirements for
  FoNN's similarity_search.py similarity tools.
@@ -33,6 +33,7 @@ import pandas as pd
 from scipy import sparse
 from sklearn.feature_extraction.text import TfidfTransformer, CountVectorizer
 from sklearn.metrics.pairwise import linear_kernel
+from tqdm import tqdm
 
 
 class NgramPatternCorpus:
@@ -72,7 +73,7 @@ class NgramPatternCorpus:
         '__dict__'
     ]
 
-    LEVELS = {'note': 'note-level', 'dw': 'note-level (duration-weighted)', 'acc': 'accent-level'}
+    LEVELS = {'note': 'note-level', 'duration_weighted': 'note-level (duration-weighted)', 'acc': 'accent-level'}
 
     FEATURES = {
         'eighth_note',
@@ -103,8 +104,9 @@ class NgramPatternCorpus:
         self.feature = feature
         assert os.path.isdir(in_dir)
         self.in_dir = in_dir
-        assert os.path.isdir(out_dir)
         self.out_dir = out_dir
+        if not os.path.isdir(self.out_dir):
+            os.makedirs(self.out_dir)
         self.name = in_dir.split('/')[-3]
         for l in NgramPatternCorpus.LEVELS:
             if l in in_dir:
@@ -112,8 +114,8 @@ class NgramPatternCorpus:
         self.data = self.check_data_for_null_entries(self.read_input_data())
         self.titles = list(self.data)
         self.patterns = None
-        self.freq = None
-        self.tfidf = None
+        self.pattern_freq_matrix = None
+        self.pattern_tfidf_matrix = None
 
     def __repr__(self):
 
@@ -128,7 +130,6 @@ class NgramPatternCorpus:
 
         """Extract feature sequence data from all csv files in corpus and return in dict"""
 
-        print("Reading input data...")
         in_dir = self.in_dir
         feature = self.feature
         titles = [filename[:-4] for filename in os.listdir(in_dir)]
@@ -140,7 +141,9 @@ class NgramPatternCorpus:
             cols = next(csv_reader)
             colsmap = {col_name: i for i, col_name in enumerate(cols)}
             assert feature in colsmap
-            print(colsmap)
+            # print('Features:')
+            # for feat in colsmap:
+            #     print(feat)
         # identify target feature data column by index
         target_col_idx = colsmap[feature]
         # extract target column data from each tune to list
@@ -151,11 +154,11 @@ class NgramPatternCorpus:
                 delimiter=',',
                 usecols=target_col_idx,
                 skip_header=1)
-            for path in inpaths
+            for path in tqdm(inpaths, desc="Reading input data")
         ]
         # format output data into dict per tune titles (keys): feature data (vals)
-        data_out = dict(zip(titles, [i.tolist() for i in target_data]))
-        print(list(data_out.values())[:1])
+        data_out = dict(zip(titles, [i.tolist() for i in tqdm(target_data, desc='Formatting data')]))
+        print("Process completed.")
         return data_out
 
     def save_tune_titles_to_file(self):
@@ -178,16 +181,14 @@ class NgramPatternCorpus:
             input='content',
             lowercase=False,
             tokenizer=lambda x: x,
-            ngram_range=(3, 12),
+            ngram_range=(6, 6),
             analyzer='word'
         )
         # calculate sparse matrix of n-gram pattern occurrences:
         freq = vec.fit_transform(data)
         # store all unique n-gram patterns:
-        patterns = np.array(
-            [np.array([int(float(ch.strip())) for ch in p.split()], dtype='int16')
-             for p in vec.get_feature_names()], dtype='object'
-        )
+        patterns = [np.array([int(float(elem.strip())) for elem in pattern.split()], dtype='int16')
+                    for pattern in vec.get_feature_names()]
 
         # optionally write outputs to disc
         if write_output:
@@ -195,7 +196,7 @@ class NgramPatternCorpus:
             np.save(f"{self.out_dir}/patterns", patterns, allow_pickle=True)
 
         self.patterns = patterns
-        self.freq = freq
+        self.pattern_freq_matrix = freq
         # memory management
         self.data = None
         gc.collect()
@@ -208,16 +209,16 @@ class NgramPatternCorpus:
         Args:
             write_output -- Boolean flag: 'True' writes output to disc, 'False' does not."""
 
-        input_data = self.freq
+        input_data = self.pattern_freq_matrix
         # Convert pattern occurrences to TF-IDF values via using sklearn.feature_extraction.text.TfidfTransformer()
         tfidf = TfidfTransformer()
         tfidf = tfidf.fit_transform(input_data)
         # optionally write output to disc
         if write_output:
             sparse.save_npz(f"{self.out_dir}/tfidf_matrix", tfidf)
-        self.tfidf = tfidf
+        self.pattern_tfidf_matrix = tfidf
         # memory management
-        self.freq = None
+        self.pattern_freq_matrix = None
         gc.collect()
         return None
 
@@ -226,7 +227,7 @@ class NgramPatternCorpus:
         """Calculate pairwise Cosine similarity between TFIDF vectors of all tunes in NgramPatternCorpus.tfidf,
         save as matrix."""
 
-        input_data = self.tfidf
+        input_data = self.pattern_tfidf_matrix
         # Calculate Cosine similarity via sklearn.metrics.pairwise.linear_kernal
         cos_similarity = linear_kernel(X=input_data, Y=None, dense_output=False).todense().astype('float16')
         # As matrix is symmetrical, convert to triangular for memory efficiency
@@ -239,7 +240,7 @@ class NgramPatternCorpus:
             shape=cos_similarity.shape
         )
         output[:] = triangular[:]
-        self.tfidf = None
+        self.pattern_tfidf_matrix = None
         output.flush()
         # memory management
         gc.collect()
@@ -251,7 +252,7 @@ class NgramPatternCorpus:
         NOTE: For large corpora this method may cause memory performance issues.
 
         Args:
-            matrix -- input matrix, can be either NgramPatternCorpus.freq or NgramPatternCorpus.tfidf
+            matrix -- input matrix, can be either NgramPatternCorpus.pattern_freq_matrixor NgramPatternCorpus.tfidf
             write_output -- Boolean flag: 'True' writes output to disc, 'False' does not
             filename -- output file name"""
 
@@ -260,7 +261,9 @@ class NgramPatternCorpus:
         # create DataFrame
         df = pd.DataFrame.sparse.from_spmatrix(matrix.T).astype("Sparse[float16, nan]")
         df.columns = titles
-        df.set_index(patterns, inplace=True, drop=True)
+        df['patterns'] = patterns
+        print(df)
+        df.set_index('patterns', inplace=True, drop=True)
         # print and optionally write to file
         print(df)
         print(df.info())
@@ -274,13 +277,13 @@ class NgramPatternCorpus:
         """Helper function to detect and remove any empty csv files from input processing."""
 
         errors = []
-        print("Removing null entries from input data:")
         for k, v in data.items():
             if np.size(v) < 2:
-                print(f"{k}")
                 errors.append(k)
-
-        for k in errors:
-            data.pop(k, None)
+        if errors:
+            print("Null sequences detected and removed from input data")
+            for err in errors:
+                print(f"{err}")
+                data.pop(err, None)
 
         return data
