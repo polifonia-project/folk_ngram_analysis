@@ -183,7 +183,7 @@ class NgramPatternCorpus:
             input='content',
             lowercase=False,
             tokenizer=lambda x: x,
-            ngram_range=(6, 6),
+            ngram_range=(3, 12),
             analyzer='word'
         )
         # calculate sparse matrix of n-gram pattern occurrences:

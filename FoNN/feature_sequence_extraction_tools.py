@@ -1,5 +1,3 @@
-# TODO: Standardise outpath formatting
-
 """
 Feature sequence data represents each note in a symbolic music document via numerical feature values, such
 as: (midi_note_num: 68, onset: 10, duration: 2)
@@ -20,7 +18,7 @@ Secondary feature sequences calculable via Tune and Corpus classes:
 
 -- 'diatonic_note_num': Diatonic pitch
 -- 'chromatic_pitch_class': Pitch normalised to a single octave, represented as an integer between 0-11.
--- 'bar_count': Bar number
+-- 'bar_num': Bar number
 -- 'relative_chromatic_pitch': Chromatic pitch relative to the root note or tonal centre of the input sequence.
 -- 'relative_diatonic_pitch': Diatonic pitch relative to the root note or tonal centre of the input sequence.
 -- 'chromatic_scale_degree': Chromatic pitch class relative to the root note or tonal centre of the input sequence.
@@ -59,7 +57,6 @@ class Tune:
     title -- Tune title extracted from MIDI filename; populates automatically on instantiation.
     score -- music21 Stream representation of the music data contained in the MIDI file; populates automatically on
     instantiation.
-    score_accents -- A filtered accent-level version of 'score' attr.
     feat_seq -- Feature sequence representation of the data held in 'score' attr.
     accent -- Accent-level feature sequence data
     duration_weighted -- 'duration-weighted' sequences for selected features. Duration-weighting is
@@ -74,15 +71,14 @@ class Tune:
         Initializes Tune object.
 
         Args:
-            inpath -- path to a monophonic MIDI file.
+            inpath -- path to a symbolic music file in any format parseable by music21 library.
         """
 
         self.inpath = inpath
         # Extract tune title from filename:
         self.title = inpath.split('/')[-1][:-4]
-        # automatically read MIDI data to music21 Stream on instantiation:
+        # automatically read music data to music21 Stream on instantiation:
         self.score = music21.converter.parse(f"{self.inpath}")
-        self.score_accents = None
         self.feat_seq = None
         self.feat_seq_accents = None
         self.duration_weighted = None
@@ -93,17 +89,21 @@ class Tune:
         return self
 
     def _get_attrs(self):
-
         """Private function to parse Tune class __dict__ and return any attrs populated with pandas DataFrame objects"""
         _attrs = self.__dict__.items()
         return [val for attr, val in _attrs if isinstance(val, pd.DataFrame)]
 
     def extract_root(self):
-        """Populates chromatic_root and diatonic_root atts using key signature information read from MIDI via music21"""
+
+        """
+        Populates chromatic_root and diatonic_root atts using key signature information read from input files via
+         music21
+        """
+
         score = self.score
         # Parse score for music21 Key objects and extract their tonics:
         roots = [key.tonic for key in score.recurse().getElementsByClass(music21.key.Key)]
-        # Retain first root note name or set root to NaN if MIDI file does not contain any root data.
+        # Retain first root note name or set root to NaN if input file does not contain any root data.
         self.chromatic_root = int(roots[0].ps) if roots != [] else 7
         self.diatonic_root = roots[0].diatonicNoteNum if roots != [] else 5
 
@@ -122,41 +122,44 @@ class Tune:
             pass
 
         # read score content
-        score_content = target.recurse().notes
-        # score_content = target.recurse().notesAndRests
+        # score_content = target.recurse().notes
+        score_content = target.recurse().notesAndRests
         # read all notes and extract their pitches represented as MIDI note numbers:
         for idx, note in enumerate(score_content):
-            # prev_element = score_content[idx - 1]
+            prev_element = score_content[idx - 1]
             if note.isNote:
                 midi_note = float(note.pitch.ps)
                 diatonic_note_num = float(note.pitch.diatonicNoteNum)
                 pitch_class = float(note.pitch.pitchClass)
+                beat_strength = round(float(note.beatStrength), ndigits=3) if note.beatStrength else 0
+                bar_num = note.measureNumber if note.measureNumber else 0
 
-            # # if rests are encountered, copy pitch data from previous note
-            # if note.isRest and prev_element.isNote:
-            #     midi_note = float(prev_element.pitch.ps)
-            #     diatonic_note_num = float(prev_element.pitch.diatonicNoteNum)
-            #     pitch_class = float(prev_element.pitch.pitchClass)
+            # if rests are encountered, copy pitch data from previous note
+            if note.isRest and prev_element.isNote:
+                midi_note = float(prev_element.pitch.ps)
+                diatonic_note_num = float(prev_element.pitch.diatonicNoteNum)
+                pitch_class = float(prev_element.pitch.pitchClass)
+                beat_strength = 0
+                bar_num = note.measureNumber
 
-            # if chords are encountered, take their root: (this is rare in our corpora)
+            # if chords are encountered, take their root:
             elif note.isChord:
                 midi_note = float(note.root().ps)
                 diatonic_note_num = float(note.root().diatonicNoteNum)
                 pitch_class = float(note.root().pitchClass)
-
-            # if note.isRest and prev_element.isChord:
-            #     midi_note = float(prev_element.root().ps)
-            #     diatonic_note_num = float(prev_element.root().diatonicNoteNum)
-            #     pitch_class = float(prev_element.root().pitchClass)
+                beat_strength = round(float(note.beatStrength), 3) if note.beatStrength else 0
+                bar_num = note.measureNumber
 
             # for each note, extract primary feature data and store all feature values in a numpy array:
             yield np.asarray([
                 midi_note,  # MIDI (chromatic) note number
                 diatonic_note_num,  # Diatonic note number
                 pitch_class,  # chromatic pitch class
+                beat_strength,  # beat strength
+                bar_num,    # bar number
                 round(float(note.offset) * 2, 2),  # onset
                 round(float(note.duration.quarterLength) * 2, 2),  # duration
-                note.volume.velocity if not note.isRest else 0,  # MIDI velocity
+                0 if note.isRest else note.volume.velocity,  # MIDI velocity
             ])
 
     def extract_primary_feature_sequences(self):
@@ -170,6 +173,8 @@ class Tune:
         output = pd.DataFrame(feat_seq_data, columns=["midi_note_num",
                                                       "diatonic_note_num",
                                                       "chromatic_pitch_class",
+                                                      "beat_strength",
+                                                      "bar_num",
                                                       "onset",
                                                       "duration",
                                                       "velocity"
@@ -178,59 +183,48 @@ class Tune:
         output["midi_note_num"] = output["midi_note_num"].astype('int8')
         output["diatonic_note_num"] = output["diatonic_note_num"].astype('int8')
         output["chromatic_pitch_class"] = output["chromatic_pitch_class"].astype('int8')
+        output["beat_strength"] = output["beat_strength"].astype('float16').fillna(0).round(decimals=3)
+        output["bar_num"] = output["bar_num"].astype('int8')
         output["onset"] = output["onset"].astype('float16')
         output["duration"] = output["duration"].astype('float16')
-        output["velocity"] = output["velocity"].astype('int16')
+        output["velocity"] = output["velocity"].fillna(0).astype('int16')
         self.feat_seq = output
 
-    def filter_score_by_beat_strength(self, thresh=0.5):
-
-        """Filters Tune.score attr via an adjustable beat strength threshold, output is stored as music21 Stream at
-        score_accents attr.
-
-        args:
-            thresh -- threshold music21 Note.beatStrength attr value by which the score is filtered. Only Note objects
-            with beatStrength >= thresh will be retained in the filtered output.
-
-        To filter and extract heavily-accented notes (i.e.: the most prominent note in each bar) from a score,
-        set thresh=1
-        To filter and extract accented notes (i.e.: one note per beat) from a score, set thresh=0.5
-
-        NOTE: Scores can also be filtered after conversion to feature sequence format via
-        filter_feat_seq_by_velocity() method. The alternative method is faster and less memory-intensive, but will
-        only filter accurately on MIDI data originating from ABC Notation files.
-        For MIDI inputs please use this method to ensure accurate output.
-        """
-
-        score = self.score
-        filtered_score = music21.stream.Score()
-        for idx, note in enumerate(score.recurse().notes):
-            if note.isNote and float(note.beatStrength) >= thresh:
-                filtered_score.append(note)
-        self.score_accents = filtered_score
-
-    def filter_feat_seq_by_velocity(self, thresh=80):
+    def filter_feat_seq(self, by='velocity', thresh=80):
 
         """
         Filters feat_seq feature sequence DataFrame, retaining data for rhythmically-accented
         notes only. Filtered output is stored in a DataFrame at accent attr.
 
-        In the ABC Notation corpora under investigation, MIDI velocity is used to encode rhythm and structure following 
-        a beat stress model applied in the preliminary conversion from ABC notation to MIDI format via abc_ingest.py.
-        In this beat stress model, all notes with MIDI velocity values above 80 are rhythmically-accented.
-
         Args:
-            thresh -- filter threshold MIDI velocity value
+            by -- Select filtering by MIDI velocity ('velocity') or music21 beatStrength ('beat_strength')
+            thresh -- If using by='beat_strength', set thresh=1 to filter and extract heavily-accented notes
+                      (i.e.: the most prominent note in each bar). Set thresh=0.5 to filter and extract accented notes
+                      (i.e.: one note per beat).
+
+                      If using by='beat_strength', set thresh=80 to filter and extract heavily-accented notes. Set
+                      thresh=105 to filter and extract accented notes.
+
+        In the Irish ABC Notation corpora under investigation, MIDI velocity is used to encode rhythm and metric
+        structure following a beat stress model applied in the preliminary conversion from ABC notation to MIDI format
+        (via abc_ingest.py.). Accordingly, by must be set to 'velocity' for accurate filtration of feature sequences
+        derived from such corpora.
+
+        For all other inputs please use by='beatStrength' method to ensure accurate output.
+
+        If no metric structure information is present in the input data, accent-level filtration cannot be applied via
+        either approach.
         """
+
+        target_feature = by
         feat_seq = self.feat_seq
-        # Filter feature sequence data via MIDI velocity threshold:
-        self.feat_seq_accents = feat_seq[feat_seq['velocity'] > thresh].reset_index()
+        self.feat_seq_accents = feat_seq[feat_seq[target_feature] > thresh].reset_index()
 
     def extract_relative_chromatic_pitches(self):
 
         """
         Uses chromatic root value assigned by Corpus.assign_roots() method to extract key-invariant chromatic pitch
-        sequence of pitches relative to the root. Applies to bot note- and accent-level feature sequence DataFrames.
+        sequence of pitches relative to the root. Applies to both note- and accent-level feature sequence DataFrames.
         """
 
         # select all feature sequence DataFrames from Tune instance attrs:
@@ -288,15 +282,22 @@ class Tune:
         for t in targets:
             t['diatonic_scale_degree'] = ((t['relative_diatonic_pitch'] % 7) + 1).astype('int8')
 
-    def extract_bar_count(self):
-        """Adds bar numbers to note- and accent-level feature sequence DataFrames."""
-        # Note: Due to its reliance on ABC Notation beat stress modelling, this method only works on IDI files outputted
-        # by abc_ingest.py 
+    def extract_bar_nums(self):
+
+        """
+        Adds bar numbers to feature sequence DataFrames. This method relies on ABC Notation beat stress model and
+        will not perform accurate bar number calculations for non-ABC originating corpora.
+        """
+
+        # Note: Due to its reliance on ABC Notation beat stress modelling, this method only works on ABC Notation input
+        # files. For input formats with metric structure parsable via music21, 'bar_num' data will automatically
+        # populate upon instantiation via Tune.convert_music21_streams_to_feature_sequences().
+
         targets = self._get_attrs()
         for t in targets:
             # create bar counter column via MIDI velocity values:
             bar_lines = np.where(np.logical_and(t['velocity'] == 105, t.index > 0), True, False)
-            t['bar_count'] = bar_lines.cumsum().astype('int16')
+            t['bar_num'] = bar_lines.cumsum().astype('int16')
 
     def strip_anacrusis(self):
 
@@ -308,12 +309,12 @@ class Tune:
         targets = self._get_attrs()
         for t in targets:
             # calculate duration of first and second bars
-            bar1_duration = t[t['bar_count'] == 0]['duration'].sum()
-            bar2_duration = t[t['bar_count'] == 1]['duration'].sum()
-            t.drop(t[(t['bar_count'] == 0) & (bar1_duration / bar2_duration <= 0.5)].index, inplace=True)
+            bar1_duration = t[t['bar_num'] == 1]['duration'].sum()
+            bar2_duration = t[t['bar_num'] == 2]['duration'].sum()
+            t.drop(t[(t['bar_num'] == 0) & (bar1_duration / bar2_duration <= 0.5)].index, inplace=True)
 
             # reindex bar numbers for tunes from which pickups have been removed
-            t['bar_count'] = np.where(t['bar_count'].values[0] == 1, t['bar_count'] - 1, t['bar_count'])
+            t['bar_num'] = np.where(t['bar_num'].values[0] == 1, t['bar_num'] - 1, t['bar_num'])
 
     @staticmethod
     def extract_parsons_codes(*feat_seqs):
@@ -372,6 +373,8 @@ class Tune:
         duration_weighted = {}
         # create new index of eighth notes from 'onsets' column:
         onsets = target['onset'].to_numpy()
+        if not len(onsets):
+            print(self.title)
         eighth_notes = np.arange(onsets[0], onsets[-1])
         idx = np.searchsorted(onsets, eighth_notes)
 
@@ -398,7 +401,7 @@ class Corpus:
 
     """
     A Corpus object is instantiated with a single argument, 'inpath', which is the path to a directory
-    containing monophonic MIDI files.
+    containing a minimum of one symbolic music file in any format parseable by the music21 library.
 
     Attributes:
         inpath -- per above
@@ -413,7 +416,8 @@ class Corpus:
         Initializes Corpus object.
 
         Args:
-            inpath -- path to a directory of monophonic MIDI files.
+            inpath -- path to a directory containing a minimum of one symbolic music file in any format parseable by the
+             music21 library
         """
 
         self.inpath = inpath
@@ -421,17 +425,17 @@ class Corpus:
         self.pkl_outpath = None
         self.csv_outpath = None
 
-    def read_all_midi_files_to_music21(self):
-        """Creates Tune object for every MIDI file in inpath dir and stores them in list at tunes attr"""
+    def read_corpus_files_to_music21(self):
+        """Creates Tune object for every symbolic music file in inpath dir and stores them in list at tunes attr"""
         inpath = self.inpath
         if os.path.isdir(inpath):
-            # extract paths to all MIDI files in inpath dir
+            # extract paths to all music files in inpath dir
             filenames = [file for file in os.listdir(inpath) if file.endswith('.mid')]
-            # create a Tune object for each MIDI file
+            # create a Tune object for each file
             self.tunes = [Tune(f"{inpath}/{file}") for file in tqdm(
-                filenames, desc="Reading MIDI files to Music21 streams")]
+                filenames, desc="Reading corpus files to Music21 streams")]
         else:
-            print("'inpath' must point to a directory of MIDI files.")
+            print("'inpath' must point to a directory of symbolic music files.")
             self.tunes = None
         return self.tunes
 
@@ -451,24 +455,6 @@ class Corpus:
         for tune in tqdm(self.tunes, desc='Extracting chromatic and diatonic roots'):
             tune.extract_root()
 
-    def filter_score_accents(self, thresh=0.5):
-
-        """
-        Runs Tune.filter_music21_scores() for each Tune object in Corpus.tunes. This filters Tune.score by an
-        adjustable beat strength threshold value, retaining only rhythmically-accented notes.
-
-        args:
-            thresh -- threshold music21 Note.beatStrength attr value by which the score is filtered. Only Note objects
-            with beatStrength >= thresh will be retained in the filtered output.
-
-        To filter and extract heavily-accented notes (i.e.: the most prominent note in each bar) from a score,
-        set thresh=1
-        To filter and extract accented notes (i.e.: one note per beat) from a score, set thresh=0.5
-        """
-
-        for tune in tqdm(self.tunes, desc=f'Filtering music21 scores: beat strength threshold = {thresh}'):
-            tune.filter_score_by_beat_strength(thresh)
-
     def convert_scores_to_feat_seqs(self, level=None):
 
         """
@@ -479,23 +465,19 @@ class Corpus:
         for tune in tqdm(self.tunes, desc=f'Calculating {level}-level feature sequences from music21 scores'):
             tune.extract_primary_feature_sequences(level=level)
 
-    def filter_feat_seq_accents(self, thresh=80, by=None):
+    def filter_feat_seq_accents(self, thresh=80, by='velocity'):
 
         """
         For all Tune objects in Corpus.tunes, this method filters Tune.feat_seq to create Tune.accent
-        attr. User can select whether to filter via velocity [for ABC inputs] or 
-        beat strength [for MIDI inputs]. Default is via velocity.
+        attr. User can select whether to filter via velocity [for ABC-originating inputs] or
+        beat strength [for all other inputs]. Default is via velocity.
         
         Args:
             thresh -- filter threshold value
             by -- set to 'velocity' or 'beat_strength' to select filtration method."""
 
-        if by == 'velocity':
-            for tune in tqdm(self.tunes, desc=f'Filtering accent-level feature sequence data by MIDI velocity'):
-                tune.filter_feat_seq_by_velocity(thresh=thresh)
-        elif by == 'beat_strength':
-            for tune in tqdm(self.tunes, desc=f'Filtering accent-level feature sequence data by music21 beatStrength'):
-                tune.filter_score_by_beat_strength(thresh=thresh)
+        for tune in tqdm(self.tunes, desc=f'Filtering accent-level feature sequence data by MIDI velocity'):
+            tune.filter_feat_seq(by=by, thresh=thresh)
 
     def extract_diatonic_intervals(self):
         
@@ -559,9 +541,13 @@ class Corpus:
                 tune.extract_parsons_cumsum(tune.feat_seq)
 
     def extract_bar_numbers(self):
-        """Runs Tune.extract_bar_count() to add bar numbers to feature sequence data for all Tune objects in Corpus.tunes"""
+
+        """
+        Runs Tune.extract_bar_nums() to add bar numbers to feature sequence data for all Tune objects in Corpus.tunes
+        """
+
         for tune in tqdm(self.tunes, desc='Adding bar numbers to feature sequence data'):
-            tune.extract_bar_count()
+            tune.extract_bar_nums()
 
     def strip_anacruses(self):
 
@@ -599,7 +585,7 @@ class Corpus:
         if not os.path.isdir(accent_level_results_dir):
             os.makedirs(accent_level_results_dir)
         # duration-weighted output data
-        duration_weighted_results_dir = f"{self.csv_outpath}/feat_seq_duration_weighted"
+        duration_weighted_results_dir = f"{self.csv_outpath}/duration_weighted"
         if not os.path.isdir(duration_weighted_results_dir):
             os.makedirs(duration_weighted_results_dir)
 
@@ -614,14 +600,16 @@ class Corpus:
                 tune.duration_weighted.to_csv(f"{duration_weighted_results_dir}/{tune.title}.csv")
 
     @staticmethod
-    def midi_ingest_factory(inpath):
+    def _ingest_factory(inpath):
 
-        """Generator function used in setup_corpus_iteratively() to read MIDI data and extract feature sequence data
-        iteratively from each file in corpus"""
+        """Private generator function used in setup_corpus_iteratively() to iteratively read each file in corpus and
+        extract feature sequence data"""
+
+        filetypes = ('.mid', '.krn')
 
         if os.path.isdir(inpath):
-            filenames = [file for file in os.listdir(inpath) if file.endswith('.mid')]
-            for file in tqdm(filenames, desc='Extracting primary feature sequence data from MIDI'):
+            filenames = [file for file in os.listdir(inpath) if file.endswith(filetypes)]
+            for file in tqdm(filenames, desc='Extracting primary feature sequence data'):
                 tune = Tune(f"{inpath}/{file}")
                 if len(tune.score) != 0:
                     tune.extract_root()
@@ -633,9 +621,9 @@ class Corpus:
 
     def setup_corpus_iteratively(self):
 
-        """Alternative corpus ingest method to read_all_midi_files_to_music21(). This is slower but more memory
-        efficient and is recommended for large corpora (10k+ MIDI files)."""
+        """Alternative corpus ingest method to read_corpus_files_to_music21(). This is slower but more memory
+        efficient and is recommended for large corpora (10k+ files)."""
 
         inpath = self.inpath
-        tunes = [tune for tune in self.midi_ingest_factory(inpath)]
+        tunes = [tune for tune in self._ingest_factory(inpath)]
         self.tunes = tunes
