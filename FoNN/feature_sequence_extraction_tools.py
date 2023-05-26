@@ -1,4 +1,4 @@
-# TODO: Check Corpus docstrings
+# TODO: Standardise outpath formatting
 
 """
 Feature sequence data represents each note in a symbolic music document via numerical feature values, such
@@ -61,7 +61,7 @@ class Tune:
     instantiation.
     score_accents -- A filtered accent-level version of 'score' attr.
     feat_seq -- Feature sequence representation of the data held in 'score' attr.
-    feat_seq_accents -- Accent-level feature sequence data
+    accent -- Accent-level feature sequence data
     duration_weighted -- 'duration-weighted' sequences for selected features. Duration-weighting is
     explained below.
     chromatic_root -- Chromatic note number representing root or tonal centre of input sequence.
@@ -213,7 +213,7 @@ class Tune:
 
         """
         Filters feat_seq feature sequence DataFrame, retaining data for rhythmically-accented
-        notes only. Filtered output is stored in a DataFrame at feat_seq_accents attr. 
+        notes only. Filtered output is stored in a DataFrame at accent attr.
 
         In the ABC Notation corpora under investigation, MIDI velocity is used to encode rhythm and structure following 
         a beat stress model applied in the preliminary conversion from ABC notation to MIDI format via abc_ingest.py.
@@ -482,7 +482,7 @@ class Corpus:
     def filter_feat_seq_accents(self, thresh=80, by=None):
 
         """
-        For all Tune objects in Corpus.tunes, this method filters Tune.feat_seq to create Tune.feat_seq_accents
+        For all Tune objects in Corpus.tunes, this method filters Tune.feat_seq to create Tune.accent
         attr. User can select whether to filter via velocity [for ABC inputs] or 
         beat strength [for MIDI inputs]. Default is via velocity.
         
@@ -586,7 +586,7 @@ class Corpus:
     def save_feat_seq_data_to_csv(self):
 
         """For all Tune objects in Corpus.tunes, this method creates a subdirectory structure at the path specified in
-        Corpus.csv_outpath. It then writes the DataFrames at Tune.feat_seq, Tune.feat_seq_accents, and
+        Corpus.csv_outpath. It then writes the DataFrames at Tune.feat_seq, Tune.accent, and
         Tune.duration_weighted to csv files in the appropriate folders."""
 
         # create subdirectories under location set by Corpus.csv_outpath attr (if they don't already exist):
@@ -595,7 +595,7 @@ class Corpus:
         if not os.path.isdir(note_level_results_dir):
             os.makedirs(note_level_results_dir)
         # accent-level output data
-        accent_level_results_dir = f"{self.csv_outpath}/feat_seq_accents"
+        accent_level_results_dir = f"{self.csv_outpath}/accent"
         if not os.path.isdir(accent_level_results_dir):
             os.makedirs(accent_level_results_dir)
         # duration-weighted output data

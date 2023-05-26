@@ -1,3 +1,5 @@
+# TODO: Standardise outpath formatting
+
 """
 pattern_extraction.py contains pattern extraction tools and outputs a 'pattern corpus' which can be explored via
 similarity_search.py.
@@ -73,7 +75,7 @@ class NgramPatternCorpus:
         '__dict__'
     ]
 
-    LEVELS = {'note': 'note-level', 'duration_weighted': 'note-level (duration-weighted)', 'acc': 'accent-level'}
+    LEVELS = {'note': 'note-level', 'duration_weighted': 'note-level (duration-weighted)', 'accent': 'accent-level'}
 
     FEATURES = {
         'eighth_note',
@@ -187,13 +189,16 @@ class NgramPatternCorpus:
         # calculate sparse matrix of n-gram pattern occurrences:
         freq = vec.fit_transform(data)
         # store all unique n-gram patterns:
-        patterns = [np.array([int(float(elem.strip())) for elem in pattern.split()], dtype='int16')
-                    for pattern in vec.get_feature_names()]
+        patterns = [
+            np.array(
+                [int(float(elem.strip())) for elem in pattern.split()], dtype='int16')
+            for pattern in vec.get_feature_names()
+        ]
 
         # optionally write outputs to disc
         if write_output:
             sparse.save_npz(f"{self.out_dir}/freq_matrix", freq)
-            np.save(f"{self.out_dir}/patterns", patterns, allow_pickle=True)
+            np.save(f"{self.out_dir}/patterns", np.array(patterns, dtype=object), allow_pickle=True)
 
         self.patterns = patterns
         self.pattern_freq_matrix = freq
