@@ -1,5 +1,3 @@
-# TODO: Standardise outpath formatting
-
 """
 pattern_extraction.py contains pattern extraction tools and outputs a 'pattern corpus' which can be explored via
 similarity_search.py.
