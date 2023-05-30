@@ -1,28 +1,35 @@
 """
-Similarity_search.py reads outputs of pattern_extraction.py and takes them as inputs to three pattern-based
-tune similarity methodologies: 'motif', 'incipit_and_cadence' and 'tfidf'.
+similarity_search.py contains PatternSimilarity class which implements three pattern-based tune similarity
+methodologies: 'motif', 'incipit_and_cadence' and 'tfidf'.
+For a user-selectable query tune, users can apply these methods to search the corpus for similar tunes.
 
-'motif' is a novel multi-step similarity method:
-first a representative pattern is extracted from a user-selected query tune via maximal tfidf.
+Input data must fist be processed through FoNN's feature sequence and pattern extraction pipeline
+(via feature_sequence_extracion_tools.py and pattern_extraction.py) to generate and populate the required 'pattern
+corpus' data stored in '../[corpus]/pattern_corpus' dir.
+
+Similarity methodologies applied in PatternSimilarity:
+1. 'motif':
+First a representative pattern is extracted from a user-selected query tune via maximal tfidf.
 All similar patterns to this search term pattern which occur in the corpus are detected via edit distance.
-The number of similar patterns per tune in the corpus is calculated and returned as an indicator of tune-level
-similarity.
+The number of similar patterns per tune in the corpus is calculated, normalised by tune length, and returned as a
+tune-similarity metric.
 
-'incipit and cadence' is an extended version of a traditional musicological incipit search.
-Structurally-important subsequences incipit and cadence sequences are extracted from all tunes in the corpus and
-compared via edit distance.
+2. 'incipit and_cadence':
+An extended version of a traditional musicological incipit search.
+Structurally-important subsequences incipit and cadence subsequences are extracted from all tunes in the corpus and
+compared via pairwise edit distance against the query tune. Users can select from three available edit distance metrics:
+Levenshtein distance; Hamming distance; and a custom-weighted Hamming distance in which musically-consonant
+substitutions are penalised less than dissonant substitutions. The edit distance output is taken as a
+tune-dissimilarity metric.
 
-For both these methods, various edit distances (Levenshtein, Hamming, custom-weighted Hamming),
-distance thresholds and custom substitution penalty matrices can be applied.
-
-The final method, 'tfidf' is the Cosine similarity between TFIDF vectors of all tunes in the corpus. This similarity
-matrix is calculated in pattern_extraction.py but this module contains methods to read the results and write excerpts to
- disc.
+3. 'tfidf':
+The Cosine similarity between TFIDF vectors of all tunes in the corpus. This similarity
+matrix is calculated via pattern_extraction.py but this module contains methods to read and format the results and write
+to disc.
  """
 
-# TODO: Update docstrings
-# TODO: Possibly restructure (flatten) flow control for 'motif'
 # TODO: (long-term) Implement local and/or global alignment methods
+
 
 import os
 
@@ -47,7 +54,8 @@ LEVELS = FoNN.pattern_extraction.NgramPatternCorpus.LEVELS
 
 class PatternSimilarity:
 
-    """Reads input data, applies all three similarity methodologies and writes results to disc.
+    """
+    Read input 'pattern corpus' data, apply selected similarity method(s) to query tune and write results to disc.
 
     Attributes:
 
@@ -88,7 +96,8 @@ class PatternSimilarity:
             feature=None
             ):
 
-        """Initialize PatternSimilarity class instance.
+        """
+        Initialize PatternSimilarity class instance.
 
         Args:
             corpus_path -- root dir of music corpus under investigation.
@@ -139,10 +148,9 @@ class PatternSimilarity:
 
         """
         Set 'n' property representing length of search term pattern(s) to be extracted from query tune when using
-        'motif' similarity mode.
+        'motif' similarity mode. 'n' can be any integer value between 3 and 12.
         """
 
-        # check value is within the max and min pattern lengths allowable
         assert 3 <= val <= 12
         self._n = val
 
@@ -152,8 +160,7 @@ class PatternSimilarity:
 
     @query_tune.setter
     def query_tune(self, val):
-        """Set 'query_tune' property representing title of query tune."""
-        # query tune name must match the title of a tune in the corpus.
+        """Set 'query_tune' title. Note: must match the title of a tune in the corpus."""
         assert val in self._titles
         self._query_tune = val
 
@@ -163,13 +170,17 @@ class PatternSimilarity:
 
     @feature.setter
     def feature(self, val):
-        """Set 'feature' property, the musical feature for which pattern data has been extracted"""
-        # feature name must match one of the 15 features provided by FoNN, as listed in global FEATURES constant.
+
+        """
+        Set 'feature' property, the musical feature under investigation. Default is 'diatonic_scale_degree'
+        Note: feature name must match one of the 15 features provided by FoNN, as listed in global FEATURES constant.
+        """
+
         assert val in FEATURES
         self._feature = val
 
     def _setup_tfidf_vector_cos_similarity_matrix(self):
-        """Load TF-IDF Cosine similarity matrix, store data as _tfidf_vector_cos_similarity_matrix property"""
+        """Load TF-IDF Cosine similarity matrix, store as PatternSimilarity._tfidf_vector_cos_similarity_matrix."""
         titles = self._titles
         matrix_path = self._tfidf_vector_cos_similarity_matrix_path
         x = y = len(titles)
@@ -178,7 +189,7 @@ class PatternSimilarity:
     def _load_sparse_matrix(self, in_dir):
 
         """
-        Loads sparse matrix from file
+        Load sparse matrix from file
 
         Args:
             in_dir -- directory containing sparse matrix file
@@ -193,7 +204,7 @@ class PatternSimilarity:
 
     def _filter_matrix(self, data, mode=None):
 
-        """Filters sparse matrix via user-selectable mode.
+        """Filter sparse matrix via user-selectable mode.
 
         Args:
              data -- input sparse matrix
@@ -224,8 +235,7 @@ class PatternSimilarity:
     def _lookup_precomputed_results(self, data, ascending=False):
 
         """
-        Looks up precalculated tune similarity matrix and returns top results for row 
-        corresponding to query tune.
+        Look up precalculated tune similarity matrix and returns results for query tune.
         
         Args:
             data -- input matrix
@@ -246,10 +256,7 @@ class PatternSimilarity:
 
     def _read_precomputed_tfidf_vector_similarity_results(self):
         
-        """
-        Applies _lookup_precomputed_results() to TF-IDF vector Cosine similarity matrix and writes 
-        to disc.
-        """
+        """Apply _lookup_precomputed_results() to TF-IDF vector Cosine similarity matrix and write output to disc."""
 
         tfidf_similarity_matrix = self._tfidf_vector_cos_similarity_matrix
         # read tfidf similarity matrix via _lookup_precomputed_results()
@@ -268,7 +275,7 @@ class PatternSimilarity:
     def _extract_incipits_and_cadences(self):
         
         """
-        Extracts incipit and cadence sequences from all tunes and stores output in DataFrame.
+        Extract incipit and cadence sequences from all tunes and store output in single corpus-level DataFrame.
 
         Args:
             cadences -- Boolean flag used to select whether to include cadences or not:
@@ -308,7 +315,7 @@ class PatternSimilarity:
     def _create_incipit_and_cadence_hamming_dist_matrix(self):
 
         """
-        Calculates Hamming distance matrix between all incipit and cadence sequences by applying 
+        Calculate matrix of Hamming distance between all incipit and cadence sequences by applying
         sklearn.metrics.pairwise_distances().
         """
 
@@ -322,11 +329,11 @@ class PatternSimilarity:
 
     def _calculate_incipit_and_cadence_edit_distance(self, edit_dist_metric):
         
-        """Calculates and/or reads results of selected similarity/distance metric as applied to incipit and cadence 
-        input data.
+        """
+        Apply selected edit distance method to incipit and cadence input data.
         
         Args:
-            edit_dist_metric -- select similarity of distance metric by name. Value can be 'levenshtein' 
+            metric -- select similarity of distance metric by name. Value can be 'levenshtein'
             (Levenshtein distance); 'hamming' (Hamming distance); or 'custom_weighted_hamming' 
             (custom-weighted Hamming distance).
         """
@@ -383,7 +390,8 @@ class PatternSimilarity:
 
     def _incipit_and_cadence_flow_control(self, edit_dist_metric='levenshtein'):
 
-        """Flow control to run all incipit and cadence metrics and write results to disc.
+        """
+        Flow control: run 'incipit and cadence' similarity method and write results to disc.
 
         Args:
             edit_dist_metric -- select edit distance metric. Value can be 'levenshtein' (Levenshtein distance); 
@@ -408,9 +416,8 @@ class PatternSimilarity:
     def _extract_search_term_motifs_from_query_tune(self):
 
         """
-        Extract representative motif(s) from query tune by maximal TF-IDF
-        for use as search term(s) in 'motif' method.
-         """
+        Extract representative motif(s) from query tune by maximal TF-IDF for use as search term(s) in 'motif' method.
+        """
 
         title = self.query_tune
         data = self._tfidf_matrix
@@ -434,8 +441,8 @@ class PatternSimilarity:
     def _filter_patterns(self):
 
         """
-       This method filters self._patterns array, retaining only patterns which correspond to rows in
-       self._pattern_occurrences_matrix, which is automatically filtered on initialization via self._filter_matrix()
+       Filter self._patterns array, corresponding to filtration of self._pattern_occurrences_matrix, which is
+       automatically applied on initialization via self._filter_matrix().
         """
 
         data = self._pattern_occurrences_matrix
@@ -450,9 +457,9 @@ class PatternSimilarity:
     def _run_motif_edit_distance_calculations(self):
 
         """
-        Calculates edit distance between search term motif(s) and all corpus patterns stored in self._patterns.
-        Detect patterns within a Levenshtein distance threshold of 1, write them to file as intermediate results,
-        and return their indices.
+        Calculate Levenshtein distance between search term motif(s) and all corpus patterns stored in self._patterns.
+        Detect patterns within a distance threshold of 1 and write them to file.
+        Return pattern indices (which correspond to row identifiers in PatternSimilarity._pattern_freq_matrix).
 
         Args:
             mode -- choice of edit distance to be applied, can be either 'levenshtein' (Levenshtein distance);
@@ -515,8 +522,9 @@ class PatternSimilarity:
     def _find_similar_patterns_and_their_occurrences(self):
 
         """
-        Calls _run_edit_distance_calculations() method to find all similar patterns to the search term(s)
-        . Occurrences of these patterns are the looked up in self_pattern_occurrences_matrix matrix and returned.
+        Call _run_edit_distance_calculations() method to find all similar patterns to the 'motif' search term(s)
+        .Occurrences of these patterns are the looked up in self_pattern_occurrences_matrix vi their indices and
+        matrix rows containing their occurrences per tune are returned.
         """
 
         # find all patterns in self._patterns which are an edit distance of 1 or less from the search term pattern(s)
@@ -531,7 +539,7 @@ class PatternSimilarity:
     def _count_similar_pattern_occurrences_per_tune(self, normalize=True):
 
         """
-        Sums the occurrences of each pattern in the filtered occurrences matrix outputted by
+        Sums corpus-level occurrences for all similar patterns to the search term pattern(s) as outputted by
         self._find_similar_patterns_and_their_occurrences().
 
         Args:
@@ -565,8 +573,8 @@ class PatternSimilarity:
     def _calculate_motif_similarity(self, normalize=True):
 
         """
-        Runs motif similarity method via call to self._count_similar_pattern_occurrences_per_tune(); formats and writes
-        results to file.
+        Runs 'motif' similarity method via call to PatternSimilarity._count_similar_pattern_occurrences_per_tune();
+        formats and writes results to file.
 
         Args:
             normalize -- Boolean flag: if True, putput pattern occurrence counts are normalized by the length of the
@@ -590,12 +598,14 @@ class PatternSimilarity:
 
     def run_similarity_search(self, mode=None, motif_norm=True, edit_dist_metric='levenshtein'):
 
-        """Top-level flow control to select and run FoNN's three similarity search methods: 'motif',
+        """
+        Top-level flow control to select and run FoNN's three similarity search methods: 'motif',
         'incipit_and_cadence', and 'tfidf'.
+        Output is automatically written to disc in csv format at '../[corpus]/similarity_results' dir.
 
         Args:
              mode -- selects between three modes above.
-             motif_norm -- selects whether to normalize output of 'motif' method.
+             motif_norm -- Boolean flag. Selects whether to normalize output of 'motif' method.
              edit_dist_metric -- selects between three edit distance metrics available in 'incipit_and_cadence' mode:
                                  1. Levenshtein distance ('levenshtein'); 2. Hamming distance ('hamming'); or
                                  3. Custom-weighted Hamming distance ('custom_weighted_hamming').

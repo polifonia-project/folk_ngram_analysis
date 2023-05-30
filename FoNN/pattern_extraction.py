@@ -1,27 +1,25 @@
 """
-pattern_extraction.py contains pattern extraction tools and outputs a 'pattern corpus' which can be explored via
-similarity_search.py.
+pattern_extraction.py contains a single class, NgramPatternCorpus, containing pattern extraction tools which output data
+ to ../[corpus]/pattern_corpus. These outputs are input requirements for the tune similarity tools stored in
+ similarity_search.py.
 
-NgramPatternCorpus class takes as input a music corpus in feature sequence representation, generated via
+NgramPatternCorpus class takes as input feature sequence csv files representing a music corpus, as generated via
 corpus_setup_tools.py.
 
 For a user-selectable musical feature and level of data granularity,
-NgramPatternCorpus class extracts and represents all local patterns between 3 and 12 elements in length,
- which occur at least once in the corpus. The number of occurrences of each pattern in each tune is calculated and
- stored in a sparse matrix (NgramPatternCorpus.pattern_frequency_matrix). A weighted version of this data is also calculated, which holds
- TF-IDF values for each pattern in each tune rather than raw occurrence counts (NgramPatternCorpus.freq). This helps
- suppress the prominence of frequent-but-insignificant 'stop word' patterns. These matrices are core requirements for
- FoNN's similarity_search.py similarity tools.
+NgramPatternCorpus class extracts and represents all local patterns between 3 and 12 elements in length which occur at
+least once in the corpus. The number of occurrences of each pattern in each tune is calculated and stored in a sparse
+matrix (NgramPatternCorpus.pattern_frequency_matrix). A weighted version of this data is also calculated, holding TF-IDF
+ values for each pattern in each tune rather than frequency counts (NgramPatternCorpus.pattern_tfidf_matrix). Use of
+ TF-IDF helps suppress the prominence of frequent-but-insignificant stop word' patterns.
 
- Pattern extraction and matrix tabulation is via scipy.sparse and sklearn.feature_extraction.text tools which allow
- fast & memory-efficient performance.
+Pattern extraction and matrix tabulation is via scipy.sparse and sklearn.feature_extraction.text tools which allow
+fast & memory-efficient performance. The indexes of the pattern occurrence matrices are stored and written to file in
+separate arrays (NgramPatternCorpus.patterns and NgramPatternCorpus.titles).
 
-  The indexes of the pattern occurrence matrices are stored and written to file in separate arrays
-  (NgramPatternCorpus.patterns and NgramPatternCorpus.titles).
-
-  The class can also calculate an additional output: Cosine similarity between column vectors in the TFIDF matrix.
-   This gives a pairwise tune similarity matrix for the entire corpus. This calculation is implemented in
-   NgramPatternCorpus.calculate_tfidf_vector_cos_similarity() method, using sklearn.metrics.pairwise.linear_kernel.
+NgramPatternCorpus class can also calculate Cosine similarity between column vectors in the TFIDF matrix. This gives a
+pairwise tune similarity matrix for the entire corpus. This calculation is implemented in
+NgramPatternCorpus.calculate_tfidf_vector_cos_similarity() method, using sklearn.metrics.pairwise.linear_kernel.
 """
 
 import csv
@@ -54,8 +52,8 @@ class NgramPatternCorpus:
         data -- input data read from csv files
         titles -- tune titles extracted from data
         patterns -- array of all unique local patterns extracted from data
-        freq -- sparse matrix storing occurrences of all patterns (index) in all tunes (columns)
-        tfidf -- sparse matrix storing tfidf values of all patterns (index) in all tunes (columns)
+        pattern_freq_matrix -- sparse matrix storing occurrences of all patterns (index) in all tunes (columns)
+        pattern_tfidf_matrix -- sparse matrix storing tfidf values of all patterns (index) in all tunes (columns)
         """
 
     # define slots to improve performance
@@ -96,9 +94,13 @@ class NgramPatternCorpus:
 
     def __init__(self, feature='diatonic_scale_degree', in_dir=None, out_dir=None):
 
-        """Initialize NgramPatternCorpus class object
+        """
+        Initialize NgramPatternCorpus class object.
+
         Args:
-            please see class attributes above"""
+            in_dir -- path to dir containing csv feature sequence files representing each tune in a music corpus.
+            out_dir -- directory to write output files.
+        """
 
         assert feature in NgramPatternCorpus.FEATURES
         self.feature = feature
@@ -119,7 +121,7 @@ class NgramPatternCorpus:
 
     def __repr__(self):
 
-        """Custom __repr__ string giving corpus name, number of tunes, and number of patterns extracted."""
+        """Display custom __repr__ giving corpus name, number of tunes, and number of patterns extracted."""
 
         titles = self.titles
         return f"\nCorpus name: {self.name}\nLevel: {self.level}" \
@@ -128,7 +130,7 @@ class NgramPatternCorpus:
 
     def read_input_data(self):
 
-        """Extract feature sequence data from all csv files in corpus and return in dict"""
+        """Read feature sequence data from all csv files in corpus and return in dict."""
 
         in_dir = self.in_dir
         feature = self.feature
@@ -163,17 +165,21 @@ class NgramPatternCorpus:
 
     def save_tune_titles_to_file(self):
 
-        """Extract tune titles from csv filenames and write to disc as array."""
+        """Extract tune titles from csv filenames and write to disc as numpy array."""
 
         titles = self.titles
         np.save(f"{self.out_dir}/titles", titles, allow_pickle=True)
 
     def create_pattern_frequency_matrix(self, write_output=True):
 
-        """Extract feature sequence n-gram patterns; create sparse matrix of their occurrences and write both to disc.
+        """
+        Extract all feature sequence n-gram patterns in corpus to numpy array (NgramPatternCorpus.patterns);
+        create as SciPy sparse CSR matrix of pattern occurrences per tune (NgramPatternCorpus.pattern_freq_matrix),
+        and optionally write both to disc.
 
         Args:
-            write_output -- Boolean flag: 'True' writes output to disc, 'False' does not."""
+            write_output -- Boolean flag: 'True' writes output to disc, 'False' does not.
+        """
 
         data = self.data.values()
         # extract n-gram patterns using sklearn.feature_extraction.text.CountVectorizer
@@ -207,7 +213,9 @@ class NgramPatternCorpus:
 
     def calculate_tfidf_vals(self, write_output=True):
 
-        """Calculates TF-IDF weighting for freq matrix, stores sparse matrix output as tfidf attr
+        """
+        Calculate TF-IDF weighting for freq matrix, stores output as SciPy sparse CSR matrix
+        (NgramPatternCorpus.pattern_tfidf_matrix) and optionally write to disc.
 
         Args:
             write_output -- Boolean flag: 'True' writes output to disc, 'False' does not."""
@@ -233,8 +241,6 @@ class NgramPatternCorpus:
         input_data = self.pattern_tfidf_matrix
         # Calculate Cosine similarity via sklearn.metrics.pairwise.linear_kernal
         cos_similarity = linear_kernel(X=input_data, Y=None, dense_output=False).todense().astype('float16')
-        # As matrix is symmetrical, convert to triangular for memory efficiency
-        triangular = np.triu(cos_similarity)
         # write output to memory map
         output = np.memmap(
             f"{self.out_dir}/tfidf_vector_cos_sim.mm",
@@ -242,7 +248,7 @@ class NgramPatternCorpus:
             mode='w+',
             shape=cos_similarity.shape
         )
-        output[:] = triangular[:]
+        output[:] = cos_similarity[:]
         self.pattern_tfidf_matrix = None
         output.flush()
         # memory management
@@ -251,13 +257,15 @@ class NgramPatternCorpus:
 
     def convert_matrix_to_df(self, matrix, write_output=True, filename=None):
 
-        """Transpose input matrix, add indices and create pandas DataFrame for ease of user inspection.
+        """
+        Transpose input matrix, add indices and create pandas DataFrame for ease of user inspection.
         NOTE: For large corpora this method may cause memory performance issues.
 
         Args:
             matrix -- input matrix, can be either NgramPatternCorpus.pattern_freq_matrixor NgramPatternCorpus.tfidf
             write_output -- Boolean flag: 'True' writes output to disc, 'False' does not
-            filename -- output file name"""
+            filename -- output file name
+        """
 
         titles = self.titles
         patterns = self.patterns
@@ -277,12 +285,14 @@ class NgramPatternCorpus:
     @staticmethod
     def check_data_for_null_entries(data):
 
-        """Helper function to detect and remove any empty csv files from input processing."""
+        """Helper function to filter empty feature sequence csv files from input processing."""
 
         errors = []
+        # find any items with size < 2 in input dict
         for k, v in data.items():
             if np.size(v) < 2:
                 errors.append(k)
+        # remove any such items
         if errors:
             print("Null sequences detected and removed from input data")
             for err in errors:
