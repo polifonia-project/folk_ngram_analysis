@@ -4,7 +4,7 @@ methodologies: 'motif', 'incipit_and_cadence' and 'tfidf'.
 For a user-selectable query tune, users can apply these methods to search the corpus for similar tunes.
 
 Input data must fist be processed through FoNN's feature sequence and pattern extraction pipeline
-(via feature_sequence_extracion_tools.py and pattern_extraction.py) to generate and populate the required 'pattern
+(via feature_sequence_extraction_tools.py and pattern_extraction.py) to generate and populate the required 'pattern
 corpus' data stored in '../[corpus]/pattern_corpus' dir.
 
 Similarity methodologies applied in PatternSimilarity:
