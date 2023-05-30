@@ -548,7 +548,7 @@ class Corpus:
 
         # create subdirectories under location set by Corpus.out_path attr (if they don't already exist):
         # note-level output data
-        note_level_results_dir = f"{self.out_path}/feat_seq_note"
+        note_level_results_dir = f"{self.out_path}/note"
         if not os.path.isdir(note_level_results_dir):
             os.makedirs(note_level_results_dir)
         # accent-level output data

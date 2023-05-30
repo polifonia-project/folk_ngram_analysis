@@ -1,5 +1,8 @@
-"""pattern_locations.py extracts onset locations for n-gram patterns. The output of this script is an input requirement
-for the FoNN Knowledge Graph (KG). This script must be applied to any corpus for which a KG is being generated."""
+"""
+pattern_locations.py extracts onset locations for all n-gram pattern occurrences in the corpus at a given pattern
+length. The output of this script is an input requirement for the FoNN Knowledge Graph (KG). This script must be applied
+ to any corpus for which a KG is being generated.
+ """
 
 import csv
 from collections import defaultdict
@@ -19,8 +22,12 @@ def read_tune_paths(root_dir):
 
 
 def read_tune_data(filepath, feature):
-    """Extract data for target musical feature from csv music data files.
-    For comprehensive list of musical feature names and explanations please see feature_sequence_extraction_tools.py docstring."""
+
+    """
+    Extract data for target musical feature from csv music data files.
+    For comprehensive list of musical feature names and explanations please see feature_sequence_extraction_tools.py
+    docstring.
+    """
 
     # read csv colunm names and check that a column corresponding to target feature is present
     with open(filepath) as data:
