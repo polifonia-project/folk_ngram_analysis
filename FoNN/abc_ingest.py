@@ -58,11 +58,11 @@ def create_midi_files_from_abc_corpus(abc_dir=None, abc_filename=None, midi_out_
         if name.endswith('.mid'):
             shutil.move(os.path.join(abc_dir, name), os.path.join(midi_out_dir, name))
 
-# TODO: Remove block below & replace w. notebook example?.
-# def main():
-#
-#     create_midi_files_from_abc_corpus()
-#
-#
-# if __name__ == "__main__":
-#     main()
+
+def main():
+
+    create_midi_files_from_abc_corpus()
+
+
+if __name__ == "__main__":
+    main()
