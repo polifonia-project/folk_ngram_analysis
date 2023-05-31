@@ -1,0 +1,60 @@
+!! Published by the Meertens Institute (http://www.meertens.knaw.nl)
+!! Part of the Database of Dutch Songs (NLB) (http://www.liederenbank.nl)
+!! NLB identifier: NLB073994_01
+!! NLB record number: 73994
+!! NLB strophe/voice number: 1
+**kern	**text
+*staff1	*staff1
+*M6/8	*
+*MM94	*
+*k[f#]	*
+*G:	*
+!! verse 0
+{8b	Hij
+=1	=1
+4b	vroeg
+8a	of
+8g	zij
+8b	met
+8dd	hem
+=2	=2
+8dd	rij-
+8dd	-den
+8dd	wou
+4g;}	gaan
+!! verse 1
+{8g	Dan
+=3	=3
+8a	moest
+8b	zij
+8cc	zich
+8b	kle-
+8b	-den
+8a	in
+=4	=4
+8g	gou-
+8b	-den-
+8g	-be-
+8d;}	-laan
+!! verse 2
+{8e	en
+8f#	dan
+=5	=5
+4.g	moest
+4a	zij
+8a	zich
+=6	=6
+(4b	kle-
+8dd)	.
+4dd	-den
+8b	in 't
+=7	=7
+4.g	gou-
+4dd	-den-
+8cc	-be-
+=8	=8
+[4.b	-laan
+4b];}	.
+==|!	==|!
+*-	*-
+!! produced by wce2krn 1.66 (released on 14 January 2015)

@@ -1,0 +1,68 @@
+!! Published by the Meertens Institute (http://www.meertens.knaw.nl)
+!! Part of the Database of Dutch Songs (NLB) (http://www.liederenbank.nl)
+!! NLB identifier: NLB076303_01
+!! NLB record number: 76303
+!! NLB strophe/voice number: 1
+**kern	**text
+*staff1	*staff1
+*M6/8	*
+*MM120	*
+*k[f#]	*
+*G:	*
+!! verse 0
+=1	=1
+{4g	'k Kwam
+8b	er
+4dd	laatst
+8dd	door
+=2	=2
+8ee	e-
+8dd	-ne
+8dd	stad,
+8ee	e-
+8dd	-ne
+8dd;}	stad
+!! verse 1
+=3	=3
+{8b	Wa-
+8b	-ren
+8dd	twee
+4.dd	meis-
+=4	=4
+[4.cc	-jes
+4.cc];}	.
+!! verse 2
+=5	=5
+{8cc	Wa-
+8cc	-ren
+8ee	twee
+(4ee	meis-
+8gg)	.
+=6	=6
+[4.dd	-jes
+4.dd];}	.
+!! verse 3
+=7	=7
+{4g	'k Kwam
+8b	er
+4dd	laatst
+8gg	door
+=8	=8
+4ff#	e-
+8ff#	-ne
+4.ee;}	stad
+!! verse 4
+=9	=9
+{8ee	wa-
+8ee	-ren
+8ee	twee
+8gg	meis-
+8ff#	-jes
+8ee	zo
+=10	=10
+4dd	rus-
+8cc	-tig
+4.b;}	zat
+==|!	==|!
+*-	*-
+!! produced by wce2krn 1.66 (released on 14 January 2015)

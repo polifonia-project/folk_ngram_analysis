@@ -1,0 +1,66 @@
+!! Published by the Meertens Institute (http://www.meertens.knaw.nl)
+!! Part of the Database of Dutch Songs (NLB) (http://www.liederenbank.nl)
+!! NLB identifier: NLB075831_01
+!! NLB record number: 75831
+!! NLB strophe/voice number: 1
+**kern	**text
+*staff1	*staff1
+*M6/8	*
+*MM120	*
+*k[f#]	*
+*G:	*
+!! verse 0
+=1	=1
+{4dd	Ik
+8dd	liep
+4ee	laatst
+8dd	eens
+=2	=2
+*M9/8	*
+8ee	door
+8dd	de
+8dd	stad,
+8ee	door
+8dd	de
+8dd;}	stad,
+!! verse 1
+{8b	Zag
+8b	ik
+8dd	een
+=3	=3
+4.dd	meis-
+4.cc;}	-je,
+!! verse 2
+{8a	Zag
+8a	ik
+8ee	een
+=4	=4
+*M6/8	*
+4.ee	meis-
+4.dd;}	-je,
+!! verse 3
+=5	=5
+{4b	Ik
+8dd	liep
+4dd	laatst
+8gg	eens
+=6	=6
+4ff#	door
+8ff#	de
+4.ee;}	stad,
+!! verse 4
+=7	=7
+{8dd	Zag
+8dd	ik
+8dd	een
+8gg	meis-
+8ff#	-je
+16ee	waar
+16ee	'k
+=8	=8
+4dd	zin
+8cc	in
+4.b;}	had.
+==|!	==|!
+*-	*-
+!! produced by wce2krn 1.66 (released on 14 January 2015)

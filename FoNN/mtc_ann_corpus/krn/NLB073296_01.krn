@@ -1,0 +1,66 @@
+!! Published by the Meertens Institute (http://www.meertens.knaw.nl)
+!! Part of the Database of Dutch Songs (NLB) (http://www.liederenbank.nl)
+!! NLB identifier: NLB073296_01
+!! NLB record number: 73296
+!! NLB strophe/voice number: 1
+**kern	**text
+*staff1	*staff1
+*M4/4	*
+*MM120	*
+*k[f#]	*
+*G:	*
+!! verse 0
+{4dd	Er
+=1	=1
+4g	wa-
+4g	-ren
+4a	eens
+8g	twee
+8a	zoet-
+=2	=2
+4b	-lief-
+4b	-fies
+4r;}	.
+!! verse 1
+{4dd	Er
+=3	=3
+4g	wa-
+4g	-ren
+4a	eens
+8g	twee
+8a	zoet-
+=4	=4
+4b	-lief-
+4b	-fies
+4r;}	.
+!! verse 2
+{8cc	En
+8ee	die
+=5	=5
+4dd	had-
+8dd	-den
+8dd	el-
+8dd	-kan-
+8dd	-der
+8cc	toch
+8dd	zo
+=6	=6
+4ee	lief,
+4ee	lief,
+4ee;}	lief
+!! verse 3
+{8ee	Ja
+8gg	die
+=7	=7
+4dd	had-
+8dd	-den
+8dd	el-
+8dd	-kan-
+8dd	-der
+8cc	toch
+8cc	zo
+=8	=8
+2.b;}	lief
+==|!	==|!
+*-	*-
+!! produced by wce2krn 1.66 (released on 14 January 2015)

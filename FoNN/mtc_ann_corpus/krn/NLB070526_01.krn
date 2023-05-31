@@ -1,0 +1,81 @@
+!! Published by the Meertens Institute (http://www.meertens.knaw.nl)
+!! Part of the Database of Dutch Songs (NLB) (http://www.liederenbank.nl)
+!! NLB identifier: NLB070526_01
+!! NLB record number: 70526
+!! NLB strophe/voice number: 1
+**kern	**text
+*staff1	*staff1
+*M4/4	*
+*MM120	*
+*k[f#]	*
+*G:	*
+!! verse 0
+{4dd	Ko-
+=1	=1
+4.dd	-lijn
+8dd	een
+8dd	bra-
+8dd	-ve
+8ee	boe-
+8dd	-ren
+=2	=2
+(4bh	zoon
+4ddH)	.
+8r;}	.
+!! verse 1
+{8dd	Het
+8dd	puik-
+8dd	-je
+=3	=3
+4a	van
+4dd	de
+(4dd	dor-
+8ee)	.
+8dd	-pe-
+=4	=4
+(8b	-lin-
+8a)	.
+4g	-gen
+4r;}	.
+!! verse 2
+{8b	Ar-
+8b	-beid-
+=5	=5
+4a	-zaam
+8dd	wel-
+8ee	-ge-
+4ff#	-maakt
+4ee	en
+=6	=6
+2dd	schoon
+2r;}	.
+!! verse 3
+=7	=7
+{4dd	Dorst
+8cc	naar
+8b	Li-
+8a	-set-
+8cc	-tes
+8b	hand
+8a	te
+=8	=8
+(4g	din-
+4a)	.
+(4bh	-gen
+4ddH);}	.
+!! verse 4
+=9	=9
+{4dd	Dorst
+8ee	naar
+8ff#	Li-
+8gg	-set-
+8dd	-tes
+8ee	hand
+8dd	te
+=10	=10
+(4b	din-
+4a)	.
+4g;}	-gen
+==|!	==|!
+*-	*-
+!! produced by wce2krn 1.66 (released on 14 January 2015)

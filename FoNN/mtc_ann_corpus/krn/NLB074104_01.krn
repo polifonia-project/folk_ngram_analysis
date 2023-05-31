@@ -1,0 +1,63 @@
+!! Published by the Meertens Institute (http://www.meertens.knaw.nl)
+!! Part of the Database of Dutch Songs (NLB) (http://www.liederenbank.nl)
+!! NLB identifier: NLB074104_01
+!! NLB record number: 74104
+!! NLB strophe/voice number: 1
+**kern	**text
+*staff1	*staff1
+*M6/8	*
+*MM120	*
+*k[f#]	*
+*G:	*
+!! verse 0
+{8d	't Was
+8c#	op
+8d	een
+=1	=1
+8g	ou-
+8f#	-de-
+8e	-jaars-
+8e	-a-
+8d	-vond
+8d	laat,
+=2	=2
+8e	a-
+8d	-vond
+8d;}	laat
+!! verse 1
+{8g	Dat
+8f#	er
+8e	een
+=3	=3
+4d	sjees
+8e	reed
+4d	langs
+8c	de
+=4	=4
+4.B;}	straat
+!! verse 2
+{8d	't Was
+8c#	op
+8d	een
+=5	=5
+8.g	ou-
+16f#	-de-
+8g	-jaars-
+4a	-a-
+8a	-vond
+=6	=6
+4.b;}	laat
+!! verse 3
+{8cc	Dat
+8b	er
+8a	een
+=7	=7
+4b	sjees
+8b	reed
+4a	langs
+8a	de
+=8	=8
+4.g;}	straat
+==|!	==|!
+*-	*-
+!! produced by wce2krn 1.66 (released on 14 January 2015)

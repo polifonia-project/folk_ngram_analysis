@@ -1,0 +1,79 @@
+!! Published by the Meertens Institute (http://www.meertens.knaw.nl)
+!! Part of the Database of Dutch Songs (NLB) (http://www.liederenbank.nl)
+!! NLB identifier: NLB072450_01
+!! NLB record number: 72450
+!! NLB strophe/voice number: 1
+**kern	**text
+*staff1	*staff1
+*M4/4	*
+*MM120	*
+*k[f#]	*
+*G:	*
+!! verse 0
+{4dd	En
+=1	=1
+4.dd	toen
+8b	het
+8cc	mon-
+8ee	-ster
+8.dd	werd
+16cc	ge-
+=2	=2
+[2b	-waar
+8b];}	.
+!! verse 1
+{8dd	Dat
+8ee	ha-
+8dd	-re
+=3	=3
+4a	doch-
+4dd	-ter
+(4dd	zou-
+8ee)	.
+8dd	-de
+=4	=4
+(8b	trou-
+8a)	.
+4.g;}	-wen
+!! verse 2
+{8b	Ver-
+8b	-tel-
+8b	-de
+=5	=5
+4ah	zij
+4ggH	het
+4ff#	aan
+4ee	haar
+=6	=6
+2dd	zoon
+2r;}	.
+!! verse 3
+=7	=7
+{4dd	En
+8cc	zij
+8b	ging-
+8b	-en
+8a	haar
+8cc	plan
+8a	ont-
+=8	=8
+(4g	-vou-
+4a)	.
+4b	-wen
+4r;}	.
+!! verse 4
+=9	=9
+{4dd	en
+8ee	zij
+8aa	ging-
+8gg	-en
+8ff#	haar
+8ee	plan
+8ee	ont-
+=10	=10
+(4dd	-vou-
+4a)	.
+4g;}	-wen
+==|!	==|!
+*-	*-
+!! produced by wce2krn 1.66 (released on 14 January 2015)

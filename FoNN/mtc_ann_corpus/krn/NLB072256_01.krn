@@ -1,0 +1,56 @@
+!! Published by the Meertens Institute (http://www.meertens.knaw.nl)
+!! Part of the Database of Dutch Songs (NLB) (http://www.liederenbank.nl)
+!! NLB identifier: NLB072256_01
+!! NLB record number: 72256
+!! NLB strophe/voice number: 1
+**kern	**text
+*staff1	*staff1
+*M4/4	*
+*MM120	*
+*k[f#]	*
+*G:	*
+!! verse 0
+{(8g	Jan
+8a)	.
+=1	=1
+4b	Al-
+8b	-berts
+8cc	die
+4dd	siet
+8dd	en
+8cc	hij
+=2	=2
+4b	sang
+8a	er
+8a	een
+4b;}	lied
+!! verse 1
+{4a	En
+=3	=3
+4g	dat
+4a	ver-
+4g	-hoord'
+8f#	er
+8f#	een
+=4	=4
+4e	ko-
+4g	-nings-
+4d	-kind
+8r;}	.
+!! verse 2
+{8f#	En
+=5	=5
+4g	dat
+4b	ver-
+2a	-hoord'
+=6	=6
+4d	er
+4b	een
+4cc	ko-
+(8b	-nings-
+8a)	.
+=7	=7
+4g;}	-kind.
+==|!	==|!
+*-	*-
+!! produced by wce2krn 1.66 (released on 14 January 2015)

@@ -1,0 +1,59 @@
+!! Published by the Meertens Institute (http://www.meertens.knaw.nl)
+!! Part of the Database of Dutch Songs (NLB) (http://www.liederenbank.nl)
+!! NLB identifier: NLB072378_01
+!! NLB record number: 72378
+!! NLB strophe/voice number: 1
+**kern	**text
+*staff1	*staff1
+*M6/8	*
+*MM120	*
+*k[f#]	*
+*G:	*
+!! verse 0
+{16b	Ja
+16b	we
+=1	=1
+8cc	drin-
+8dd	-ken
+8ee	van-
+8ee	-a-
+8dd	-vond
+8cc	geen
+=2	=2
+8b	bier
+8b	of
+8dd	geen
+4dd;}	wijn
+!! verse 1
+{8b	Wij
+=3	=3
+8a	moe-
+8a	-ten
+8dd	van-
+8dd	-a-
+8cc	-vond
+8b	nog
+=4	=4
+8a	o-
+8a	-ver
+8a	de
+4a;}	Rijn.
+!! verse 2
+{8d	Wij
+=5	=5
+8g	moe-
+8g	-ten
+8a	van-
+8b	-a-
+8b	-vond
+8ee	nog
+=6	=6
+4.dd	o-
+4a	-ver
+8a	de
+=7	=7
+[4.g	Rijn.
+4g];}	.
+==|!	==|!
+*-	*-
+!! produced by wce2krn 1.66 (released on 14 January 2015)

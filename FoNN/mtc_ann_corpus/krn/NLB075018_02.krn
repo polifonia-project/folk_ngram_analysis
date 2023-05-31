@@ -1,0 +1,72 @@
+!! Published by the Meertens Institute (http://www.meertens.knaw.nl)
+!! Part of the Database of Dutch Songs (NLB) (http://www.liederenbank.nl)
+!! NLB identifier: NLB075018_02
+!! NLB record number: 75018
+!! NLB strophe/voice number: 2
+**kern	**text
+*staff1	*staff1
+*M4/4	*
+*MM120	*
+*k[f#]	*
+*G:	*
+!! verse 0
+{8.dd	Maar
+16dd	de
+=1	=1
+8.g	jon-
+16g	-ge-
+8.b	-ling
+16b	moest
+8.a	on-
+16a	-der
+8.g	de
+16a	sol-
+=2	=2
+4b	-da-
+2b;}	-ten.
+!! verse 1
+{8.dd	Maar
+16dd	de
+=3	=3
+8.g	jon-
+16g	-ge-
+8.b	-ling
+16b	moest
+8.a	on-
+16a	-der
+8.g	de
+16a	sol-
+=4	=4
+4b	-da-
+4.b;}	-ten.
+!! verse 2
+{8b	Maar
+8.b	na
+16cc	een
+=5	=5
+4..dd	jaar-
+16ee	-tje
+8cc	kwam
+8b	hij
+8cc	weer
+8dd	in
+=6	=6
+4ee	huis,
+4ee	huis,
+8ee;}	huis,
+!! verse 3
+{8b	Maar
+8b	na
+8cc	een
+=7	=7
+4..dd	jaar-
+16ee	-tje
+8ddx	kwam
+8ee	hij
+8dd	weer
+8cc	in
+=8	=8
+2.b;}	huis.
+==|!	==|!
+*-	*-
+!! produced by wce2krn 1.66 (released on 14 January 2015)

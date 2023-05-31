@@ -1,0 +1,84 @@
+!! Published by the Meertens Institute (http://www.meertens.knaw.nl)
+!! Part of the Database of Dutch Songs (NLB) (http://www.liederenbank.nl)
+!! NLB identifier: NLB074470_01
+!! NLB record number: 74470
+!! NLB strophe/voice number: 1
+**kern	**text
+*staff1	*staff1
+*M4/4	*
+*MM120	*
+*k[f#]	*
+*G:	*
+!! verse 0
+{4g	De
+=1	=1
+4.dd	harts-
+8dd	-tocht
+8cc	is
+8b	een
+8cc	vrees-
+8dd	-lijk
+=2	=2
+*M3/4	*
+4b	iets
+8r;}	.
+!! verse 1
+{8dd	Wan-
+8cc	-neer
+8b	men
+=3	=3
+4a	zich
+8r	.
+8a	niet
+8g	wil
+8a	be-
+=4	=4
+*M4/4	*
+4b	-dwing-
+4g	-en
+8r;}	.
+!! verse 2
+{8g	en
+8f#	toe-
+8g	-geeft
+=5	=5
+*M4/4	*
+4a	aan
+4dd	zijn
+4ff#	bo-
+4ee	-ze
+=6	=6
+*M2/4	*
+4dd	list
+4r;}	.
+!! verse 3
+=7	=7
+*M4/4	*
+{4dd	Komt
+8cc	men
+8b	tot
+8b	vre-
+8a	-se-
+8cc	-lij-
+8a	-ke
+=8	=8
+(4g	din-
+4a)	.
+4b	-gen
+4r;}	.
+!! verse 4
+=9	=9
+{4dd	komt
+8ee	men
+8ff#	tot
+8gg	vre-
+8ee	-se-
+8dd	-lij-
+8cc	-ke
+=10	=10
+(4b	din-
+4a)	.
+4g;}	-gen.
+==|!	==|!
+*-	*-
+!! produced by wce2krn 1.66 (released on 14 January 2015)

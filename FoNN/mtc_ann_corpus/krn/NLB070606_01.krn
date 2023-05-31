@@ -1,0 +1,84 @@
+!! Published by the Meertens Institute (http://www.meertens.knaw.nl)
+!! Part of the Database of Dutch Songs (NLB) (http://www.liederenbank.nl)
+!! NLB identifier: NLB070606_01
+!! NLB record number: 70606
+!! NLB strophe/voice number: 1
+**kern	**text
+*staff1	*staff1
+*M4/4	*
+*MM120	*
+*k[f#]	*
+*G:	*
+!! verse 0
+=1	=1
+{4g	In
+8a	Eng-
+8b	-land
+4cc	woont
+4a	een
+=2	=2
+8.g	koop-
+16g	-man
+8b	rijk
+8b	en
+4a	mach-
+4a;}	-tig
+!! verse 1
+=3	=3
+{4dd	Die
+8dd	had
+8ee	een
+4.dd	doch-
+16cc	-ter,
+16cc	was
+=4	=4
+8b	wel-
+8dd	-be-
+8ee	-roemd
+8ee	op
+2dd;}	d'aard
+!! verse 2
+=5	=5
+{4g	Die
+(8b	be-
+8dd)	.
+4gg	-min-
+4ff#	-d'een
+=6	=6
+8ee	stal-
+8dd	-knecht
+8ff#	trouw
+8ff#	en
+4ee	krach-
+4dd;}	-tig
+!! verse 3
+=7	=7
+{4dd	Tot-
+8dd	-dat
+8cc	haar
+4b	ou-
+8.g	-ders
+16g	de
+=8	=8
+8a	lief-
+8cc	-de
+8ee	werd
+8ee	ge-
+2dd;}	-waar
+!! verse 4
+=9	=9
+{4dd	Tot-
+8dd	-dat
+8cc	haar
+4b	ou-
+8.g	-ders
+16g	de
+=10	=10
+8a	lief-
+8cc	-de
+8b	werd
+8a	ge-
+2g;}	-waar.
+==|!	==|!
+*-	*-
+!! produced by wce2krn 1.66 (released on 14 January 2015)

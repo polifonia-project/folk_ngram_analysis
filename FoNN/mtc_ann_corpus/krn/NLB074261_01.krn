@@ -1,0 +1,66 @@
+!! Published by the Meertens Institute (http://www.meertens.knaw.nl)
+!! Part of the Database of Dutch Songs (NLB) (http://www.liederenbank.nl)
+!! NLB identifier: NLB074261_01
+!! NLB record number: 74261
+!! NLB strophe/voice number: 1
+**kern	**text
+*staff1	*staff1
+*M6/8	*
+*MM120	*
+*k[f#]	*
+*G:	*
+!! verse 0
+{16.g	En
+32g	jan
+=1	=1
+8b	Al-
+8g	-berts
+16b	en
+16cc	Jan
+8b	Al-
+8dd	-berts
+16dd	en
+16dd	daar
+=2	=2
+8dd	is
+8cc	er
+8b	een
+(8b	maagd
+8a);}	.
+!! verse 1
+{16g	en
+16g	ze
+=3	=3
+8a	zeg-
+8a	-gen
+8a	dat
+8cc	zij
+8b	der
+8a	een
+=4	=4
+(8g	klein-
+8f#)	.
+8e	-tje
+4d;}	draagt
+!! verse 2
+{16e	en
+16f#	ze
+=5	=5
+4.g	zeg-
+4a	-gen
+8cc	dat
+=6	=6
+(4b	zij
+8dd)	.
+4dd	der
+8dd	een
+=7	=7
+(4.g	klein-
+4a)	.
+8cc	-tje
+=8	=8
+[4.b	draagt
+4b];}	.
+==|!	==|!
+*-	*-
+!! produced by wce2krn 1.66 (released on 14 January 2015)

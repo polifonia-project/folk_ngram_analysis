@@ -1,0 +1,79 @@
+!! Published by the Meertens Institute (http://www.meertens.knaw.nl)
+!! Part of the Database of Dutch Songs (NLB) (http://www.liederenbank.nl)
+!! NLB identifier: NLB072851_01
+!! NLB record number: 72851
+!! NLB strophe/voice number: 1
+**kern	**text
+*staff1	*staff1
+*M3/4	*
+*MM120	*
+*k[f#]	*
+*G:	*
+!! verse 0
+{8.b	En
+16b	er
+=1	=1
+8.g	reed
+16g	er
+4g	eens
+(8b	een
+8a)	.
+=2	=2
+4g	rui-
+4g	-ter-
+(8b	-tje
+8cc)	.
+=3	=3
+*M4/4	*
+2dd	door
+2ee	het
+=4	=4
+*M3/4	*
+2dd;}	woud
+!! verse 1
+{8.b	En
+16b	er
+=5	=5
+8.g	reed
+16g	er
+4g	eens
+(8b	een
+8a)	.
+=6	=6
+4g	rui-
+4g	-ter-
+(8b	-tje
+8cc)	.
+=7	=7
+*M4/4	*
+2dd	door
+2ee	het
+=8	=8
+2dd;}	woud
+!! verse 2
+{2ee	Daar
+=9	=9
+4dd	vond
+8cc	hij
+8cc	op
+4b	zij-
+4a	-ne
+=10	=10
+*M3/4	*
+4b	we-
+4g;}	-gen
+!! verse 3
+{4a	Een
+=11	=11
+4b	meis-
+4cc	-je
+4dd	van
+=12	=12
+4.a	acht-
+8b	-tien
+4a	jaar
+=13	=13
+2g;}	oud.
+==|!	==|!
+*-	*-
+!! produced by wce2krn 1.66 (released on 14 January 2015)

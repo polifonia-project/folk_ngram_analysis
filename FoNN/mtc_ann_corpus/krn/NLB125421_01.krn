@@ -1,0 +1,135 @@
+!! Published by the Meertens Institute (http://www.meertens.knaw.nl)
+!! Part of the Database of Dutch Songs (NLB) (http://www.liederenbank.nl)
+!! NLB identifier: NLB125421_01
+!! NLB record number: 125421
+!! NLB strophe/voice number: 1
+**kern	**text
+*staff1	*staff1
+*M4/4	*
+*MM120	*
+*k[b-]	*
+*F:	*
+!! verse 0
+{4f	Ko-
+=1	=1
+4.cc	-lijn
+8cc	een
+8b-	bra-
+8a	-ve
+8b-	boe-
+8cc	-ren
+=2	=2
+2a	zoon,
+8r;}	.
+!! verse 1
+{8a	Het
+8cc	puik-
+8a	-je
+=3	=3
+4g	van
+4g	de
+(8a	dor-
+8g)	.
+(8f	-pe-
+8g)	.
+=4	=4
+4a	-lin-
+4f	-gen
+8r;}	.
+!! verse 2
+{8a	Ar-
+8a	-beid-
+8a	-zaam,
+=5	=5
+4g	wel-
+4cc	-ge-
+4b	-maakt
+4dd	en
+=6	=6
+2cc	schoon,
+8r;}	.
+!! verse 3
+{8g	Dorst
+8g	naar
+8cc	Li-
+=7	=7
+8cc	-set-
+8g	-tes
+8a	hand
+8f	te
+(4e	din-
+4d)	.
+=8	=8
+2c	-gen.
+8r;}	.
+!! verse 4
+{8g	Het
+8g	meis-
+8g	-je
+=9	=9
+4.a	schoon
+8a	ook
+4.b-	een
+8b-	boe-
+=10	=10
+2g	-rin,
+8r;}	.
+!! verse 5
+{8cc	Had
+8cc	ech-
+8b-	-ter
+=11	=11
+4.a	soms
+8a	de
+4.b-	stad
+8b-	be-
+=12	=12
+([4cc	-ke-
+16cc]	.
+16dd	.
+16cc	.
+16b-)	.
+4a	-ken,
+8r;}	.
+!! verse 6
+{8f	En
+=13	=13
+4.dd	hier-
+8dd	-door
+8dd	was
+8ee	haar
+8ff	hart
+8dd	en
+=14	=14
+2cc;}	zin
+!! verse 7
+{4cc	Van
+8b-	veld
+8a	en
+=15	=15
+8a	kud-
+8g	-de
+8b-	af-
+8g	-ge-
+(4f	-we-
+4g)	.
+=16	=16
+4a	-ken,
+4r;}	.
+!! verse 8
+{4cc	Van
+8dd	veld
+8ee	en
+=17	=17
+8ff	kud-
+8dd	-de
+8b-	af-
+8g	-ge-
+(4a	-we-
+4g)	.
+=18	=18
+2f	-ken.
+4r;}	.
+==|!	==|!
+*-	*-
+!! produced by wce2krn 1.66 (released on 14 January 2015)

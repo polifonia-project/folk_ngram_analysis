@@ -1,0 +1,75 @@
+!! Published by the Meertens Institute (http://www.meertens.knaw.nl)
+!! Part of the Database of Dutch Songs (NLB) (http://www.liederenbank.nl)
+!! NLB identifier: NLB072356_02
+!! NLB record number: 72356
+!! NLB strophe/voice number: 2
+**kern	**text
+*staff1	*staff1
+*M3/4	*
+*MM120	*
+*k[f#]	*
+*G:	*
+!! verse 0
+{4d	De
+=1	=1
+4.cc	e-
+8dd	-ne
+4cc	dat
+=2	=2
+4.b	was
+8a	er
+8g	ja
+8a	een
+=3	=3
+*M4/4	*
+4b	schip-
+4a	-per
+4r;}	.
+!! verse 1
+{4d	De
+=4	=4
+*M3/4	*
+4.cc	e-
+8dd	-ne
+4cc	dat
+=5	=5
+4.b	was
+8a	er
+8g	ja
+8a	een
+=6	=6
+*M4/4	*
+4b	schip-
+4a	-per
+4r;}	.
+!! verse 2
+{8b	En
+8a	de
+=7	=7
+4g	an-
+8b	-der
+8a	een
+4g	land-
+4ee	-mans-
+=8	=8
+*M3/4	*
+(4.dd	-zoon
+8cc);}	.
+!! verse 3
+{8b	En
+8a	de
+=9	=9
+*M4/4	*
+(8g	an-
+8a)	.
+8b	-der
+8cc	een
+4b	land-
+4a	-mans-
+=10	=10
+*M3/4	*
+4g	-zoon
+4r;}	.
+==|!	==|!
+*-	*-
+!! produced by wce2krn 1.66 (released on 14 January 2015)

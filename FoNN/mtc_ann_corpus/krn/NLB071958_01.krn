@@ -1,0 +1,58 @@
+!! Published by the Meertens Institute (http://www.meertens.knaw.nl)
+!! Part of the Database of Dutch Songs (NLB) (http://www.liederenbank.nl)
+!! NLB identifier: NLB071958_01
+!! NLB record number: 71958
+!! NLB strophe/voice number: 1
+**kern	**text
+*staff1	*staff1
+*M4/4	*
+*MM120	*
+*k[f#]	*
+*G:	*
+!! verse 0
+=1	=1
+{4dd	't Was
+8b	op
+8dd	een
+4gg	zoe-
+4aa	-le
+=2	=2
+8gg	zo-
+8ff#	-mer-
+4.cc;}	-dag
+!! verse 1
+{16a	toen
+16a	ik
+8b	in
+8cc	het
+=3	=3
+4.ff#	bos
+8ee	een
+8ee	scha-
+8dd	-duw
+4b;}	zag
+!! verse 2
+=4	=4
+{4dd	't Was
+8b	op
+8dd	een
+4gg	zoe-
+4bb	-le
+=5	=5
+8aa	zo-
+8gg	-mer-
+4.ee;}	-dag
+!! verse 3
+{16ff#	toen
+16ff#	ik
+8aa	in
+8gg	het
+=6	=6
+8dd	bos
+8dd	een
+8ee	scha-
+8ff#	-duw
+2gg;}	zag
+==|!	==|!
+*-	*-
+!! produced by wce2krn 1.66 (released on 14 January 2015)

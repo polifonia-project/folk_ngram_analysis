@@ -1,0 +1,118 @@
+!! Published by the Meertens Institute (http://www.meertens.knaw.nl)
+!! Part of the Database of Dutch Songs (NLB) (http://www.liederenbank.nl)
+!! NLB identifier: NLB073939_01
+!! NLB record number: 73939
+!! NLB strophe/voice number: 1
+**kern	**text
+*staff1	*staff1
+*M4/4	*
+*MM120	*
+*k[f#]	*
+*G:	*
+!! verse 0
+{4g	Kom
+=1	=1
+4cc	laat
+4b	ons
+4a	toch
+4g	zo
+=2	=2
+4cc	stil
+4b	niet
+4a;}	zijn,
+!! verse 1
+{8b	En
+8b	kom
+=3	=3
+4cc	laat
+4b	ons
+4a	wat
+4g	ver-
+=4	=4
+(4cc	-ma-
+4b)	.
+4.a;}	-ken,
+!! verse 2
+{8a	De
+=5	=5
+4.dd	zoe-
+8dd	-te
+4.dd	zo-
+8dd	-mer
+=6	=6
+4ee	is
+4dd	voor-
+4g;}	-bij,
+!! verse 3
+{8a	En
+8b	de
+=7	=7
+4cc	win-
+4b	-ter,
+4a	die
+4g	komt
+=8	=8
+(4cc	na-
+4b)	.
+2a;}	-der,
+!! verse 4
+=9	=9
+{4.dd	Zoe-
+8dd	-te
+4.dd	zus-
+8dd	-sie,
+=10	=10
+4ee	hoe
+4dd	is
+2g;}	dit,
+!! verse 5
+=11	=11
+{4.dd	Dat
+8dd	gij
+2dd	hier
+=12	=12
+*M6/4	*
+4ee	'le-
+4dd	-nig
+4a;}	zit,
+!! verse 6
+{8a	En
+8b	zeg
+4cc	zoe-
+4b	-te
+=13	=13
+*M4/4	*
+2a	zus-
+2gg	-sie,
+=14	=14
+*M6/4	*
+4ff#	zus-
+4gg	-sie
+4dd;}	fijn
+!! verse 7
+{8gg	En
+8gg	mag
+4ff#	ik
+4ee	van-
+=15	=15
+2dd	-nacht
+2a	uw
+4b	bij-
+4cc#	-slaap
+=16	=16
+*M4/4	*
+4dd;}	zijn,
+!! verse 8
+{4gg	Mag
+4ff#	ik
+4ee	van-
+=17	=17
+2dd	-nacht
+2a	uw
+=18	=18
+4b	bij-
+4cc#	-slaap
+2dd;}	zijn?
+==|!	==|!
+*-	*-
+!! produced by wce2krn 1.66 (released on 14 January 2015)

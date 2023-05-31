@@ -1,0 +1,59 @@
+!! Published by the Meertens Institute (http://www.meertens.knaw.nl)
+!! Part of the Database of Dutch Songs (NLB) (http://www.liederenbank.nl)
+!! NLB identifier: NLB072255_01
+!! NLB record number: 72255
+!! NLB strophe/voice number: 1
+**kern	**text
+*staff1	*staff1
+*M6/8	*
+*MM94	*
+*k[f#]	*
+*G:	*
+!! verse 0
+{8dd	Jan
+=1	=1
+8g	Al-
+8g	-berts
+8b	die
+4dd	uit
+8dd	het
+=2	=2
+8ee	rij-
+8ee	-en
+8ee	wou
+4dd;}	gaan.
+!! verse 1
+{8dd	Die
+=3	=3
+8g	zag
+8a	daar
+8b	van
+8b	ver
+8b	een
+8a	mooi
+=4	=4
+8g	meis-
+8b	-je
+8g	al
+4d;}	staan.
+!! verse 2
+{8d	Die
+=5	=5
+4.g	zag
+4a	daar
+8a	van
+=6	=6
+4.b	ver
+4dd	een
+8b	mooi
+=7	=7
+(4g	meis-
+8dd)	.
+4dd	-je
+8cc	al
+=8	=8
+[4.b	staan.
+4b];}	.
+==|!	==|!
+*-	*-
+!! produced by wce2krn 1.66 (released on 14 January 2015)

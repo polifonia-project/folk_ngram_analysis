@@ -1,0 +1,78 @@
+!! Published by the Meertens Institute (http://www.meertens.knaw.nl)
+!! Part of the Database of Dutch Songs (NLB) (http://www.liederenbank.nl)
+!! NLB identifier: NLB072664_01
+!! NLB record number: 72664
+!! NLB strophe/voice number: 1
+**kern	**text
+*staff1	*staff1
+*M3/4	*
+*MM120	*
+*k[f#]	*
+*G:	*
+!! verse 0
+{4dd	Er
+=1	=1
+4dd	liep
+4ee	er
+4ff#	een
+=2	=2
+4gg	meis-
+4ff#	-je
+4ee	al
+=3	=3
+4ee	op
+4dd	het
+4dd	land
+=4	=4
+4ee	op
+4dd	het
+4dd;}	land
+!! verse 1
+=5	=5
+{4gg	Had
+4b	geen
+4cc	ver-
+=6	=6
+(4dd	-mo-
+4ee)	.
+4dd	-gen
+=7	=7
+(4cc	of
+4ee)	.
+4cc	ver-
+=8	=8
+2.b;}	-stand
+!! verse 2
+=9	=9
+{4dd	had
+4ee	geen
+4ff#	ver-
+=10	=10
+4gg	-mo-
+4gg	-gen
+4b	of
+=11	=11
+(4a	geen
+4b)	.
+4cc	ver-
+=12	=12
+(2b	-stand
+4dd);}	.
+!! verse 3
+=13	=13
+{4cc	Had
+4b	geen
+4aa	ver-
+=14	=14
+4gg	-mo-
+4ff#	-gen
+4gg	of
+=15	=15
+(4dd	geen
+4ee)	.
+4ff#	ver-
+=16	=16
+2gg;}	-stand
+==|!	==|!
+*-	*-
+!! produced by wce2krn 1.66 (released on 14 January 2015)

@@ -1,0 +1,68 @@
+!! Published by the Meertens Institute (http://www.meertens.knaw.nl)
+!! Part of the Database of Dutch Songs (NLB) (http://www.liederenbank.nl)
+!! NLB identifier: NLB074077_02
+!! NLB record number: 74077
+!! NLB strophe/voice number: 2
+**kern	**text
+*staff1	*staff1
+*M6/8	*
+*MM120	*
+*k[f#]	*
+*G:	*
+!! verse 0
+=1	=1
+{8g	Kind-
+8g	-je
+8b	ge
+4dd	bent
+8dd	nog
+=2	=2
+*M9/8	*
+8ee	veel
+8dd	te
+8dd	jong
+8ee	veel
+8dd	te
+8dd;}	jong
+!! verse 1
+{8g	Om
+8b	te
+8dd	gaan
+=3	=3
+4.dd	trou-
+4.cc	-wen
+4.r;}	.
+!! verse 2
+=4	=4
+{8cc	Om
+8dd	te
+8ee	gaan
+(4ee	trou-
+8ff#)	.
+4.dd;}	-wen
+!! verse 3
+=5	=5
+*M6/8	*
+{8g	Kind-
+8b	-je
+8dd	ge
+4gg	bent
+8gg	nog
+=6	=6
+4ff#	veel
+8ff#	te
+4.ee;}	jong
+!! verse 4
+=7	=7
+{8.gg	Om
+16gg	te
+8gg	gaan
+4ff#	trou-
+8ee	-wen
+=8	=8
+4dd	mor-
+8cc	-gen
+4.b;}	dan
+==|!	==|!
+*-	*-
+!! produced by wce2krn 1.66 (released on 14 January 2015)

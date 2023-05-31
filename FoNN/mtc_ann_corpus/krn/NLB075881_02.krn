@@ -1,0 +1,92 @@
+!! Published by the Meertens Institute (http://www.meertens.knaw.nl)
+!! Part of the Database of Dutch Songs (NLB) (http://www.liederenbank.nl)
+!! NLB identifier: NLB075881_02
+!! NLB record number: 75881
+!! NLB strophe/voice number: 2
+**kern	**text
+*staff1	*staff1
+*M6/8	*
+*MM120	*
+*k[f#]	*
+*G:	*
+!! verse 0
+{8g	Het
+=1	=1
+8b	vrouw-
+8a	-ke
+8g	dat
+8b	was
+8a	er
+8g	zo
+=2	=2
+8dd	ze-
+8.dd	-re
+16dd	be-
+4dd;}	-droefd;
+!! verse 1
+{8dd	Het
+=3	=3
+8dd	had
+8ee	er
+8gg	nog
+8b	nooit
+8cc	ge-
+8dd	-ne
+=4	=4
+8ee	ar-
+8.dd	-moe
+16cc#	ge-
+4dd;}	-proefd.
+!! verse 2
+{8dd	Het
+=5	=5
+8dd	moest
+8ee	er
+8ff#	haar
+(8gg	brood
+8ff#)	.
+8ee	gaan
+=6	=6
+(4dd	vra-
+8cc)	.
+4b;}	-gen
+!! verse 3
+{8dd	Al
+=7	=7
+4ee	van
+8dd	de
+(8dd	hon-
+8cc)	.
+8b	-gers-
+=8	=8
+2a;}	-nood.
+!! verse 4
+{8b	En
+8cc	zo
+=9	=9
+8dd	kwam
+8ee	zij
+8dd	in
+(8b	vreem-
+8a)	.
+8g	-de
+=10	=10
+(4cc	lan-
+8b)	.
+8a;}	-den
+!! verse 5
+{8b	Met
+8cc	vijf
+=11	=11
+8dd	kin-
+8ee	-de-
+8dd	-ren
+(8cc	naakt
+8b)	.
+8a	en
+=12	=12
+[4.g	bloot.
+4g];}	.
+==|!	==|!
+*-	*-
+!! produced by wce2krn 1.66 (released on 14 January 2015)

@@ -1,0 +1,81 @@
+!! Published by the Meertens Institute (http://www.meertens.knaw.nl)
+!! Part of the Database of Dutch Songs (NLB) (http://www.liederenbank.nl)
+!! NLB identifier: NLB112233_01
+!! NLB record number: 112233
+!! NLB strophe/voice number: 1
+**kern	**text
+*staff1	*staff1
+*M3/4	*
+*MM120	*
+*k[f#c#]	*
+*D:	*
+!! verse 0
+{8.d	Lie-
+16f#	-ve
+=1	=1
+4.a	schip-
+8b	-per
+8.a	vaar
+16g	mij
+=2	=2
+4g	o-
+4f#;}	-ver
+!! verse 1
+{8d	Naar
+8f#	dat
+=3	=3
+4a	gind-
+(8b	-se
+8a)	.
+8g	dorp-
+8f#	-je
+=4	=4
+2e;}	heen
+!! verse 2
+{8e	Ik
+8f#	zal
+=5	=5
+4g	U
+4b	dit
+8a	hals-
+8g	-snoer
+=6	=6
+(8f#	ge-
+8dd)	.
+4a;}	-ven
+!! verse 3
+{8a	Met
+8b	deez'
+=7	=7
+4cc#	kos-
+4a	-te-
+8e	-lij-
+8g	-ken
+=8	=8
+2f#;}	steen
+!! verse 4
+{8e	Ik
+8f#	zal
+=9	=9
+4g	u
+4b	dit
+8a	hals-
+8g	-snoer
+=10	=10
+(8f#	ge-
+8dd)	.
+4a;}	-ven
+!! verse 5
+{8a	Met
+8b	deez'
+=11	=11
+4cc#	kos-
+4b	-te-
+8g	-lij-
+8e	-ken
+=12	=12
+4d	steen
+4r;}	.
+==|!	==|!
+*-	*-
+!! produced by wce2krn 1.66 (released on 14 January 2015)

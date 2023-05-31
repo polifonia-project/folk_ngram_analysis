@@ -1,0 +1,65 @@
+!! Published by the Meertens Institute (http://www.meertens.knaw.nl)
+!! Part of the Database of Dutch Songs (NLB) (http://www.liederenbank.nl)
+!! NLB identifier: NLB073685_01
+!! NLB record number: 73685
+!! NLB strophe/voice number: 1
+**kern	**text
+*staff1	*staff1
+*M6/8	*
+*MM120	*
+*k[f#]	*
+*G:	*
+!! verse 0
+=1	=1
+{4g	Moe-
+8b	-der
+4dd	mag
+8dd	ik
+=2	=2
+8ee	trou-
+8dd	-wen
+8dd	gaan,
+8ee	trou-
+8dd	-wen
+8dd;}	gaan
+!! verse 1
+=3	=3
+*M9/8	*
+{8b	't is
+8b	ja
+8dd	zo
+4.dd	lief-
+4.cc;}	-lijk
+!! verse 2
+=4	=4
+{8a	't is
+8a	ja
+8ee	zo
+4.ee	lief-
+4.dd;}	-lijk
+!! verse 3
+=5	=5
+*M6/8	*
+{4b	Moe-
+8dd	-der
+4gg	mag
+8gg	ik
+=6	=6
+4ff#	trou-
+8ff#	-wen
+4.ee;}	gaan
+!! verse 4
+=7	=7
+{8ee	't is
+8ee	ja
+8ee	zo
+8gg	lief-
+8ff#	-lijk
+8ee	en
+=8	=8
+4dd	aan-
+8cc	-ge-
+4.b;}	-naam
+==|!	==|!
+*-	*-
+!! produced by wce2krn 1.66 (released on 14 January 2015)

@@ -1,0 +1,82 @@
+!! Published by the Meertens Institute (http://www.meertens.knaw.nl)
+!! Part of the Database of Dutch Songs (NLB) (http://www.liederenbank.nl)
+!! NLB identifier: NLB141251_01
+!! NLB record number: 141251
+!! NLB strophe/voice number: 1
+**kern	**text
+*staff1	*staff1
+*M6/8	*
+*MM120	*
+*k[f#c#g#]	*
+*A:	*
+!! verse 0
+{8a	Er
+=1	=1
+4.a	reed
+(8a	een
+8g#)	.
+8a	jonk-
+=2	=2
+4.e	-heer,
+4a	hij
+8a	was
+=3	=3
+8b	wel-
+8cc#	-le-
+8b	-ge-
+(8dd	-moed,
+8cc#);}	.
+!! verse 1
+{8b	Er
+=4	=4
+4.a	reed
+(8a	een
+8g#)	.
+8a	jonk-
+=5	=5
+4.e	-heer,
+4a	hij
+8a	was
+=6	=6
+8b	wel-
+8cc#	-le-
+8b	-ge-
+8b;}	-moed,
+!! verse 2
+{8cc#	En
+8b	hij
+=7	=7
+8b	droeg
+8cc#	er
+8b	een
+8b	ro-
+8cc#	-zen-
+8b	-krans
+=8	=8
+4.f#	om-
+4f#	-me
+8f#	zijn
+=9	=9
+4.f#;}	hoed
+!! verse 3
+{4cc#	En
+8b	hij
+=10	=10
+4.a	droeg
+(8a	er
+8g#)	.
+8f#	een
+=11	=11
+4.e	ro-
+4a	-zen-
+8b	-krans
+=12	=12
+4.cc#	om-
+4cc#	-me
+8b	zijn
+=13	=13
+4.a	hoed.
+4r;}	.
+==|!	==|!
+*-	*-
+!! produced by wce2krn 1.66 (released on 14 January 2015)

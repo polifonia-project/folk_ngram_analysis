@@ -1,0 +1,78 @@
+!! Published by the Meertens Institute (http://www.meertens.knaw.nl)
+!! Part of the Database of Dutch Songs (NLB) (http://www.liederenbank.nl)
+!! NLB identifier: NLB072851_02
+!! NLB record number: 72851
+!! NLB strophe/voice number: 2
+**kern	**text
+*staff1	*staff1
+*M3/4	*
+*MM120	*
+*k[f#]	*
+*G:	*
+!! verse 0
+{(8b	Hij
+8a)	.
+=1	=1
+4g	greut-
+4g	-te
+(8b	dat
+8a)	.
+=2	=2
+4g	meis-
+4g	-je
+8b	en
+8cc	hij
+=3	=3
+4dd	sprak
+4dd	ze
+4ee	wel
+=4	=4
+2dd;}	aan
+!! verse 1
+{(8b	Hij
+8a)	.
+=5	=5
+4g	greut-
+4g	-te
+(8b	dat
+8a)	.
+=6	=6
+4g	meis-
+4g	-je
+8b	en
+8cc	hij
+=7	=7
+4dd	sprak
+4dd	ze
+4ee	wel
+=8	=8
+*M4/4	*
+2dd;}	aan
+!! verse 2
+{2ee	Wilt
+=9	=9
+8.dd	gij
+16dd	d'r
+4cc	eens
+4b	met
+4a	mij
+=10	=10
+*M3/4	*
+4b	rij-
+4g;}	-den
+!! verse 3
+{4a	of
+=11	=11
+4b	wilt
+8.cc	gij
+16cc	d'r
+4dd	eens
+=12	=12
+(4.a	met
+8b)	.
+4a	mij
+=13	=13
+2g;}	gaan?
+==|!	==|!
+*-	*-
+!! produced by wce2krn 1.66 (released on 14 January 2015)

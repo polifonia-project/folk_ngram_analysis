@@ -1,0 +1,67 @@
+!! Published by the Meertens Institute (http://www.meertens.knaw.nl)
+!! Part of the Database of Dutch Songs (NLB) (http://www.liederenbank.nl)
+!! NLB identifier: NLB074769_02
+!! NLB record number: 74769
+!! NLB strophe/voice number: 2
+**kern	**text
+*staff1	*staff1
+*M7/8	*
+*MM120	*
+*k[f#]	*
+*G:	*
+!! verse 0
+=1	=1
+{8dd	Doch-
+8dd	-ter-
+8dd	-lief
+8dd	je
+8dd	bent
+8cc#	er
+8dd	nog
+=2	=2
+*M6/8	*
+8ee	veels
+8dd	te
+8dd	klein,
+8ee	veels
+8dd	te
+8dd;}	klein
+!! verse 1
+=3	=3
+{8g	Moet
+8a	er
+8b	nog
+8ee	ja-
+8ee	-ren
+8ee	bij
+=4	=4
+4dd	moe-
+8cc	-der
+4.b;}	zijn
+!! verse 2
+=5	=5
+{4dd	Doch-
+8dd	-ter
+8.gg	lief
+16gg	je
+8gg	bent
+=6	=6
+4aa	veels
+8aa	te
+4.bb;}	klein
+!! verse 3
+=7	=7
+{8gg	Moet
+8ff#	er
+8ee	nog
+8dd	ja-
+8dd	-ren
+8bb	bij
+=8	=8
+(8aa	moe-
+8ee)	.
+8ff#	-der
+4.gg;}	zijn.
+==|!	==|!
+*-	*-
+!! produced by wce2krn 1.66 (released on 14 January 2015)

@@ -1,0 +1,76 @@
+!! Published by the Meertens Institute (http://www.meertens.knaw.nl)
+!! Part of the Database of Dutch Songs (NLB) (http://www.liederenbank.nl)
+!! NLB identifier: NLB073672_01
+!! NLB record number: 73672
+!! NLB strophe/voice number: 1
+**kern	**text
+*staff1	*staff1
+*M6/4	*
+*MM120	*
+*k[f#]	*
+*G:	*
+!! verse 0
+{4b	Een
+4b	heer
+(8b	die
+8a)	.
+=1	=1
+*M5/4	*
+2g	ging
+4d	zeer
+4g	ver
+4a	van
+=2	=2
+*M6/4	*
+2.b;}	huis
+!! verse 1
+{8b	In
+8b	geen
+4b	zes
+8b	ze-
+8a	-ven
+=3	=3
+*M5/4	*
+2g	ja-
+4d	-ren
+8g	kwam
+4.a	hij
+=4	=4
+*M6/4	*
+2.b;}	thuis
+!! verse 2
+{8b	En
+8b	die
+4b	zes
+8b	ze-
+8a	-ven
+=5	=5
+4g	ja-
+4b	-ren
+4dd	die
+4dd	vie-
+4cc	-len
+4b	hem
+=6	=6
+8b	lan-
+[8a	-gen
+2a];}	.
+!! verse 3
+{8a	dat
+8b	hij
+4cc	naar
+4b	zijn
+=7	=7
+2a	huis-
+8g	-vrouw
+8a	be-
+2b	-gon
+8f#	te
+8a	ver-
+=8	=8
+8a	-lan-
+[8g	-gen
+2g];}	.
+==|!	==|!
+*-	*-
+!! produced by wce2krn 1.66 (released on 14 January 2015)

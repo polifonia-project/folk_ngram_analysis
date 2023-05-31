@@ -1,0 +1,62 @@
+!! Published by the Meertens Institute (http://www.meertens.knaw.nl)
+!! Part of the Database of Dutch Songs (NLB) (http://www.liederenbank.nl)
+!! NLB identifier: NLB073326_01
+!! NLB record number: 73326
+!! NLB strophe/voice number: 1
+**kern	**text
+*staff1	*staff1
+*M4/4	*
+*MM120	*
+*k[f#]	*
+*G:	*
+!! verse 0
+{8b	En
+8b	Jan
+=1	=1
+4b	Hal-
+8b	-berts,
+8ee	Jan
+4dd	Hal-
+8ee	-berts
+8dd	die
+=2	=2
+4cc	zit
+8dd	in
+8dd	het
+4b;}	woud
+!! verse 1
+{8g	En
+8g	hij
+=3	=3
+4e	speelt
+8g	daar
+8g	met
+4a	veer-
+8g	-tien
+8f#	mooi
+=4	=4
+4e	ma-
+8d	-ger-
+8d	-kes
+4g;}	stout
+!! verse 2
+{8d	En
+8d	hij
+=5	=5
+*M6/4	*
+8f#	speel-
+8f#	-de
+8b	wel
+8b	met
+2a	veer-
+4e	-tien
+4b	mooi
+=6	=6
+*M4/4	*
+4cc	ma-
+8b	-ger-
+8a	-kes
+4g;}	stout.
+==|!	==|!
+*-	*-
+!! produced by wce2krn 1.66 (released on 14 January 2015)

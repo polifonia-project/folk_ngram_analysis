@@ -1,0 +1,122 @@
+!! Published by the Meertens Institute (http://www.meertens.knaw.nl)
+!! Part of the Database of Dutch Songs (NLB) (http://www.liederenbank.nl)
+!! NLB identifier: NLB072500_01
+!! NLB record number: 72500
+!! NLB strophe/voice number: 1
+**kern	**text
+*staff1	*staff1
+*M4/4	*
+*MM120	*
+*k[f#]	*
+*G:	*
+!! verse 0
+{4dd	Hoort
+4dd	vrien-
+4dd	-den
+=1	=1
+*M6/4	*
+4.b	hoort
+8b	mijn
+2b	lied
+4r;}	.
+!! verse 1
+{8a	wat
+8a	ik
+=2	=2
+*M4/4	*
+4g	duid'-
+4b	-lijk
+4.dd	zal
+8ee	ver-
+=3	=3
+*M6/4	*
+4dd	-kla-
+4a	-ren
+4r;}	.
+!! verse 2
+{8a	Wat
+8a	er
+4a	een-
+4b	-maal
+=4	=4
+4.cc	is
+8cc	ge-
+2cc	-schied
+4r;}	.
+!! verse 3
+{4cc	voor
+=5	=5
+*M4/4	*
+4cc	meer
+4ee	dan
+4.dd	dui-
+8cc	-zend
+=6	=6
+4cc	ja-
+4b	-ren.
+4r;}	.
+!! verse 4
+{4dd	Toen
+=7	=7
+4dd	't oud
+4dd	en
+4.b	grijs
+8b	Sta-
+=8	=8
+2b	-vo-
+4a;}	-ren
+!! verse 5
+{4b	nog
+=9	=9
+4cc	bloeid'
+4dd	op
+4ee	Fries-
+4ee	-lands
+=10	=10
+2dd	grond
+4r;}	.
+!! verse 6
+{4dd	En
+=11	=11
+4.ee	van
+8ee	zijn
+4ee	macht
+4dd	deed
+=12	=12
+(4g	ho-
+4b)	.
+4.dd;}	-ren,
+!! verse 7
+{8ee	Door
+=13	=13
+4dd	heel
+4dd	de
+4ee	we-
+4dd	-reld
+=14	=14
+2.b;}	rond,
+!! verse 8
+{4dd	En
+=15	=15
+4.ee	van
+8ee	zijn
+4ee	macht
+4dd	deed
+=16	=16
+(4g	ho-
+4b)	.
+4.dd;}	-ren,
+!! verse 9
+{8ee	door
+=17	=17
+4dd	heel
+4a	de
+4cc	we-
+4b	-reld
+=18	=18
+*M6/4	*
+2g	rond.
+4r;}	.
+==|!	==|!
+*-	*-
+!! produced by wce2krn 1.66 (released on 14 January 2015)

@@ -1,0 +1,83 @@
+!! Published by the Meertens Institute (http://www.meertens.knaw.nl)
+!! Part of the Database of Dutch Songs (NLB) (http://www.liederenbank.nl)
+!! NLB identifier: NLB075325_02
+!! NLB record number: 75325
+!! NLB strophe/voice number: 2
+**kern	**text
+*staff1	*staff1
+*M3/4	*
+*MM120	*
+*k[f#]	*
+*G:	*
+!! verse 0
+{4cc	Hij
+=1	=1
+4.b	zei-
+8a	-de
+8g	bak-
+8f#	-kers-
+=2	=2
+(8g	-meis-
+8a)	.
+4b	-sie
+8cc	Wilt
+8b	gij
+=3	=3
+(4a	rij-
+8cc)	.
+8b	-den
+(8a	of
+8cc)	.
+=4	=4
+2b;}	gaan
+!! verse 1
+{4cc	Hij
+=5	=5
+4.b	zei-
+8dd	-de
+8g	bak-
+8f#	-kers-
+=6	=6
+(8g	-meis-
+8a)	.
+4b	-sie
+8b	Wilt
+8b	gij
+=7	=7
+(4a	rij-
+8cc)	.
+8b	-den
+(8a	of
+8cc)	.
+=8	=8
+2b;}	gaan
+!! verse 2
+{8b	Neen
+8dd	ik
+=9	=9
+(8g	wil
+8b)	.
+8.dd	d'r
+16dd	niet
+8ee	met
+8dd	u
+=10	=10
+4a	rij-
+4g;}	-den
+!! verse 3
+{8a	Ve-
+8a	-le
+=11	=11
+(8b	min-
+8dd)	.
+4dd	-der
+4b	nog
+=12	=12
+(4a	met
+4ee)	.
+4dd	u
+=13	=13
+2g;}	gaan.
+==|!	==|!
+*-	*-
+!! produced by wce2krn 1.66 (released on 14 January 2015)

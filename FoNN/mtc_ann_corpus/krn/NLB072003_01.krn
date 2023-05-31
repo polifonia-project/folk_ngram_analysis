@@ -1,0 +1,78 @@
+!! Published by the Meertens Institute (http://www.meertens.knaw.nl)
+!! Part of the Database of Dutch Songs (NLB) (http://www.liederenbank.nl)
+!! NLB identifier: NLB072003_01
+!! NLB record number: 72003
+!! NLB strophe/voice number: 1
+**kern	**text
+*staff1	*staff1
+*M4/4	*
+*MM120	*
+*k[f#]	*
+*G:	*
+!! verse 0
+{8b	Hij
+=1	=1
+8b	klop-
+8b	-te
+8b	aan
+8b	de
+(8b	deu-
+8dd)	.
+8.dd	-re
+16ee	en hij
+=2	=2
+8.dd	ringel-
+16dd	-de
+8cc	aan
+8b	de
+4a	klink
+8r;}	.
+!! verse 1
+{8a	Sta
+=3	=3
+8a	op
+8a	doe
+8a	up-
+8b	-ser
+4cc	fij-
+8.dd	-ne
+16cc	en
+=4	=4
+8b	loat
+8b	doe
+8a	mie
+8a	d'r
+4g	in
+8r;}	.
+!! verse 2
+{8d	Ik
+=5	=5
+4g	dou
+8.g	die
+16g	de
+(8a	deu-
+8cc)	.
+8b	-re
+8a	nait
+=6	=6
+4g	o-
+4e	-pen
+4r	.
+8r;}	.
+!! verse 3
+{8d	Ik
+=7	=7
+4g	loat
+12g	die
+12g	der
+12g	van
+4a	ao-
+8b	-vond
+8a	nait
+=8	=8
+4g	in.
+4r	.
+4.r;}	.
+==|!	==|!
+*-	*-
+!! produced by wce2krn 1.66 (released on 14 January 2015)

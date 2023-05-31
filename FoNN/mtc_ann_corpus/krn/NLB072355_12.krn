@@ -1,0 +1,71 @@
+!! Published by the Meertens Institute (http://www.meertens.knaw.nl)
+!! Part of the Database of Dutch Songs (NLB) (http://www.liederenbank.nl)
+!! NLB identifier: NLB072355_12
+!! NLB record number: 72355
+!! NLB strophe/voice number: 12
+**kern	**text
+*staff1	*staff1
+*M3/4	*
+*MM120	*
+*k[f#]	*
+*G:	*
+!! verse 0
+{4c	Zo
+=1	=1
+4.cc	gaat
+8dd	het
+4cc	met
+=2	=2
+4.b	al
+8a	die
+8g	mooi-
+8a	-e
+=3	=3
+*M4/4	*
+4b	meis-
+4a	-jes
+4r;}	.
+!! verse 1
+{4b	Zo
+=4	=4
+*M3/4	*
+4.cc	gaat
+8dd	het
+4cc	met
+=5	=5
+4.b	al
+8a	die
+8g	mooi-
+8a	-e
+=6	=6
+*M4/4	*
+4b	meis-
+4a	-jes
+4r;}	.
+!! verse 2
+{8b	Die
+8a	de
+=7	=7
+4g	jonk-
+4g	-man
+4a	brengt
+4a	tot
+=8	=8
+8dd;}	schand
+!! verse 3
+{8cc	(En)
+8b	Die
+8a	de
+4g	jonk-
+4a	-man
+=9	=9
+2b	brengt
+(4a	tot
+4b)	.
+=10	=10
+*M3/4	*
+4g	schand.
+4r;}	.
+==|!	==|!
+*-	*-
+!! produced by wce2krn 1.66 (released on 14 January 2015)

@@ -1,0 +1,82 @@
+!! Published by the Meertens Institute (http://www.meertens.knaw.nl)
+!! Part of the Database of Dutch Songs (NLB) (http://www.liederenbank.nl)
+!! NLB identifier: NLB134474_01
+!! NLB record number: 134474
+!! NLB strophe/voice number: 1
+**kern	**text
+*staff1	*staff1
+*M6/8	*
+*MM120	*
+*k[]	*
+*C:	*
+!! verse 0
+{8g	Zoo-
+=1	=1
+4e	-lang
+8g	de
+4cc	roos-
+8b	-jes
+=2	=2
+8b	bloei-
+8a	-en
+8r	.
+4r;}	.
+!! verse 1
+{16cc	En
+16cc	de
+=3	=3
+4b	le-
+8a	-lies
+4g	heer-
+8f	-lijk
+=4	=4
+4.e	staan,
+4r;}	.
+!! verse 2
+{8g	Zal
+=5	=5
+4e	ik
+8g	mij
+4cc	nooit
+8g	be-
+=6	=6
+8b	-moei-
+8a	-en
+8r	.
+4r;}	.
+!! verse 3
+{8cc	Om
+=7	=7
+4b	met
+8a	een
+8d	an-
+8a	-der
+8g	te
+=8	=8
+4.e	gaan.
+4r;}	.
+!! verse 4
+{8g	Zal
+=9	=9
+4e	ik
+8g	mij
+4cc	nooit
+8ee	be-
+=10	=10
+(4dd	-moei-
+8cc)	.
+4a;}	-en
+!! verse 5
+{8cc	Om
+=11	=11
+4b	met
+8a	een
+8g	an-
+8a	-der
+8b	te
+=12	=12
+4.cc	gaan.
+4r;}	.
+==|!	==|!
+*-	*-
+!! produced by wce2krn 1.66 (released on 14 January 2015)

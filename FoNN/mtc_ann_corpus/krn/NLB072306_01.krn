@@ -1,0 +1,106 @@
+!! Published by the Meertens Institute (http://www.meertens.knaw.nl)
+!! Part of the Database of Dutch Songs (NLB) (http://www.liederenbank.nl)
+!! NLB identifier: NLB072306_01
+!! NLB record number: 72306
+!! NLB strophe/voice number: 1
+**kern	**text
+*staff1	*staff1
+*M4/4	*
+*MM120	*
+*k[f#]	*
+*G:	*
+!! verse 0
+{8dd	Er
+=1	=1
+4dd	was
+8.dd	eens
+16dd	een
+4ee	meis-
+8.dd	-je
+16cc	vroeg
+=2	=2
+4b	op-
+4a	-ge-
+4g	-staan
+4r;}	.
+!! verse 1
+=3	=3
+{4gg	Om
+8.gg	ha-
+16gg	-re
+8aa	zoe-
+8aa	-te-
+4gg	-lief
+=4	=4
+4ff#	zoe-
+8ee	-ken
+8ee	te
+4dd	gaan
+4r;}	.
+!! verse 2
+=5	=5
+*M5/4	*
+{(8dd	Zij
+8gg)	.
+4.gg	zocht
+8dd	al
+(8dd	on-
+8gg)	.
+8ff#	-der
+8ee	die
+=6	=6
+(4.dd	lin-
+8cc)	.
+4b	-den
+4r;}	.
+!! verse 3
+{4dd	En
+=7	=7
+*M4/4	*
+8cc	kon
+8b	noch
+8cc	taal
+8dd	noch
+8ee	te-
+8ff#	-ken
+8gg	van
+8cc	hem
+=8	=8
+(4b	vin-
+4a)	.
+2g;}	-den.
+!! verse 4
+=9	=9
+*M5/4	*
+{(8dd	Zij
+8gg)	.
+4.gg	zocht
+8dd	al
+(8dd	on-
+8gg)	.
+8ff#	-der
+8ee	die
+=10	=10
+(4.dd	lin-
+8cc)	.
+4b	-den
+4r;}	.
+!! verse 5
+{4dd	En
+=11	=11
+*M4/4	*
+8cc	kon
+8b	noch
+8cc	taal
+8dd	noch
+8ee	te-
+8ff#	-ken
+8gg	van
+8cc	hem
+=12	=12
+(4b	vin-
+4a)	.
+4.g;}	-den.
+==|!	==|!
+*-	*-
+!! produced by wce2krn 1.66 (released on 14 January 2015)

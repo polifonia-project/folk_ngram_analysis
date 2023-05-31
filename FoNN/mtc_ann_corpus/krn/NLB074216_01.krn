@@ -1,0 +1,59 @@
+!! Published by the Meertens Institute (http://www.meertens.knaw.nl)
+!! Part of the Database of Dutch Songs (NLB) (http://www.liederenbank.nl)
+!! NLB identifier: NLB074216_01
+!! NLB record number: 74216
+!! NLB strophe/voice number: 1
+**kern	**text
+*staff1	*staff1
+*M4/4	*
+*MM142	*
+*k[f#]	*
+*G:	*
+!! verse 0
+{8d	En
+8d	Jan
+=1	=1
+4a	Al-
+8b	-berts
+8cc	die
+4dd	zet-
+8ee	-te
+8dd	zich
+=2	=2
+4cc	neer
+8dd	op
+8dd	z'n
+4b;}	ros,
+!! verse 1
+{8g	En
+8g	hij
+=3	=3
+4e	reed
+8f#	'r
+8g	al
+4a	mee
+8g	door
+8f#	een
+=4	=4
+4e	wil-
+4d	-gen-
+4g;}	-bos,
+!! verse 2
+{8d	En
+8d	hij
+=5	=5
+4g	reed
+8b	er
+8b	al
+2a	mee
+=6	=6
+4d	door
+4b	een
+4cc	wil-
+(8b	-gen-
+8a)	.
+=7	=7
+2.g;}	-bos.
+==|!	==|!
+*-	*-
+!! produced by wce2krn 1.66 (released on 14 January 2015)
