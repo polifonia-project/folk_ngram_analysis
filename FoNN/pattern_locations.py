@@ -1,7 +1,12 @@
 """
-pattern_locations.py extracts onset locations for all n-gram pattern occurrences in the corpus at a given pattern
-length. The output of this script is an input requirement for the FoNN Knowledge Graph (KG). This script must be applied
- to any corpus for which a KG is being generated.
+pattern_locations.py extracts pattern location information for all n-gram pattern occurrences in the corpus at a given
+pattern length. The output of this script is an input requirement for the FoNN Knowledge Graph (KG). This script must be
+applied to any corpus for which a KG is being generated via the Polifonia Patterns Knowledge Graph pipeline at
+ https://github.com/polifonia-project/patterns-knowledge-graph.
+
+ What we call 'locations' are the onset location or index of a pattern occurrence in a given feature sequence
+ representing a single tune. For example, pattern [1 2 3 4] occurring in tune [1 2 3 4 5 1 2 3 4 5] will have locations
+ 0 and 5 representing the indices at which its first element is located in the tune sequence.
  """
 
 import csv
@@ -65,19 +70,20 @@ def find_ngram_indices(ngrams):
 
 # ----------------------------------------------------------------------------------------------------------------------
 
-# TODO: Move below to notebook?
-
 # Run on full corpus:
 
 # corpus dir
-root_dir = '/Users/dannydiamond/NUIG/Polifonia/MTC/MTC-ANN-2.0/mtc_ann_feat_seq_corpus/feat_seq_dw'
+root_dir = '../mtc_ann_corpus/feature_sequence_data/duration_weighted'
 # select musical feature
 feature = 'diatonic_scale_degree'
 # define n-values (range of pattern lengths)
 
 
-# run
-for n in (4, 5, 6):
+# run -- Note: Currently, the cal below will extract locations for all patterns between 4-6 elements in length.
+# Please change values in pattern_lengths tuple below to adjust range of pattern lengths for which the script will
+# extract locations.
+pattern_lengths = (4, 5, 6)
+for n in pattern_lengths:
     results = {}
     tune_paths = read_tune_paths(root_dir)
     for path in tune_paths:
@@ -87,9 +93,11 @@ for n in (4, 5, 6):
         indices = find_ngram_indices(ngrams)
         results[title] = dict(indices)
 
-    # # store output as pickle
-    out_dir = '/Users/dannydiamond/NUIG/Polifonia/MTC/MTC-ANN-2.0/mtc_ann_feat_seq_corpus/locations/'
-    out_file = f'dw_locations{n}.pkl'
+    # store output as pickle file; create output dir if it doesn't already exist
+    out_dir = root_dir + '/locations/'
+    if not os.path.isdir(out_dir):
+        os.makedirs(out_dir)
+    out_file = f'{n}gram_locations.pkl'
     out_path = f"{out_dir}/{out_file}"
     print(results)
     with open(out_path, 'wb') as f_out:
