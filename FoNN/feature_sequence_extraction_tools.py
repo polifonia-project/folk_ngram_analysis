@@ -542,7 +542,7 @@ class Corpus:
     def save_feat_seq_data_to_csv(self):
 
         """
-        Create a subdirectory structure at the path specified in Corpus.out_path for each tune in corpus. Write
+        Create a subdirectory structure at path specified in Corpus.out_path for each tune in corpus. Write
         DataFrames at Tune.feat_seq, Tune.accent, and Tune.duration_weighted to csv files in the appropriate folders.
         """
 
