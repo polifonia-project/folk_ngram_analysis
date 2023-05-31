@@ -1,9 +1,0 @@
-,index,midi_note_num,diatonic_note_num,chromatic_pitch_class,onset,duration,velocity,bar_count,relative_chromatic_pitch,relative_diatonic_pitch,chromatic_scale_degree,diatonic_scale_degree,chromatic_interval,diatonic_interval,parsons_code,parsons_cumsum
-0,2,69,34,9,2.0,2.0,105,0,7,4,7,5,0,0,0,0
-1,6,78,39,6,6.0,2.0,95,0,16,9,4,3,9,5,1,1
-2,9,74,37,2,10.0,1.0,105,1,12,7,0,1,-2,-1,-1,0
-3,13,69,34,9,14.0,2.0,95,1,7,4,7,5,-2,-1,-1,-1
-4,16,67,33,7,18.0,1.0,105,2,5,3,5,4,-2,-1,-1,-2
-5,20,71,35,11,22.0,2.0,95,2,9,5,9,6,2,1,1,-1
-6,23,67,33,7,26.0,1.0,105,3,5,3,5,4,1,1,-1,-2
-7,27,71,35,11,30.0,1.0,95,3,9,5,9,6,2,1,1,-1
