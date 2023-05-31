@@ -24,11 +24,11 @@ credits:
 - Targeting the goals of [Polifonia](https://polifonia-project.eu) WP3, FoNN contains tools to extract feature sequence data, extract musical patterns, and detect similarity within a symbolic music corpus. Although some of FoNN's functionality is tailored to Western European folk music, the software can be used on any corpus in a compatible symbolic representation format (MIDI, ABC Notation, **kern, MusicXML, or any other format compatible with the [music21](http://web.mit.edu/music21/) Python library).
 
 The repo contains a fully functional work-in-progress version of the software, along with two test music datasets: the Meertens Annotated Corpus (MTC-ANN) of Dutch folk songs and The Session corpus of Irish traditional folk dance tunes.
-Three demo notebooks are supplied in ```./notebooks``` directory. These demos illustrate FoNN's feature extraction, pattern extraction, and similarity search tools as applied to the MTC-ANN corpus: 
+Three demo notebooks are supplied in ```./FoNN/notebooks``` directory. These demos illustrate FoNN's feature extraction, pattern extraction, and similarity search tools as applied to the MTC-ANN corpus: 
 
-- [feature_extraction_demo.ipynb](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/notebooks/feature_extraction_demo.ipynb): Reads the symbolic MTC-ANN music corpus from **kern format; extracts feature sequence data and writes to csv at ```./mtc_ann_corpus/feature_sequence_data``` 
-- [pattern_extraction_demo.ipynb](https://github.com/polifonia-project/folk_ngram_analysis/master/notebooks/pattern_extraction_demo.ipynb): Reads the feature sequence data outputted by the above notebook, extracts unique feature patterns and counts their occurrences per tune across the corpus. Writes output to ```./mtc_ann_corpus/pattern_corpus```.
-- [similarity_search_demo.ipynb](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/notebooks/similarity_search_demo.ipynb): Using the data outputted by the notebook above, this demo detects similar tunes across the corpus for a user-selected query tune via FoNN's three novel pattern-based similarity metrics. 
+- [feature_extraction_demo.ipynb](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/notebooks/feature_extraction_demo.ipynb): Reads the symbolic MTC-ANN music corpus from **kern format; extracts feature sequence data and writes to csv at ```./FoNN/mtc_ann_corpus/feature_sequence_data``` 
+- [pattern_extraction_demo.ipynb](https://github.com/polifonia-project/folk_ngram_analysis/master/notebooks/pattern_extraction_demo.ipynb): Reads the feature sequence data outputted by the above notebook, extracts unique feature patterns and counts their occurrences per tune across the corpus. Writes output to ```./FoNN/mtc_ann_corpus/pattern_corpus```.
+- [similarity_search_demo.ipynb](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/notebooks/similarity_search_demo.ipynb): Using the data outputted by the notebook above, for a user-selectable query tune, this demo detects similar tunes across the corpus   via FoNN's three novel pattern-based similarity metrics. Writes output to ```./FoNN/mtc_ann_corpus/similarity_results```
 
 
 NOTE: Deliverable 3.4 of the Polifonia project describes the context and research informing development of these tools. It will be published on [Cordis](https://cordis.europa.eu/project/id/101004746/it) later this year (2023).
@@ -73,9 +73,9 @@ NOTE: *The Session* and *CRÉ* corpora are provided in both ABC Notation and MID
 
 1.1. **Reading a corpus**
 
-- Running ```./notebooks/feature_extraction_tools_demo.ipynb``` extracts feature sequence data from an input corpus via ```FoNN.feature_sequence_extraction_tools.Corpus``` class. 
-- By default this notebook reads the corpus at ```./mtc_ann_corpus/krn``` and outputs feature sequence data to ```./mtc_ann_corpus/feature_sequence_data```. 
-- Input path and format can be edited as desired, while output will always write to ```./[corpus name]/feature_sequence_data``` subdirectory. 
+- Running ```.FoNN/notebooks/feature_extraction_tools_demo.ipynb``` extracts feature sequence data from an input corpus via ```FoNN.feature_sequence_extraction_tools.Corpus``` class. 
+- By default this notebook reads the corpus at ```./FoNN/mtc_ann_corpus/krn``` and outputs feature sequence data to ```./FoNN/mtc_ann_corpus/feature_sequence_data```. 
+- Input path and format can be edited as desired, while output will always write to ```./FoNN/[corpus name]/feature_sequence_data``` subdirectory. 
 - This notebook extracts 16 feature sequences in what we term 'note-level', 'duration-weighted note-level' and 'accent-level' representations, as explained below: 
 1. Note-level: for every music score document in the corpus, each note is represented via 16 feature values.
 2. Duration-weighted note-level: for every music score document in the corpus, each 1/8 note temporal increment is represented via 16 feature values.
@@ -99,19 +99,19 @@ NOTE: *The Session* and *CRÉ* corpora are provided in both ABC Notation and MID
 -- 'parsons_code': simple melodic contour. Please see Tune.extract_parsons_codes() docstring for detailed explanation.
 -- 'parsons_cumsum': cumulative Parsons code values.
 ```
-- For more detail on how to customise inclusion/exclusion of features and choice of output data level, please refer to ```./notebooks/feature_extraction_tools_demo.ipynb```.   
+- For more detail on how to customise inclusion/exclusion of features and choice of output data level, please refer to ```./FoNN/notebooks/feature_extraction_tools_demo.ipynb```.   
 
 
 1.2. **Extracting patterns and counting their occurrences:**
 
-- For a user-selected musical feature, ```/notebooks/pattern_extraction_demo.ipynb``` uses FoNN.pattern_extraction.NgramPatternCorpus class to extract all unique *n*-gram patterns from the input corpus. The default feature is 'diatonic_pitch_class' but other features can be selected by the user from the list above in Section 1.1. 
-- Default input data is the MTC-ANN corpus feature sequence data at ```./mtc_ann_corpus/feature_sequence_data```, but pattern extraction can be applied to any other symbolic corpus which has first been processed via FoNN's feature extraction pipeline as described in section 1.1.
-- A pattern is defined as a subsequence of length between 3 and 12 elements which occurs at least once in the corpus. All patterns following this definition which occur in the corpus are stored in an array. Their occurrences in every tune in the corpus are counted and stored in a sparse matrix. These counts are weighted and converted to TF-IDF values to supress frequent-but-insignificant 'stop word' patterns. These outputs are the core input requirements for FoNN's similarity search tool; they are stored in ```./[corpus name]/pattern_corpus``` dir.
+- For a user-selected musical feature, ```/FoNN/notebooks/pattern_extraction_demo.ipynb``` uses FoNN.pattern_extraction.NgramPatternCorpus class to extract all unique *n*-gram patterns from the input corpus. The default feature is 'diatonic_pitch_class' but other features can be selected by the user from the list above in Section 1.1. 
+- Default input data is the MTC-ANN corpus feature sequence data at ```./FoNN/mtc_ann_corpus/feature_sequence_data```, but pattern extraction can be applied to any other symbolic corpus which has first been processed via FoNN's feature extraction pipeline as described in section 1.1.
+- A pattern is defined as a subsequence of length between 3 and 12 elements which occurs at least once in the corpus. All patterns following this definition which occur in the corpus are stored in an array. Their occurrences in every tune in the corpus are counted and stored in a sparse matrix. These counts are weighted and converted to TF-IDF values to supress frequent-but-insignificant 'stop word' patterns. These outputs are the core input requirements for FoNN's similarity search tool; they are stored in ```./FoNN/[corpus name]/pattern_corpus``` dir.
 
 
 1.3. **Pattern-based tune similarity**
 
-- The ```similarity_search_demo.ipynb``` notebook contains sample similarity searches for a user-selected query tune from the MTC-ANN corpus via FoNN.similarity_search.
+- The ```/FoNN/notebooks/similarity_search_demo.ipynb``` notebook contains sample similarity searches for a user-selected query tune from the MTC-ANN corpus via FoNN.similarity_search.
 - Results are returned which rank other tunes in the corpus by their similarity to the candidate tune. These are obtained via FoNN's three novel metrics: 'motif', 'incipit and cadence', and 'TFIDF'.
 1. 'motif':
 First a representative pattern is extracted from the query tune via maximal tfidf. Similar patterns to this search term pattern are detected via Levenshtein distance, with only one single edit permitted. The number of similar patterns per tune in the corpus is calculated, normalised by tune length, and returned as a
@@ -125,11 +125,11 @@ substitutions are penalised less than dissonant substitutions. The edit distance
 tune-dissimilarity metric.
 3. 'tfidf':
 A classical IR baseline methodology: the Cosine similarity between TFIDF vectors of all tunes in the corpus is taken as a tune similarity metric. 
-- All results are displayed in the notebook and automatically written to csv files at ```./[corpus name]/similarity_results```.
+- All results are displayed in the notebook and automatically written to csv files at ```./FoNN/[corpus name]/similarity_results```.
 
 1.4. **Test music datasets**
-- [The Meertens Tune Collection Annotated Corpus (MTC-ANN) version 2.0.1](https://www.liederenbank.nl/mtc/): 360 folk song melodies from the Meertens Instituut's Database of Dutch Songs, in **kern and MIDI formats. Stored in ```./mtc_ann_corpus``` dir. 
-- [The Session](https://thesession.org): An online, crowd-sourced collection of 40,000+ monophonic Irish traditional dance tunes in ABC Notation and MIDI formats. Stored in ```./the_session_corpus``` dir. 
+- [The Meertens Tune Collection Annotated Corpus (MTC-ANN) version 2.0.1](https://www.liederenbank.nl/mtc/): 360 folk song melodies from the Meertens Instituut's Database of Dutch Songs, in **kern and MIDI formats. Stored in ```./FoNN/mtc_ann_corpus``` dir. 
+- [The Session](https://thesession.org): An online, crowd-sourced collection of 40,000+ monophonic Irish traditional dance tunes in ABC Notation and MIDI formats. Stored in ```./FoNN/the_session_corpus``` dir. 
 
 
 ## 2. Ceol Rince na hÉireann (CRÉ) MIDI corpus 

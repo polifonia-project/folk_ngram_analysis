@@ -1,5 +1,3 @@
-# TODO: Tense
-
 """
 Feature sequence data represents each note in a symbolic music document via numerical feature values, such
 as: (midi_note_num: 68, onset: 10, duration: 2)

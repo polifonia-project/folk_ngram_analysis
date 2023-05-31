@@ -1,4 +1,0 @@
-eighth_note,midi_note_num,diatonic_note_num,chromatic_pitch_class,beat_strength,bar_num,velocity,relative_chromatic_pitch,relative_diatonic_pitch,chromatic_scale_degree,diatonic_scale_degree,chromatic_interval,diatonic_interval,parsons_code,parsons_cumsum
-0,65,32,5,0,0,0,-5,-3,7,5,0,0,0,0
-1,70,35,10,0,3,0,0,0,0,1,-2,-1,-1,0
-2,69,34,9,0,11,0,-1,-1,11,7,2,1,1,-3
