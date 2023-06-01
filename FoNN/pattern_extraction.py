@@ -103,8 +103,8 @@ class NgramPatternCorpus:
         Args:
             in_dir -- path to dir containing csv feature sequence files representing each tune in a music corpus.
             out_dir -- directory to write output files.
-            n_vals -- a list holding pattern length values for which patterns will be extracted. E.g.:
-                      n_vals = [4] extracts patterns of 4 elements in length; n_vals = [4, 5, 6] extracts patterns of
+            n_vals -- a tuple holding min and max pattern length values for which patterns will be extracted. E.g.:
+                      n_vals = (4, 4) extracts patterns of 4 elements in length; n_vals = (4, 6) extracts patterns of
                       4-6 elements in length.
         """
 
@@ -115,7 +115,6 @@ class NgramPatternCorpus:
         self.out_dir = out_dir
         if not os.path.isdir(self.out_dir):
             os.makedirs(self.out_dir)
-        assert type(n_vals) is tuple
         for n in n_vals:
             assert 3 <= n <= 12
         self.n_vals = n_vals

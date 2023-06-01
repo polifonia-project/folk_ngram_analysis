@@ -320,12 +320,12 @@ class PatternSimilarity:
         """
 
         incipits_and_cadences = self._incipits_and_cadences
-        # calculate distance matrix, convert to triangular format and force type to conserve memory
+        # calculate distance matrix
         incipits_and_cadences_hamming_dist = pairwise_distances(
             incipits_and_cadences, metric='hamming'
         ).astype('float16')
         
-        return incipits_and_cadences_hamming_dist if incipits_and_cadences else None
+        return incipits_and_cadences_hamming_dist
 
     def _calculate_incipit_and_cadence_edit_distance(self, edit_dist_metric):
         
