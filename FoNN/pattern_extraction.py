@@ -46,8 +46,11 @@ class NgramPatternCorpus:
     Attributes:
         feature -- a single input feature name selected from FEATURES
         in_dir -- path to dir containing csv feature sequence files representing each tune in a music corpus, as
-        outputted by feature_sequence_extraction_tools.py
+                  outputted by feature_sequence_extraction_tools.py
         out_dir -- directory to write output files
+        n_vals -- a list holding pattern length values for which patterns will be extracted. E.g.:
+                  n_vals = [4] extracts patterns of 4 elements in length; n_vals = [4, 5, 6] extracts patterns of
+                  4-6 elements in length.
         name -- Corpus name. Derived automatically from in_dir directory name
         data -- input data read from csv files
         titles -- tune titles extracted from data
@@ -92,7 +95,7 @@ class NgramPatternCorpus:
         'relative_pitch_class'
     }
 
-    def __init__(self, feature='diatonic_scale_degree', in_dir=None, out_dir=None):
+    def __init__(self, feature='diatonic_scale_degree', in_dir=None, out_dir=None, n_vals=None):
 
         """
         Initialize NgramPatternCorpus class object.
@@ -100,6 +103,9 @@ class NgramPatternCorpus:
         Args:
             in_dir -- path to dir containing csv feature sequence files representing each tune in a music corpus.
             out_dir -- directory to write output files.
+            n_vals -- a list holding pattern length values for which patterns will be extracted. E.g.:
+                      n_vals = [4] extracts patterns of 4 elements in length; n_vals = [4, 5, 6] extracts patterns of
+                      4-6 elements in length.
         """
 
         assert feature in NgramPatternCorpus.FEATURES
@@ -109,6 +115,10 @@ class NgramPatternCorpus:
         self.out_dir = out_dir
         if not os.path.isdir(self.out_dir):
             os.makedirs(self.out_dir)
+        assert type(n_vals) is tuple
+        for n in n_vals:
+            assert 3 <= n <= 12
+        self.n_vals = n_vals
         self.name = in_dir.split('/')[-3]
         for l in NgramPatternCorpus.LEVELS:
             if l in in_dir:
@@ -187,7 +197,7 @@ class NgramPatternCorpus:
             input='content',
             lowercase=False,
             tokenizer=lambda x: x,
-            ngram_range=(3, 12),
+            ngram_range=self.n_vals,
             analyzer='word'
         )
         # calculate sparse matrix of n-gram pattern occurrences:
@@ -273,10 +283,9 @@ class NgramPatternCorpus:
         df = pd.DataFrame.sparse.from_spmatrix(matrix.T).astype("Sparse[float16, nan]")
         df.columns = titles
         df['patterns'] = patterns
-        print(df)
         df.set_index('patterns', inplace=True, drop=True)
         # print and optionally write to file
-        print(df)
+        print(df.head())
         print(df.info())
         if write_output:
             df.to_pickle(f"{self.out_dir}/{filename}.pkl")

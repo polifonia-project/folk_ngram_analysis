@@ -1,6 +1,6 @@
 """
 Feature sequence data represents each note in a symbolic music document via numerical feature values, such
-as: (midi_note_num: 68, onset: 10, duration: 2)
+as: (midi_note_num: 68, offset: 10, duration: 2)
 .
 Tune class objects represent a single tune in feature sequence format.
 Corpus class objects represent collections of Tune objects.
@@ -10,7 +10,7 @@ Primary feature sequences calculable via Tune and Corpus classes, with feature n
 toolkit:
 
 -- 'midi_note_num': Chromatic pitch represented as MIDI number
--- 'onset': note onset (1/8 notes)
+-- 'offset': note offset (1/8 notes)
 -- 'duration': note (1/8 notes)
 -- 'velocity': MIDI velocity
 
@@ -97,7 +97,7 @@ class Tune:
     def extract_root(self):
 
         """
-        Populates Tune.chromatic_root and Tune.diatonic_root attrs with integer chromaitc and diatonic pitch values
+        Populates Tune.chromatic_root and Tune.diatonic_root attrs with integer chromatic and diatonic pitch values
         using key signature information read from input files via music21.
         """
 
@@ -112,7 +112,7 @@ class Tune:
 
         """
         Generator function. Extracts primary feature sequence data from music21 Stream representation of a tune.
-        Outputs a list containing midi_note_num, diatonic_note_num, chromatic_pitch_class, onset, duration,
+        Outputs a list containing midi_note_num, diatonic_note_num, chromatic_pitch_class, offset, duration,
         bar_num, beat_strength and velocity values for
         each note in the tune. Yields a tune-level numpy array containing feature data for entire tune.
         """
@@ -124,7 +124,7 @@ class Tune:
             pass
 
         # read score content
-        score_content = target.recurse().notesAndRests
+        score_content = target.flat.recurse().notesAndRests
         # read all notes and extract their pitches represented as MIDI note numbers:
         for idx, note in enumerate(score_content):
             prev_element = score_content[idx - 1]
@@ -158,7 +158,7 @@ class Tune:
                 pitch_class,  # chromatic pitch class
                 beat_strength,  # beat strength
                 bar_num,    # bar number
-                round(float(note.offset) * 2, 2),  # onset
+                round(float(note.offset) * 2, 2),  # offset
                 round(float(note.duration.quarterLength) * 2, 2),  # duration
                 0 if note.isRest else note.volume.velocity,  # MIDI velocity
             ])
@@ -176,7 +176,7 @@ class Tune:
                                                       "chromatic_pitch_class",
                                                       "beat_strength",
                                                       "bar_num",
-                                                      "onset",
+                                                      "offset",
                                                       "duration",
                                                       "velocity"
                                                       ])
@@ -186,7 +186,7 @@ class Tune:
         output["chromatic_pitch_class"] = output["chromatic_pitch_class"].astype('int8')
         output["beat_strength"] = output["beat_strength"].astype('float16').fillna(0).round(decimals=3)
         output["bar_num"] = output["bar_num"].astype('int8')
-        output["onset"] = output["onset"].astype('float16')
+        output["offset"] = output["offset"].astype('float16')
         output["duration"] = output["duration"].astype('float16')
         output["velocity"] = output["velocity"].fillna(0).astype('int16')
         self.feat_seq = output
@@ -368,12 +368,15 @@ class Tune:
 
         target = self.feat_seq
         duration_weighted = {}
-        # create new index of eighth notes from 'onsets' column:
-        onsets = target['onset'].to_numpy()
-        if not len(onsets):
-            print(self.title)
-        eighth_notes = np.arange(onsets[0], onsets[-1])
-        idx = np.searchsorted(onsets, eighth_notes)
+        # create new index of eighth notes from 'offsets' column:
+        if 'offset' in target.columns:
+            offsets = target['offset'].to_numpy()
+        else:
+            print(f"No offset values encoded for {self.title}: duration-weighting is not possible for this input.")
+            return None
+
+        eighth_notes = np.arange(offsets[0], offsets[-1])
+        idx = np.searchsorted(offsets, eighth_notes)
 
         # rescaled feature sequence data to new index
         for feat in features:
@@ -384,7 +387,7 @@ class Tune:
         # return results to 'Tune.duration_weighted' attribute & set type as int16:
         duration_weighted = pd.DataFrame.from_dict(duration_weighted, orient='columns')
         duration_weighted = duration_weighted.rename_axis('eighth_note').astype('int16', errors='ignore')
-        duration_weighted.pop('onset')
+        duration_weighted.pop('offset')
         self.duration_weighted = duration_weighted
 
 
@@ -560,12 +563,12 @@ class Corpus:
 
         # write data to file:
         for tune in tqdm(self.tunes, desc='Saving feature sequence data to csv'):
-            if tune.feat_seq is not None and len(tune.feat_seq) > 2:
+            if tune.feat_seq is not None and len(tune.feat_seq) > 1:
                 tune.feat_seq.rename_axis('index').astype('int16', errors='ignore')
                 tune.feat_seq.to_csv(f"{note_level_results_dir}/{tune.title}.csv")
-            if tune.feat_seq_accents is not None and len(tune.feat_seq_accents) > 2:
+            if tune.feat_seq_accents is not None and len(tune.feat_seq_accents) > 1:
                 tune.feat_seq_accents.to_csv(f"{accent_level_results_dir}/{tune.title}.csv")
-            if tune.duration_weighted is not None and len(tune.duration_weighted) > 2:
+            if tune.duration_weighted is not None and len(tune.duration_weighted) > 1:
                 tune.duration_weighted.to_csv(f"{duration_weighted_results_dir}/{tune.title}.csv")
 
     @staticmethod

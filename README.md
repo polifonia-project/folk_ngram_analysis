@@ -30,6 +30,10 @@ Three demo notebooks are supplied in ```./FoNN/demo_notebooks``` directory. Thes
 - [pattern_extraction_demo.ipynb](https://github.com/polifonia-project/folk_ngram_analysis/master/demo_notebooks/pattern_extraction_demo.ipynb): Reads the feature sequence data outputted by the above notebook, extracts unique feature patterns and counts their occurrences per tune across the corpus. Writes output to ```./FoNN/mtc_ann_corpus/pattern_corpus```.
 - [similarity_search_demo.ipynb](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/demo_notebooks/similarity_search_demo.ipynb): Using the data outputted by the notebook above, for a user-selectable query tune, this demo detects similar tunes across the corpus   via FoNN's three novel pattern-based similarity metrics. Writes output to ```./FoNN/mtc_ann_corpus/similarity_results```
 
+The repo also contains a data extraction and processing pipline to generate inputs for Polifonia [Patterns Knowledge Graph (KG)](https://github.com/polifonia-project/patterns-knowledge-graph). Two Jupyter notebooks which run this pipeline are stored in ```./FoNN/pattern_knowledge_graph_pipeline``` directory:
+- ```./FoNN/pattern_knowledge_graph_pipeline/patterns_kg_data_extraction.ipynb``` runs FoNN's pattern extraction tools to extract corpus data.
+- ```./FoNN/pattern_knowledge_graph_pipeline/patterns_kg_data_processing.ipynb``` combines pattern data, feature sequence data and descriptors for each tune in the corpus and writes this data to a corpus-level Pickle file matching the Patterns KG input requirements.
+
 
 NOTE: Deliverable 3.4 of the Polifonia project describes the context and research informing development of these tools. It will be published on [Cordis](https://cordis.europa.eu/project/id/101004746/it) later this year (2023).
 
@@ -42,7 +46,9 @@ NOTE: Deliverable 3.4 of the Polifonia project describes the context and researc
    * 1.3. Tools to explore pattern-based similarity between tunes within a corpus: [similarity_search.py](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/FoNN/similarity_search.py)
    * 1.4 Copies of two test music datasets: 
      - [The Meertens Tune Collection Annotated Corpus](https://www.liederenbank.nl/mtc/)
-     - [The Session](https://thesession.org) 
+     - [The Session](https://thesession.org)
+   * 1.5 Patterns KG data extraction and processing pipeline:
+   [patterns_knowledge_graph_pipeline](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/FoNN/patterns_knowledge_graph_pipeline)
 
     
 2. **Ceol Rince na hÉireann (CRÉ) corpus**
@@ -64,9 +70,9 @@ NOTE: *The Session* and *CRÉ* corpora are provided in both ABC Notation and MID
 
 - To ingest a corpus in ABC Notation format, first install the ABC2MIDI external dependency, which can be downloaded directly [here](https://ifdo.ca/~seymour/runabc/abcMIDI-2022.06.14.zip). For information on ABC2MIDI, please see the project [documentation](https://abcmidi.sourceforge.io).
 
-- Convert from ABC Notation to MIDI by running the ```./FoNN/abc_ingest.py``` script. This preliminary step uses ABC2MIDI to encode a specific 'beat stress model' into the MIDI output, which is used later in the workflow to filter data for rhythmically-accented notes. Such higher-level representation of melody is of particular interest in the study of Irish and related European & North American folk musics.
+- If ingesting a corpus in ABC Notation, first convert to MIDI by running the ```./FoNN/abc_ingest.py``` script. This preliminary step uses ABC2MIDI to encode a specific 'beat stress model' into the MIDI output, which is used later in the workflow to filter data for rhythmically-accented notes. Such higher-level representation of melody is of particular interest in the study of Irish and related European & North American folk musics.
 
-- The workflow from here onwards is the same for corpora originating in all formats.
+- The workflow from here onwards is the same for corpora originating in all formats: if a corpus does not originate in ABC Notation, please skip to section 1.1.
 
 
 ## 1. FoNN - FOlk _N_-gram aNalysis: running the tools
@@ -76,10 +82,14 @@ NOTE: *The Session* and *CRÉ* corpora are provided in both ABC Notation and MID
 - Running ```.FoNN/demo_notebooks/feature_extraction_tools_demo.ipynb``` extracts feature sequence data from an input corpus via ```FoNN.feature_sequence_extraction_tools.Corpus``` class. 
 - By default this notebook reads the corpus at ```./FoNN/mtc_ann_corpus/krn``` and outputs feature sequence data to ```./FoNN/mtc_ann_corpus/feature_sequence_data```. 
 - Input path and format can be edited as desired, while output will always write to ```./FoNN/[corpus name]/feature_sequence_data``` subdirectory. 
-- This notebook extracts 16 feature sequences in what we term 'note-level', 'duration-weighted note-level' and 'accent-level' representations, as explained below: 
+- This notebook extracts 16 feature sequences in what we term note-level, duration-weighted note-level, and accent-level representations, as explained below: 
 1. Note-level: for every music score document in the corpus, each note is represented via 16 feature values.
 2. Duration-weighted note-level: for every music score document in the corpus, each 1/8 note temporal increment is represented via 16 feature values.
 3. Accent-level: for every music score document in the corpus, accented on-the-beat notes are represented via 16 feature values while other less metrically significant notes are dropped.
+- Throughout the FoNN toolkit, these levels of data granularity are specified via the following string names:
+1. note-level: 'note'
+2. duration-weighted note-level: 'duration_weighted'
+3. accent-level: 'accent'
 - The 16 musical features extracted for each note are:
 ```
 -- 'midi_note_num': Chromatic pitch represented as MIDI number
@@ -131,8 +141,13 @@ A classical IR baseline methodology: the Cosine similarity between TFIDF vectors
 - [The Meertens Tune Collection Annotated Corpus (MTC-ANN) version 2.0.1](https://www.liederenbank.nl/mtc/): 360 folk song melodies from the Meertens Instituut's Database of Dutch Songs, in **kern and MIDI formats. Stored in ```./FoNN/mtc_ann_corpus``` dir. 
 - [The Session](https://thesession.org): An online, crowd-sourced collection of 40,000+ monophonic Irish traditional dance tunes in ABC Notation and MIDI formats. Stored in ```./FoNN/the_session_corpus``` dir. 
 
+1.5 **Patterns KG data extraction and processing pipeline**
+- Step 1: Run ```./FoNN/pattern_knowledge_graph_pipeline/patterns_kg_data_extraction.ipynb``` to extract corpus feature sequence and pattern data via FoNN.
+- Step 2: Run ```./FoNN/pattern_knowledge_graph_pipeline/patterns_kg_data_processing.ipynb``` to combine feature sequence and pattern data for the entire corpus and write to Pickle file for KG creation via Polifonia [Patterns Knowledge Graph (KG)](https://github.com/polifonia-project/patterns-knowledge-graph) repo.
+- Further information on user-customization of pipeline parameters is provided within the notebooks.
 
-## 2. Ceol Rince na hÉireann (CRÉ) MIDI corpus 
+
+## 2. Ceol Rince na hÉireann (CRÉ) MIDI corpus [legacy component]
 
 - A new version of the previously-existing *Ceol Rince na hÉireann* corpus, containing 1,195 monophonic Irish traditional dance tunes. the corpus in provided in ABC Notation and in MIDI. Please see: [./cre_corpus/readme.md](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/cre_corpus/README.md) for more information.
 
@@ -141,7 +156,7 @@ A classical IR baseline methodology: the Cosine similarity between TFIDF vectors
   * Source: Black, B 2020, [The Bill Black Irish tune archive homepage](http://www.capeirish.com/webabc), viewed 5 January 2021.
   * Contents: 1,195 traditional Irish dance tunes, each of which is represented as a monophonic MIDI file. Also included is ```roots.csv```, a file giving the expert-annotated root note for every file in the corpus as a chromatic integer pitch class.
   
-## 3. Root Note Detection 
+## 3. Root Note Detection [legacy component]
 
 
 Work-in-progress on automatic detection of musical root for each tune in the corpus. Please see: [/.root_key_detection/README.md](https://github.com/polifonia-project/folk_ngram_analysis/blob/master/root_note_detection/README.md).
