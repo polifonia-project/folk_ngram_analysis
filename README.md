@@ -128,7 +128,7 @@ First a representative pattern is extracted from the query tune via maximal tfid
 tune-similarity metric.
 2. 'incipit and_cadence':
 An extended version of a traditional musicological incipit search.
-Structurally-important subsequences incipit and cadence subsequences are extracted from all tunes in the corpus and
+Structurally-important incipit and cadence subsequences are extracted from all tunes in the corpus and
 compared via pairwise edit distance against the query tune. Users can select from three available edit distance metrics:
 Levenshtein distance; Hamming distance; and a custom-weighted Hamming distance in which musically-consonant
 substitutions are penalised less than dissonant substitutions. The edit distance output is taken as a
@@ -142,7 +142,7 @@ A classical IR baseline methodology: the Cosine similarity between TFIDF vectors
 - [The Session](https://thesession.org): An online, crowd-sourced collection of 40,000+ monophonic Irish traditional dance tunes in ABC Notation and MIDI formats. Stored in ```./FoNN/the_session_corpus``` dir. 
 
 1.5 **Patterns KG data extraction and processing pipeline**
-- Step 1: Run ```./FoNN/pattern_knowledge_graph_pipeline/patterns_kg_data_extraction.ipynb``` to extract corpus feature sequence and pattern data via FoNN.
+- Step 1: Run ```./FoNN/pattern_knowledge_graph_pipeline/patterns_kg_data_extraction.ipynb``` to extract corpus feature sequence and pattern data.
 - Step 2: Run ```./FoNN/pattern_knowledge_graph_pipeline/patterns_kg_data_processing.ipynb``` to combine feature sequence and pattern data for the entire corpus and write to Pickle file for KG creation via Polifonia [Patterns Knowledge Graph (KG)](https://github.com/polifonia-project/patterns-knowledge-graph) repo.
 - Further information on user-customization of pipeline parameters is provided within the notebooks.
 
