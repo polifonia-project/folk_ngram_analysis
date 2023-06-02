@@ -1,7 +1,8 @@
 """Utility script to set up and read custom edit distance penalty matrices for similarity_search_dev.py."""
-import os
+
 
 import numpy as np
+
 
 # list all ascii characters
 index = [chr(i) for i in range(128)]
@@ -23,6 +24,3 @@ substitution = rotation = np.array(sub_matrix, dtype=float)
 # print(substitution)
 # print("Deletion matrix")
 # print(deletion)
-
-
-

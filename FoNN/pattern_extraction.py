@@ -1,17 +1,18 @@
 """
 pattern_extraction.py contains a single class, NgramPatternCorpus, containing pattern extraction tools which output data
- to ../[corpus]/pattern_corpus. These outputs are input requirements for the tune similarity tools stored in
+ to ../[corpus]/pattern_corpus. These files are input requirements for the tune similarity tools stored in
  similarity_search.py.
 
-NgramPatternCorpus class takes as input feature sequence csv files representing a music corpus, as generated via
-corpus_setup_tools.py.
+Initialization of a NgramPatternCorpus object requires feature sequence csv files representing a music corpus, as
+generated via corpus_setup_tools.py.
 
 For a user-selectable musical feature and level of data granularity,
 NgramPatternCorpus class extracts and represents all local patterns between 3 and 12 elements in length which occur at
-least once in the corpus. The number of occurrences of each pattern in each tune is calculated and stored in a sparse
-matrix (NgramPatternCorpus.pattern_frequency_matrix). A weighted version of this data is also calculated, holding TF-IDF
- values for each pattern in each tune rather than frequency counts (NgramPatternCorpus.pattern_tfidf_matrix). Use of
- TF-IDF helps suppress the prominence of frequent-but-insignificant stop word' patterns.
+least once in the feature sequence corpus files. The number of occurrences of each pattern in each tune is calculated
+and stored in a sparse matrix (NgramPatternCorpus.pattern_frequency_matrix). A weighted version of this data is also
+calculated, holding TF-IDF values for each pattern in each tune rather than frequency counts
+(NgramPatternCorpus.pattern_tfidf_matrix). Use of TF-IDF helps suppress the prominence of frequent-but-insignificant
+stop word' patterns.
 
 Pattern extraction and matrix tabulation is via scipy.sparse and sklearn.feature_extraction.text tools which allow
 fast & memory-efficient performance. The indexes of the pattern occurrence matrices are stored and written to file in
@@ -20,6 +21,9 @@ separate arrays (NgramPatternCorpus.patterns and NgramPatternCorpus.titles).
 NgramPatternCorpus class can also calculate Cosine similarity between column vectors in the TFIDF matrix. This gives a
 pairwise tune similarity matrix for the entire corpus. This calculation is implemented in
 NgramPatternCorpus.calculate_tfidf_vector_cos_similarity() method, using sklearn.metrics.pairwise.linear_kernel.
+
+The pattern occurrence matrices can be written to pandas DataFrames via NgramPatternCorpus.convert_matrix_to_df(), but
+this process is memory-intensive and is recommended for small corpora (> approx. 10k tunes) only.
 """
 
 import csv
@@ -36,7 +40,8 @@ from tqdm import tqdm
 
 class NgramPatternCorpus:
 
-    """For a user-selectable musical feature, level of data granularity, and range of pattern lengths,
+    """
+    For a user-selectable musical feature, level of data granularity, and range of pattern lengths,
     NgramPatternCorpus class extracts and represents all local patterns which occur at least once in the corpus.
 
     Class attributes:
@@ -80,6 +85,7 @@ class NgramPatternCorpus:
         'eighth_note',
         'midi_note_num',
         'diatonic_note_num',
+        'beat_strength',
         'chromatic_pitch_class',
         'onset',
         'velocity',
@@ -173,9 +179,7 @@ class NgramPatternCorpus:
         return data_out
 
     def save_tune_titles_to_file(self):
-
         """Extract tune titles from csv filenames and write to disc as numpy array."""
-
         titles = self.titles
         np.save(f"{self.out_dir}/titles", titles, allow_pickle=True)
 
@@ -244,8 +248,10 @@ class NgramPatternCorpus:
 
     def calculate_tfidf_vector_cos_similarity(self):
 
-        """Calculate pairwise Cosine similarity between TFIDF vectors of all tunes in NgramPatternCorpus.tfidf,
-        save as matrix."""
+        """
+        Calculate pairwise Cosine similarity between TFIDF vectors of all tunes in NgramPatternCorpus.tfidf,
+        save as matrix.
+        """
 
         input_data = self.pattern_tfidf_matrix
         # Calculate Cosine similarity via sklearn.metrics.pairwise.linear_kernal
@@ -292,9 +298,7 @@ class NgramPatternCorpus:
 
     @staticmethod
     def check_data_for_null_entries(data):
-
         """Helper function to filter empty feature sequence csv files from input processing."""
-
         errors = []
         # find any items with size < 2 in input dict
         for k, v in data.items():

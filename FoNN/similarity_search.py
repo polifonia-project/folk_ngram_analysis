@@ -60,9 +60,8 @@ class PatternSimilarity:
     Attributes:
 
         query_tune -- title of query tune for input into similarity search.
-        feature -- input musical feature name. Must correspond to feature as listed in
-                   FoNN.pattern_extraction.NgramPatternCorpus.FEATURES and as explained in
-                   FoNN.feature_sequence_extraction_tools.Tune docstring.
+        feature -- input musical feature name. Must correspond to feature name as listed and explained in
+                   FoNN.feature_sequence_extraction_tools.Tune docstring & FoNN README.md.
         n -- length of representative pattern to extract from query tune for 'motif' method.
         _titles --  array listing titles of all tunes in corpus, outputted via pattern_extraction.py.
         _patterns -- array of all unique local patterns extracted from corpus, outputted by pattern_extraction.py.
@@ -160,7 +159,7 @@ class PatternSimilarity:
 
     @query_tune.setter
     def query_tune(self, val):
-        """Set 'query_tune' title. Note: must match the title of a tune in the corpus."""
+        """Set 'query_tune' title. Note: must match the filename of a tune in the corpus (excluding filetype suffix)."""
         assert val in self._titles
         self._query_tune = val
 
@@ -204,7 +203,8 @@ class PatternSimilarity:
 
     def _filter_matrix(self, data, mode=None):
 
-        """Filter sparse matrix via user-selectable mode.
+        """
+        Filter sparse matrix via user-selectable mode.
 
         Args:
              data -- input sparse matrix

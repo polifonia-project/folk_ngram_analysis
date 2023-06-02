@@ -1,10 +1,13 @@
 """
 Feature sequence data represents each note in a symbolic music document via numerical feature values, such
-as: (midi_note_num: 68, offset: 10, duration: 2)
-.
-Tune class objects represent a single tune in feature sequence format.
-Corpus class objects represent collections of Tune objects.
-Together, these classes allow extraction of primary and secondary feature sequence data from MIDI files.
+as: (midi_note_num: 68, offset: 10, duration: 2).
+
+Tune class object represents a single tune in this feature sequence format, which is extracted from music document
+(score) files principally via the music21 Python library. Any file type compatible with music21 can be used to
+initialize a Tune object.
+
+Corpus class objects represent collections of multiple Tune objects.
+Together, these classes allow extraction of primary and secondary feature sequence data from music score files.
 
 Primary feature sequences calculable via Tune and Corpus classes, with feature names as used throughout the FoNN
 toolkit:
@@ -30,10 +33,10 @@ Secondary feature sequences calculable via Tune and Corpus classes:
 -- 'parsons_cumsum': cumulative Parsons code values.
 
 These classes also allow:
--- Extraction of the 'root' or tonal centre from a MIDI input.
+-- Extraction of the 'root' or tonal centre from an input score.
 -- Filtering of the feature sequences at accent-level (retaining data only for notes which occur on accented beats)
 -- Generation of duration-weighted feature sequences (combining feature and duration values in a single
-sequence, which represents pitch class value per eighth note rather than per note event).
+   sequence, which represents pitch class value per eighth note rather than per note event).
 '"""
 
 import music21
@@ -48,20 +51,20 @@ pd.options.mode.chained_assignment = None
 class Tune:
 
     """
-    Tune class objects represent a single tune in feature sequence format. A Tune object can be instantiated
+    Tune class object represents a single tune in feature sequence format. A Tune object can be instantiated
     via the 'in_path' argument, which must point to a single MIDI file. Tune objects can be created individually or
     can be automatically instantiated in bulk at corpus-level when a Corpus object is instantiated.
 
     Attributes:
 
-    in_path -- path to a monophonic MIDI file.
-    title -- Tune title extracted from MIDI filename; populates automatically on instantiation.
-    score -- music21 Stream representation of the music data contained in the MIDI file; populates automatically on
-    instantiation.
-    feat_seq -- Feature sequence representation of the data held in 'score' attr.
+    in_path -- path to a music score file in any music21-compatible format.
+    title -- Tune title extracted from filename; populates automatically on instantiation.
+    score -- music21 Stream representation of the music data contained in the input file; populates automatically on
+             instantiation.
+    feat_seq -- Feature sequence representation of the music information held in 'score' attr.
     accent -- Accent-level feature sequence data
     duration_weighted -- 'duration-weighted' sequences for selected features. Duration-weighting is
-    explained below.
+                          explained below.
     chromatic_root -- Chromatic note number representing root or tonal centre of input sequence.
     diatonic_root -- Diatonic note number representing root or tonal centre of input sequence.
     """
@@ -90,14 +93,14 @@ class Tune:
         return self
 
     def _get_attrs(self):
-        """Private function to parse Tune class __dict__ and return any attrs populated with pandas DataFrame objects"""
+        """Private function: parse Tune class __dict__ and return any attrs populated with pandas DataFrame objects"""
         _attrs = self.__dict__.items()
         return [val for attr, val in _attrs if isinstance(val, pd.DataFrame)]
 
     def extract_root(self):
 
         """
-        Populates Tune.chromatic_root and Tune.diatonic_root attrs with integer chromatic and diatonic pitch values
+        Populate Tune.chromatic_root and Tune.diatonic_root attrs with integer chromatic and diatonic pitch values
         using key signature information read from input files via music21.
         """
 
@@ -111,10 +114,10 @@ class Tune:
     def convert_music21_streams_to_feature_sequences(self):
 
         """
-        Generator function. Extracts primary feature sequence data from music21 Stream representation of a tune.
-        Outputs a list containing midi_note_num, diatonic_note_num, chromatic_pitch_class, offset, duration,
+        Generator function. Extract primary feature sequence data from music21 Stream representation of a tune.
+        Output a list containing midi_note_num, diatonic_note_num, chromatic_pitch_class, offset, duration,
         bar_num, beat_strength and velocity values for
-        each note in the tune. Yields a tune-level numpy array containing feature data for entire tune.
+        each note in the tune. Yield a tune-level numpy array containing feature data for entire tune.
         """
 
         # check that Tune object's score attr exists before proceeding
@@ -165,8 +168,10 @@ class Tune:
 
     def extract_primary_feature_sequences(self):
 
-        """Extracts primary feature sequences via convert_music21_streams_to_feature_sequences() generator function.
-        Formats output and stores as Tune.feat_seq attr."""
+        """
+        Extract primary feature sequences via convert_music21_streams_to_feature_sequences() generator function.
+        Format output and store as Tune.feat_seq attr.
+        """
 
         # Add data for each note to 'feat_seq_data' dict:
         feat_seq_data = self.convert_music21_streams_to_feature_sequences()
@@ -194,11 +199,11 @@ class Tune:
     def filter_feat_seq(self, by='velocity', thresh=80):
 
         """
-        Filters feat_seq feature sequence DataFrame, retaining data for rhythmically-accented
-        notes only. Filtered output is stored in a DataFrame as Tune.feat_seq_accents attr.
+        Filters Tune.feat_seq feature sequence DataFrame, retaining data for rhythmically-accented
+        notes only. Output is stored in a DataFrame as Tune.feat_seq_accents attr.
 
         Args:
-            by -- Select filtering by MIDI velocity ('velocity') or music21 beatStrength ('beat_strength')
+            by -- Select filtering by MIDI velocity (by='velocity') or music21 beatStrength (by='beat_strength')
             thresh -- If using by='beat_strength', set thresh=1 to filter and extract heavily-accented notes
                       (i.e.: the most prominent note in each bar). Set thresh=0.5 to filter and extract accented notes
                       (i.e.: one note per beat).
@@ -224,8 +229,8 @@ class Tune:
     def extract_relative_chromatic_pitches(self):
 
         """
-        Uses Tune.chromatic_root MIDI pitch value to extract key-invariant chromatic pitch
-        sequence of pitches relative to the root. Applies to both note- and accent-level feature sequences.
+       Extract key-invariant chromatic pitch sequence (pitch relative to the chromatic root, Tune.chromatic_root).
+       Applies to both note- and accent-level feature sequences.
         """
 
         # select all feature sequence DataFrames from Tune attrs
@@ -237,14 +242,14 @@ class Tune:
             t['relative_chromatic_pitch'] = (t['midi_note_num'] - chromatic_root).astype('int8')
 
     def extract_chromatic_scale_degrees(self):
-        """Calculates chromatic scale degree values from note- and accent-level feature sequences."""
+        """Calculate chromatic scale degree values from note- and accent-level feature sequences."""
         # select all feature sequence DataFrames from Tune attrs:
         targets = self._get_attrs()
         for t in targets:
             t['chromatic_scale_degree'] = (t['relative_chromatic_pitch'] % 12).astype('int8')
 
     def extract_chromatic_intervals(self):
-        """Calculates chromatic interval sequences for note- and accent-level feature sequences."""
+        """Calculate chromatic interval sequences for note- and accent-level feature sequences."""
         targets = [i for i in self._get_attrs()]
         for t in targets:
             t['chromatic_interval'] = (t['midi_note_num'] - t['midi_note_num'].shift(1)).fillna(0).astype('int8')
@@ -252,8 +257,8 @@ class Tune:
     def extract_relative_diatonic_pitches(self):
 
         """
-        Uses Tune.diatonic_root pitch value to extract key-invariant diatonic pitch
-        sequence of pitches relative to the root. Applies to both note- and accent-level feature sequence data.
+       Extract key-invariant diatonic pitch sequence (pitch relative to the diatonic root, Tune.diatonic_root).
+       Applies to both note- and accent-level feature sequences.
         """
 
         # select all feature sequence DataFrames from Tune instance attrs:
@@ -263,46 +268,32 @@ class Tune:
             t['relative_diatonic_pitch'] = (t['diatonic_note_num'] - diatonic_root).astype('int8')
 
     def extract_diatonic_pitch_classes(self):
-        """Extracts diatonic pitch class sequences for note- and accent-level feature sequences."""
+        """Extract diatonic pitch class sequences for note- and accent-level feature sequences."""
         targets = self._get_attrs()
         for t in targets:
             t["diatonic_pitch_class"] = (t["diatonic_note_num"] % 7).astype('int8')
 
     def extract_diatonic_intervals(self):
-        """Extracts diatonic interval sequences for note- and accent-level feature sequences."""
+        """Extract diatonic interval sequences for note- and accent-level feature sequences."""
         targets = self._get_attrs()
         for t in targets:
             t['diatonic_interval'] = (t['diatonic_note_num'] - t['diatonic_note_num'].shift(1)).fillna(0).astype('int8')
 
     def extract_diatonic_scale_degrees(self):
-        """Extracts diatonic scale degree sequences for note- and accent-level feature sequences."""
+        """Extract diatonic scale degree sequences for note- and accent-level feature sequences."""
         targets = self._get_attrs()
         for t in targets:
             t['diatonic_scale_degree'] = ((t['relative_diatonic_pitch'] % 7) + 1).astype('int8')
 
-    def extract_bar_nums(self):
-
-        """
-        Adds bar numbers to feature sequence DataFrames. Note: This method relies on ABC Notation beat stress model and
-        will not perform accurate bar number calculations for non-ABC originating corpora.
-        """
-
-        # Note: Due to its reliance on ABC Notation beat stress modelling, this method only works on ABC Notation input
-        # files. For input formats with metric structure parsable via music21, 'bar_num' data will automatically
-        # populate upon instantiation via Tune.convert_music21_streams_to_feature_sequences().
-
-        targets = self._get_attrs()
-        for t in targets:
-            # create bar counter column via MIDI velocity values:
-            bar_lines = np.where(np.logical_and(t['velocity'] == 105, t.index > 0), True, False)
-            t['bar_num'] = bar_lines.cumsum().astype('int16')
-
     def strip_anacrusis(self):
 
         """
-        Applies heuristic to check if first bar is less than 1/2 the length of second bar.
+        Apply heuristic to check if first bar is less than 1/2 the length of second bar.
         If so, first bar is taken as a pickup or anacrusis and removed from note- and accent-level feature sequence data
         """
+
+        # Note: this is a legacy method: anacruses can now be filtered simply by exclusion of data for which 'bar_num'
+        # col value == 0.
 
         targets = self._get_attrs()
         for t in targets:
@@ -319,7 +310,7 @@ class Tune:
     def extract_parsons_codes(*feat_seqs):
 
         """
-        Extracts Parsons code sequences for feature sequence DataFrames passed as inputs; adds output to feature
+        Extract Parsons code sequences for feature sequence DataFrames passed as inputs; add output to feature
         sequence data at note- and accent-levels.
         
         Parsons code is a simple representation of melodic contour, formulated by Denys Parsons:
@@ -347,7 +338,7 @@ class Tune:
     def extract_parsons_cumsum(*feat_seqs):
 
         """
-        Extracts cumulative Parsons code sequence values; adds output to note- and accent-level feature sequence data.
+        Extract cumulative Parsons code sequence values; add output to note- and accent-level feature sequence data.
         """
 
         for data in feat_seqs:
@@ -357,7 +348,7 @@ class Tune:
     def apply_duration_weighting(self, features=None):
 
         """
-        Calculates duration-weighted sequence for selected features and returns output as Tune.duration_weighted attr.
+        Calculate duration-weighted sequence for selected features and return output as Tune.duration_weighted attr.
 
         Duration weighting re-indexes sequence data, converting from feature value per note event to
         one value per eighth note.
@@ -439,9 +430,7 @@ class Corpus:
         return self.tunes
 
     def filter_empty_scores(self):
-
         """Filter out blank scores before feature sequence calculations."""
-
         for tune in self.tunes:
             if len(tune.score) == 0:
                 print(f"No input data for {tune.title}")
@@ -454,7 +443,6 @@ class Corpus:
 
     def convert_scores_to_feat_seqs(self, level=None):
         """Extract feature sequence data for all tunes in the corpus"""
-
         for tune in tqdm(self.tunes, desc=f'Calculating {level}-level feature sequences from music21 scores'):
             tune.extract_primary_feature_sequences(level=level)
 
@@ -463,7 +451,7 @@ class Corpus:
         """
         Filter Tune.feat_seq to create Tune.feat_seq_accents for all Tune objects in Corpus.tunes.
          User can select whether to filter via velocity [for ABC-originating inputs] or beat strength [for all other
-         inputs]. Default is filtration via  beat strength.
+         inputs]. Default is filtration via beat strength.
         
         Args:
             thresh -- filter threshold value
@@ -523,18 +511,13 @@ class Corpus:
         for tune in tqdm(self.tunes, desc='Adding bar numbers to feature sequence data'):
             tune.extract_bar_nums()
 
-    def strip_anacruses(self):
-        """Remove anacruses from feature sequence data for all tunes in corpus."""
-        return [tune.strip_anacrusis() for tune in tqdm(self.tunes, desc='Removing anacruses (pick-up measures)')]
-
     def extract_duration_weighted_feat_seqs(self, features):
 
         """
-        Runs Tune.apply_duration_weighting() to apply duration-weighting of feature sequence data for all tunes.
+        Run Tune.apply_duration_weighting() to create duration-weighted sequences of selected features for all tunes.
 
         Args:
-            features -- list of musical features for which
-            duration-weighted sequences are to be calculated.
+            features -- list of musical feature names for which duration-weighted sequences are to be calculated.
         """
 
         for tune in tqdm(self.tunes, desc='Calculating duration-weighted feature sequences'):

@@ -1,11 +1,15 @@
 """
-pattern_locations.py extracts pattern location information for all n-gram pattern occurrences in the corpus at a given
-pattern length. This script must be applied to any corpus for which a Knowledge Graph is being generated via the
-Polifonia Patterns Knowledge Graph pipeline at https://github.com/polifonia-project/patterns-knowledge-graph.
+pattern_locations.py extracts pattern location information for all n-gram pattern occurrences in input feature sequence
+data at a user-selectable pattern length. This script must be applied to any corpus for which a Knowledge Graph is being
+ generated via the Polifonia Patterns Knowledge Graph pipeline at
+ https://github.com/polifonia-project/patterns-knowledge-graph.
 
 What we call 'locations' are the onset location or index of a pattern occurrence in a given feature sequence
 representing a single tune. For example, pattern [1 2 3 4] occurring in tune [1 2 3 4 5 1 2 3 4 5] will have locations
 0 and 5 representing the two indices at which the pattern's first element occurs in the tune sequence.
+
+Functions from this script are applied in ../patterns_knowledge_graph_pipeline/patterns_kg_data_extraction.ipynb
+notebook, which is step 1 of FoNN's 2-step Polifonia Patterns Knowledge Graph pipeline.
  """
 
 import csv

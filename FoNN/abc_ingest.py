@@ -1,14 +1,14 @@
 """
-'abc_ingest.py' calls abc2MIDI command-line tool and uses it to create an individual MIDI file for each tune in a
+'abc_ingest.py' calls abc2midi command-line tool and uses it to create an individual MIDI file for each tune in a
 monophonic ABC Notation corpus.
 
 An ABC Notation cre_corpus is a single file containing scores for one or more tunes in ABC (.abc) format.
 For more information on ABC Notation, please see:
-https://ifdo.ca/~seymour/runabc/top.html [info on abc2MIDI packages and versions]
-https://abcmidi.sourceforge.io [abc2MIDI docs]
+https://ifdo.ca/~seymour/runabc/top.html [info on abc2midi packages and versions]
+https://abcmidi.sourceforge.io [abc2midi docs]
 
-NOTE: This script requires prior instillation of the abc2MIDI external dependency. An up-to-date version of
-the abc2MIDI package can be directly downloaded and installed via https://ifdo.ca/~seymour/runabc/abcMIDI-2022.06.14.zip
+NOTE: This script requires prior instillation of the abc2midi external dependency. An up-to-date version of
+the abc2midi package can be directly downloaded and installed via https://ifdo.ca/~seymour/runabc/abcMIDI-2022.06.14.zip
 """
 
 import os
@@ -20,7 +20,7 @@ import subprocess
 def create_midi_files_from_abc_corpus(abc_dir=None, abc_filename=None, midi_out_dir=None):
 
     """
-    Runs abc2MIDI to extract an individual MIDI file for every tune in an ABC cre_corpus file.
+    Runs abc2midi to extract an individual MIDI file for every tune in an ABC cre_corpus file.
 
     Args:
         abc_filename -- Name of ABC Notation corpus file to be processed.
@@ -29,17 +29,17 @@ def create_midi_files_from_abc_corpus(abc_dir=None, abc_filename=None, midi_out_
 
     """
 
-    # Run abc2MIDI:
-    print("Running abc2MIDI command-line tool...")
+    # Run abc2midi:
+    print("Running abc2midi command-line tool...")
     create_midi = subprocess.run(
         ["abc2midi", f"{abc_dir}/{abc_filename}", "-t", "-n", "252", "-NGRA", "-Q"],
         cwd=f"{abc_dir}",
         capture_output=True
     )
-    # store abc2MIDI conversion log
+    # store abc2midi conversion log
     raw_stdout = str(create_midi.stdout)
 
-    # Reformat and print log
+    # Optionally format and print log
     # formatted_stdout = list(raw_stdout.split("\\n"))
     # for line in formatted_stdout:
     #     print(line)
