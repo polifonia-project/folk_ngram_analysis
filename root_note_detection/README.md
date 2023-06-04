@@ -1,23 +1,17 @@
 ---
 component-id: root_note_detection
-
 name: Root Note Detection
-
 brief-description: Work-in-progress on root note detection on a corpus of monophonic Irish folk tunes.
-
 type: Repository
-
 release-date: 20/05/2022
-
 release-number: v0.7.0.1-dev
-
 work-package: 
 - WP3
-licence: CC By 4.0, https://creativecommons.org/licenses/by/4.0/
+licence:
+- CC_BY_v4
 links:
 - https://github.com/polifonia-project/folk_ngram_analysis/blob/master/root_note_detection/root_note_detection.ipynb
 - https://zenodo.org/record/5768216#.YbEAbS2Q3T8
-
 credits:
 - https://github.com/danDiamo
 - https://github.com/ashahidkhattak
