@@ -7,7 +7,8 @@ release-date: 15/06/2022
 release-number: v0.7.0.1-dev
 work-package: 
 - WP3
-licence: CC BY 4.0, https://creativecommons.org/licenses/by/4.0/
+licence:
+- CC_BY_v4
 links:
 - https://github.com/polifonia-project/folk_ngram_analysis/corpus
 - http://www.capeirish.com/webabc
