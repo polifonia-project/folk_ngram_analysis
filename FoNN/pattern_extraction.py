@@ -53,8 +53,9 @@ class NgramPatternCorpus:
         in_dir -- path to dir containing csv feature sequence files representing each tune in a music corpus, as
                   outputted by feature_sequence_extraction_tools.py
         out_dir -- directory to write output files
-        n_vals -- a list holding pattern length values for which patterns will be extracted. E.g.:
-                  n_vals = [4] extracts patterns of 4 elements in length; n_vals = [4, 5, 6] extracts patterns of
+        n_vals -- a tuple holding two integers representing the min and max pattern lengths for which patterns will be
+                  extracted. E.g.:
+                  n_vals = (4, 4) extracts patterns of 4 elements in length; n_vals = (4, 6) extracts patterns of
                   4-6 elements in length.
         name -- Corpus name. Derived automatically from in_dir directory name
         data -- input data read from csv files
