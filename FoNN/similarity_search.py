@@ -59,18 +59,18 @@ class PatternSimilarity:
 
     Attributes:
 
+        _titles --  array listing titles of all tunes in corpus, outputted via pattern_extraction.py.
         query_tune -- title of query tune for input into similarity search.
+        n -- length of representative pattern to extract from query tune for 'motif' method.
         feature -- input musical feature name. Must correspond to feature name as listed and explained in
                    FoNN.feature_sequence_extraction_tools.Tune docstring & FoNN README.md.
-        n -- length of representative pattern to extract from query tune for 'motif' method.
-        _titles --  array listing titles of all tunes in corpus, outputted via pattern_extraction.py.
         _patterns -- array of all unique local patterns extracted from corpus, outputted by pattern_extraction.py.
-        freq_matrix -- sparse matrix storing occurrences of all patterns (index) in all tunes (columns), outputted by
-                       pattern_extraction.py.
+        _pattern_occurrences_matrix -- sparse matrix storing occurrences of all patterns (index) in all tunes (columns),
+                                       outputted by FoNN.pattern_extraction.NgramPatternCorpus.
         _feat_seq_data_path -- path to corpus feature sequence csv files outputted by 
-                               feature_sequence_extraction_tools.py
+                               FoNN.feature_sequence_extraction_tools.Corpus
         _tfidf_matrix_path -- path to sparse matrix storing tfidf values of all patterns (index) in all tunes (columns),
-                              outputted by pattern_extraction.py.
+                              outputted by FoNN.pattern_extraction.NgramPatternCorpus.
         _tfidf_matrix -- data content of file at _tfidf_matrix_path.
         _tfidf_vector_cos_similarity_matrix_path -- path to matrix file storing Cosine similarity between TFIDF vectors 
                                                     of all tunes in the corpus, as outputted via 
