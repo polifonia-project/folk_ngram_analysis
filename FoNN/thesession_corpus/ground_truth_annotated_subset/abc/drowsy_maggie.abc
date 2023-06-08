@@ -1,0 +1,513 @@
+X:27
+T:Drowsy Maggie 27
+N:tune id: 27; setting id: 27
+Z:Jeremy
+S:thesession.org
+R:reel
+M:4/4
+K:Edorian
+|:E2BE dEBE|E2BE AFDF|E2BE dEBE|BABc dAFD:|
+d2fd c2ec|defg afge|d2fd c2ec|BABc dAFA|
+d2fd c2ec|defg afge|afge fdec|BABc dAFD|
+
+
+X:12406
+T:Drowsy Maggie 12406
+N:tune id: 27; setting id: 12406
+Z:Jamie
+S:thesession.org
+R:reel
+M:4/4
+K:Edorian
+|:E2 GE BEGE|(3EEE GE BEGE|D2 FD ADFD|(3DDD FD ADFD|
+E2 GE BEGE|(3EEE GE BEGE|G2 EF GABc|1 dBAF E2 A,C:|2 dBAF E2 Bc||
+|:d2 fd c2 ec|d2 fd c2 Bc|d2 fd c2 ec|BABc dAFA|
+d2 fd c2 ec|d2 fd c2 Bc|d2 fd c2 ec|Bdce dAFA:|
+
+
+X:12407
+T:Drowsy Maggie 12407
+N:tune id: 27; setting id: 12407
+Z:slainte
+S:thesession.org
+R:reel
+M:4/4
+K:Edorian
+d2fd c2ec|defg faaf|d2fd c2ec|BABc dAFA|
+d2fd c2ec|defg faaf|bgaf gefd|BABc dAFD||
+
+
+X:12408
+T:Drowsy Maggie 12408
+N:tune id: 27; setting id: 12408
+Z:Phantom Button
+S:thesession.org
+R:reel
+M:4/4
+K:Dmajor
+|:E2BE dEBE|E2BE AFDF|E2BE dEBE|1 BABc dAFD:|2 BABc dAFA||
+d2fd B/c/d ec|defg afge|d2fd B/c/d ec|BABc dAFA|
+d2fd B/c/d ec|defg afge|afge fdec|BABc dAFA||
+dBfB dBfB|cAeA fAeA|dBfB dBfB|fef^g aecA|
+dBfB dBfB|cAeA fAeA|defd B/c/d ec|BABc dAFD||
+
+
+X:12409
+T:Drowsy Maggie 12409
+N:tune id: 27; setting id: 12409
+Z:dlowder
+S:thesession.org
+R:reel
+M:4/4
+K:Edorian
+|:E2Bd cABE|E2BG FADF|E2Bd cABc|1 dfec dAFD:|2 dfec dAFA||
+d2fe dcBd|(3cBA ed ceAc|defe dcBc|def^g aecA|
+defe dcBd|(3cBA eA ceAg|fdec dcBa|^gbeg aecA||
+
+
+X:12410
+T:Drowsy Maggie 12410
+N:tune id: 27; setting id: 12410
+Z:Dr. Dow
+S:thesession.org
+R:reel
+M:4/4
+K:Edorian
+|:E2BE dEBE|E2BE AFDF|E2BE dEBE|1 BABc dAFD:|2 BABc dAFA||
+|:d2fd cdec|defg afge|1 d2fd c2ec|BABc dAFA:|2 afge fdec|BABc dAFA||
+|:dBfB dBfB|cAeA cAeA|1 dBfB dBfB|defg aece:|2 defg aecA|BABc dAFA||
+|:dffe dfBf|ceed ceAe|1 dffe defg|a2ag aece:|2 af=ge fdec|BABc dAFD||
+
+
+X:12411
+T:Drowsy Maggie 12411
+N:tune id: 27; setting id: 12411
+Z:Dr. Dow
+S:thesession.org
+R:reel
+M:4/4
+K:Edorian
+|:~E3d cABE|~E2BE FADF|~E3d cABc|1 dfec dAFD:|2 dfec dAFA||
+defe dcBd|(3cBA eA ceAc|defe dcBc|def^g aecA|
+defe dcBd|(3cBA eA ceAe|faec dcBa|^gbeg aecA||
+
+
+X:12412
+T:Drowsy Maggie 12412
+N:tune id: 27; setting id: 12412
+Z:Phantom Button
+S:thesession.org
+R:reel
+M:4/4
+K:Edorian
+|:~E2Bd cABE|~E2BE FADF|~E2Bd cABc|dfec dBAF:|
+d2fe dcBd|c/B/A eA ceAc|defe dcBc|def^g aece|
+dafe dcBA|B/c/d ef gecg|f/g/aec dcBa|^gbeg aecA||
+
+
+X:12413
+T:Drowsy Maggie 12413
+N:tune id: 27; setting id: 12413
+Z:bobgreen
+S:thesession.org
+R:reel
+M:4/4
+K:Edorian
+"Em"E2BE E2BE|E2BE "D"AFDF|"Em"E2BE B2Bc|dedB "D"AFDF||
+"Em"EEBE dEBE|EEBE "D"AFDF|"Em"EEBE dEBE|dedB "D"AFDF||
+"Em"EEB,D EB"D"AF|"Em"GABe "D"dBAF|"Em"EEB,D EB"D"AF|"Em"GAGF EDB,D||
+EEB,D EB"D"AF|"Em"GABe "D"dBAF|"Em"EEB,D EB"D"AF|"Em"GAGF EDB,G,||
+"Am"A,2EA, A,2EA,|A,2EA, "G"DB,G,B,|"Am"A,2EA, E2EF|GAGE "G"DB,G,B,||
+"Am"A,A,EA, GA,EA,|A,A,EA, "G"DB,G,B,|"Am"A,A,EA, GA,EA,|DEDB, "G"DB,G,B,||
+"Am"A,A,=CE AGE=C|A,A,=CE AGE=C|A,A,=CE ABAE|=cd=cA "Em"EDCB,||
+"Am"A,A,=CE AGE=C|A,A,=CE AGE=C|A,A,=CE AB=cd|ed=ce "Em"BAGF||
+
+
+X:12414
+T:Drowsy Maggie 12414
+N:tune id: 27; setting id: 12414
+Z:Ramiro
+S:thesession.org
+R:reel
+M:4/4
+K:Edorian
+d2fd cdec|defd faaf|d2fd cdec|BABc dAFA|
+d2fd cdec|defd faa2|bgaf gfed|BABc dAFD||
+
+
+X:12415
+T:Drowsy Maggie 12415
+N:tune id: 27; setting id: 12415
+Z:flipe
+S:thesession.org
+R:reel
+M:4/4
+K:Gmajor
+E2(BE dEBE)|E2(BE AFDF)|E2(BE dEBE)|T(BAB)^c dAFD|
+E2(BE dEBE)|E2(BE AFDF)|E2(BE dEBE)|T(BAB)^c dAFD||
+d2(fd) c2(ec)|defg afge|d2(fd) c2(ec)|T(BAB)c dAFA|
+d2(fd) c2(ec)|defg afge|afge fdec|T(BAB)c dAFD||
+
+
+X:20867
+T:Drowsy Maggie 20867
+N:tune id: 27; setting id: 20867
+Z:Edgar Bolton
+S:thesession.org
+R:reel
+M:4/4
+K:Edorian
+~E2 BE dEBE|~E2 BE AFDF|(3EGE BE dEBE|dDdB AFDF|
+~E2 BE dEBE|~E2 BE AFDF|GFEF GABc|dcdB A2 FA|
+Be (3eee e2 eg|fd (3ddd d2 ef|g3 g g3 g|fa (3aaa afed|
+d2 (3bbb bage|fa (3aaa afed|~B3 B BAFA|~d3 B AFDF||
+
+
+X:21232
+T:Drowsy Maggie 21232
+N:tune id: 27; setting id: 21232
+Z:TomBom
+S:thesession.org
+R:reel
+M:4/4
+K:Edorian
+|:"Em"E2 GE BE GE|"Em" E2 GB "D"AD FD|"Em" E2 GE BE GE|"G" BA Bc "D"dA FD|
+"Em"E2 GE BE GE|"Em" E2 GB "D"AD FD|"Em" E2 GE BE GE|"G" BA Bc "D"dA FA:|
+|:"D"d2 fd "A"c2 ec|"D" de fg "D"af "Em"ge|"D" d2 fd "A"c2 ec|"G" BA Bc "D"dA FA|
+"D"d2 fd "A"c2 ec|"D" de fg "D"af "Em"ge|"D" af"Em"ge "D"fd"Em"ec|"G" BA Bc "D"dA FD:|
+
+
+X:23223
+T:Drowsy Maggie 23223
+N:tune id: 27; setting id: 23223
+Z:jakethepeg
+S:thesession.org
+R:reel
+M:4/4
+K:Bminor
+||B2 fB aBfB|B2 fB ecAc|B2 fB aBfB|fefg aecA|
+B2 fB aBfB|B2 fB ecAc|B2 fB aBfB|fefg aece||
+d2 fd c2 ec|defg afge|d2 fd c2 ec|BABc dAGA|
+d2 fd c2 ec|defg afge|afge fdec|BABc dAGA||
+
+
+X:23242
+T:Drowsy Maggie 23242
+N:tune id: 27; setting id: 23242
+Z:Lucy Rietmann
+S:thesession.org
+R:reel
+M:4/4
+K:Edorian
+|:E2BE dEBE|E2BE dAFD|E2BE dEBE|BABc dAFD|
+E~B3 E~B3|E~B3 dAFD|E2BE dEBE|BABc dAFA:|
+|:d2fd c2ec|d2fd faaf|defd cdec|~B3c dAFA|
+d2fd c2ec|dcde faaf|bgaf gfed|~B3c dAFD:|
+
+
+X:23248
+T:Drowsy Maggie 23248
+N:tune id: 27; setting id: 23248
+Z:Lucy Rietmann
+S:thesession.org
+R:reel
+M:4/4
+K:Edorian
+|:E2~E2 ~E2~E2|~E2dB AFED|~E2BE d~E3|BABd BAFD|
+E2 B~E2 ~E2|~E2dB AFED|E2~E2 d~E3|~B3d BAFD:|
+|:d2fd c2ec|deg2 eaa2|dffd cded|BABd BAFA|
+d2fd c2ec|deg2 eaa2|afge fdeA|~B3d BAFA:|
+
+
+X:24826
+T:Drowsy Maggie 24826
+N:tune id: 27; setting id: 24826
+Z:ebarr
+S:thesession.org
+R:reel
+M:4/4
+K:Edorian
+|:E2BE dEBE|E2BE ADFA|E2BE dEBE|BABc dDFA:|
+d2fd c2ec|defg afge|d2fd c2ec|BABc dDFA|
+d2fd c2ec|defg afge|a2fg fdec|BABc dDFA|
+
+
+X:27945
+T:Drowsy Maggie 27945
+N:tune id: 27; setting id: 27945
+Z:JACKB
+S:thesession.org
+R:reel
+M:4/4
+K:Edorian
+E2BE dEBE|E2BE AFDF|E2BE dEBE|BABc dAFD|
+E2BE E2 BE|E2 BE AF D2|E2BE dEBE|BABc dAFD||
+defd cdec|defd fa a2|defd cdec|BABc dAFA|
+defd cdec|defd fa a2|afge fdec|BABc dAFD||
+
+
+X:27946
+T:Drowsy Maggie 27946
+N:tune id: 27; setting id: 27946
+Z:JACKB
+S:thesession.org
+R:reel
+M:4/4
+K:Adorian
+A2eA gAeA|A2eA dBGB|A2eA gAeA|edef gdBG|
+A2eA A2 eA|A2 eA dB G2|A2eA gAeA|edef gdBd||
+GABG FGAF|GABG Bd d2|GABG FGAF|EDEF GDBd|
+GABG FGAF|GABG Bd d2|dBcA BGAF|EDEF GDBG||
+
+
+X:29583
+T:Drowsy Maggie 29583
+N:tune id: 27; setting id: 29583
+Z:G.Ryckeboer
+S:thesession.org
+R:reel
+M:4/4
+K:Edorian
+D2|E2BE dEBE|E2dB AGFD|E2BE dEBE|BABc dAFD|
+E2BE dEcE|E2dB AGFD|E2BE dEBE|BABc dAFD|
+E2BE dEcE|E2dB AGFD|E2BE dEBE|BABc dAFD|
+E2BE dEcE|E2dB AGFD|E2BE dEBE|BABc dAFA||
+d2fd cdec|dcde fgaf|d2fd cdec|B2Bc dAFA|
+d2fd cdec|dcde fga2|abaf gfed|BBBc dAFA||
+B2fB aBgB|fBaf edcA|B2fB aBgB|fBaf edcA|
+B2fB aBgB|fBaf edcA|B/c/def aecA|BBBc dAFD||
+
+
+X:31098
+T:Drowsy Maggie 31098
+N:tune id: 27; setting id: 31098
+Z:Chris Quarles
+S:thesession.org
+R:reel
+M:4/4
+K:Edorian
+|:"Em" E2 BE dEBE|E2 BE "D" AFDF|"Em" E2 BE dEBE|1 "G" BABc "D" dAFD:|2 "G" BABc "D" dAFA||
+|:"D"d2 fd "A"c2 ec|"D" de fg "D"af "Em"ge|"D" d2 fd "A"c2 ec|"G" BA Bc "D"dA FA|
+"D"d2 fd "A"c2 ec|"D" de fg "D"af "Em"ge|"D" af"Em"ge "D"fd"Em"ec|"G" BA Bc "D"dA FD:|
+
+
+X:31476
+T:Drowsy Maggie 31476
+N:tune id: 27; setting id: 31476
+Z:Sergei Ejov
+S:thesession.org
+R:reel
+M:4/4
+K:Edorian
+|:"Em"E2BE dEBE|E2BE "D"AFDF|"Em"E2BE dEBE|BABc "D"dAFD:|
+"D"d2fd "A"c2ec|"G"defg afge|"D"d2fd "A"c2ec|"G"BABc dAFA|
+"D"d2fd "A"c2ec|"G"defg afge|afge fdec|BABc "D"dAFD||
+
+
+X:35491
+T:Drowsy Maggie 35491
+N:tune id: 27; setting id: 35491
+Z:Bob Sturm
+S:thesession.org
+R:reel
+M:4/4
+K:Edorian
+E2BE dEBE|~E2BE AFDF|E2BE dEBE|BABc dAFD|
+E2BE dEBE|~E2BE AFDF|E2BE dEBE|BABc dAFA||
+d2fd c2ec|dcde fa ~a2|d2fd c2ec|BABc dAFA|
+d2fd c2ec|dcde fa ~a2|bgaf gfed|BABc dAFD||
+
+
+X:37487
+T:Drowsy Maggie 37487
+N:tune id: 27; setting id: 37487
+Z:Chris Fargen
+S:thesession.org
+R:reel
+M:4/4
+K:Edorian
+|:"Em"E2BE dEBE|E2BE "D"AFDF|"Em"E2BE dEBE|BABc "D"dAFD|
+"Em"E2BE dEBE|E2BE "D"AFDF|"Em"E2BE dEBE|BABc "D"dAFD:|
+|:"D"d2fd "A"c2ec|"D"defg afge|"D"d2fd "A"c2ec|"D"BABc dAFA|
+"D"d2fd "A"c2ec|"D"defg afge|"G"afge fdec|"A"BABc dAFD:|"Em"E8||
+
+
+X:39017
+T:Drowsy Maggie 39017
+N:tune id: 27; setting id: 39017
+Z:JACKB
+S:thesession.org
+R:reel
+M:4/4
+K:Edorian
+E2BE dEBE|E2BE AFDF|E2BE dEBE|BABc dAFD|
+E2BE E2 BE|E2 BE AF D2|E2BE dEBE|BABc dAFD||
+d2 fd c2 ec|defg afge|d2 fd c2 ec|BABc dAFA|
+d2 fd c2 ec|defg a2 fg|afge fdec|BABc dAFD||
+
+
+X:39098
+T:Drowsy Maggie 39098
+N:tune id: 27; setting id: 39098
+Z:Michael Machado
+S:thesession.org
+R:reel
+M:4/4
+K:Edorian
+|:"Em"vE2BE dEBE|uE2BE "D"(AFDF)|"Em"uE2BE dEBE|1 (BA)Bc "D"(dA)FD:|2 (BA)Bc "D"(dA)FA||
+"D"d2(fd) "A"c2(ec)|"G"(de)fg (af)ge|"D"d2(fd) "A"c2(ec)|"G"(BA)Bc (dA)FA|
+"D"d2(fd) "A"c2(ec)|"G"(de)fg af/g/|(3(agf) (3(gfe) (fd)ec|(BA)Bc "D"(dA)FA||
+"Bm"(3(dcB) fB (3(dcB) fB|"A"(3(cBA) eA fAeA|"Bm"(3(dcB) fB (3(dcB) fB|"Bm" (fe)fg "A" (ae)cA|
+"Bm"(3(dcB) fB (3(dcB) fB|"A"(3(cBA) eA fAeA|"Em"d2 (fd) c2 (ec)|"Em"(BA)Bc "D"(dA)FD||
+
+
+X:39125
+T:Drowsy Maggie 39125
+N:tune id: 27; setting id: 39125
+Z:ceolachan
+S:thesession.org
+R:reel
+M:4/4
+K:Edorian
+E2 Bd cEBE|E2 BG FADF|E2 Bd cEBc|dfec dBAF|
+E2 Be dEcE|E2 BG FADF|E2 Bd cEBc|dfec dBAc||
+d2 fd {e}dcBd|cAeA ceAc|d2 fd {e}dcBA|^GABc dAFA|
+d2 fd {e}dcBd|cdef gbag|fgec dcBA|^GABc dAFA|
+d2 fd {e}dcBd|cAeA ceAc|d2 fd {e}dcB^g|abe^g aece|
+d2 fd {e}dcBd|cdef gbag|fgec dcBA|^GABc dAFA||
+
+
+X:787
+T:Sleepy Maggie 787
+N:tune id: 787; setting id: 787
+Z:Mark de Jong
+S:thesession.org
+R:reel
+M:4/4
+K:Bminor
+f2Bb fBde|f2Ba eAce|f2Bb fBde|f^gaf eAce:|
+fBdB fBde|fBdB eAce|fBdB fBde|f^gaf eAce|
+fBdB fBde|fBdB eAce|fBbB aB^gB|f^gaf eAce|
+
+
+X:13917
+T:Sleepy Maggie 13917
+N:tune id: 787; setting id: 13917
+Z:Dr. Dow
+S:thesession.org
+R:reel
+M:4/4
+K:Adorian
+f2de fBde|f2df eAce|f2de fBde|fgaf eAce:|
+|:fBdB fBde|fBdB eAce|1 fBdB fBde|fgaf eAce:|2 dcBc defg|abaf eAce||
+|:fBbB fBde|fBbB aAce|fBbB aBgB|fBgB aAce:|
+f2de fBde|f2df eAce|f2de fBde|fgaf eAce:|
+|:fBdB fBde|fBdB eAce|fBdB fBde|fgaf eAce:|
+|:f2db Bfde|f2db Aece|f2db Bfde|fbaf eAce:|
+|:fBbB fBde|fBbB aAce|fBbB aBgB|fBgB aAce:|
+e2cd eAcd|e2ce dGBd|e2cd eAcd|efge dGBd:|
+|:eAcA eAcd|eAcA dGBd|eAcA eAcd|efge dGBd:|
+|:e2ca Aecd|e2ca GdBd|e2ca Aecd|eage dGBd:|
+|:eAaA eAcd|eAaA gGBd|eAaA gAfA|eAfA gGBd:|
+
+
+X:13918
+T:Sleepy Maggie 13918
+N:tune id: 787; setting id: 13918
+Z:Loftus Loveness
+S:thesession.org
+R:reel
+M:4/4
+K:Bdorian
+|:fB B/B/B fBce|fB B/B/B eAce|fB B/B/B fBce|fgaf eAce:|
+|:f2 f/a/b fBce|f2 f/g/a eAce|f2 f/a/b fBce|fgaf eAce:|
+|:fB B/B/B bB B/B/B|aB B/B/B eAce|fBbB aBgB|fgaf eAce:|
+
+
+X:13919
+T:Sleepy Maggie 13919
+N:tune id: 787; setting id: 13919
+Z:slainte
+S:thesession.org
+R:reel
+M:4/4
+K:Adorian
+e2Aa edBd|e2 e/f/g edBd|e2Aa edBd|efge dGBd:|
+eA~A2 edBd|eA~A2 BGBd|eA~A2 edBd|efge dGBd:|
+
+
+X:13920
+T:Sleepy Maggie 13920
+N:tune id: 787; setting id: 13920
+Z:Dr. Dow
+S:thesession.org
+R:reel
+M:4/4
+K:Adorian
+e2 cA eA B/c/d|e2 cA dG B/c/d|e2 cA eA B/c/d|edge dG B/c/d:|
+|:eAcA eA B/c/d|eAcA dG B/c/d|eAcA eA B/c/d|edge dG B/c/d:|
+
+
+X:13921
+T:Sleepy Maggie 13921
+N:tune id: 787; setting id: 13921
+Z:ceolachan
+S:thesession.org
+R:reel
+M:4/4
+K:Gdorian
+|:e2 Aa edB<d|e2 g2 B<GB<d|e2 Aa edB<d|e>fg>e d<GB<d:|
+|:eA A2 eAB<d|eA A2 B<GB<d|eA A2 eAB<d|e>fg>e d<GB<d:|
+
+
+X:13922
+T:Sleepy Maggie 13922
+N:tune id: 787; setting id: 13922
+Z:ceolachan
+S:thesession.org
+R:reel
+M:4/4
+K:Bminor
+|:f2 Bb fec<e|f2 a2 c<Ac<e|f2 Bb fec<e|f>ga>f e<Ac<e:|
+|:fB B2 fBc<e|fB B2 c<Ac<e|fB B2 fBc<e|f>ga>f e<Ac<e:|
+
+
+X:30744
+T:Sleepy Maggie 30744
+N:tune id: 6253; setting id: 30744
+Z:Nico
+S:thesession.org
+R:slide
+M:12/8
+K:Dmajor
+|:B|A2 A ABc d2 A FGF|A2 G ECE B2 A F2 G|
+ABA ABc dcd F2 A|ABA GFE D3 D2:|
+|:e|f2 d ABA f2 d A3|g2 e c2 e dcB A2 d|
+f2 d ABA f/g/fd A2 A|Bcd efe d3 d2:|
+
+
+X:37408
+T:Sleepy Maggie 37408
+N:tune id: 787; setting id: 37408
+Z:bagpie
+S:thesession.org
+R:reel
+M:4/4
+K:Bdorian
+|:f2Ba fBde|f2Ba eAce|f2Ba fBde|fgaf eAce:|
+|:fBdB fBde|fBdB eAce|fBdB fBde|fgaf eAce:|
+
+
+
+
+X:6084
+T:Peggy On The Settle 6084
+N:tune id: 6084; setting id: 6084
+Z:patrickcumminsmusic
+S:thesession.org
+R:reel
+M:4/4
+K:Adorian
+|:egfd e~A3|edBd e~A3|egfd e~A3|BGdc BGBd:|
+edef g2 ag|edef gdBd|edef g2 ga|bgaf gdBd|
+edef g2 ag|edef gdBd|gdBd g2 ga|bc'ba gfed|

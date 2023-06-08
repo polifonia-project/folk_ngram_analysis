@@ -1,0 +1,431 @@
+X:9639
+T:Edenderry, The 9639
+N:tune id: 9639; setting id: 9639
+Z:bogman
+S:thesession.org
+R:reel
+M:4/4
+K:Gmajor
+|:B2 AG BGGA|B2 AG Bded|B2 AG BG ~G2|AcBG AGEG:|
+~g3 a gede|gabg agab|~g3 a gedB|A2 BG AGEG|
+~g3 a gede|gabg a2 ga|bgab gedB|A2 BG AGEG||
+
+
+X:20077
+T:Edenderry, The 20077
+N:tune id: 9639; setting id: 20077
+Z:bogman
+S:thesession.org
+R:reel
+M:4/4
+K:Gmajor
+|:B2 AG BGGA|B2 AG Bded|B2 AG BGGB|AGBG AGEG:|
+gfga gede|gabg agab|gfga gedB|A2 BG AGEG|
+gfga gede|gabg a2 ga|bgaf gedB|A2 BG AGEG||
+
+
+X:22351
+T:Edenderry, The 22351
+N:tune id: 9639; setting id: 22351
+Z:JACKB
+S:thesession.org
+R:reel
+M:4/4
+K:Gmajor
+B2 AG BG G2|B2 AG (3Bcd gd|B2 AG BGGB|AGBG AGEG|
+B2 AG BGGA|B2 AG (3Bcd gd|B2 AG BGGB|AGBG AGEG||
+g3a gede|gabg agab|g3a gedB|A2 BG AGEG|
+gfga gede|gabg a2 ga|bgaf gedB|A2 BG AGEG||
+DBBD BDDB|DBBD (3Bcd gd|DBBD BDDB|AcBG AGEG|
+DBBA BG G2|B2 AG (3Bcd gd|DBBA BGGB|AcBG AGEG||
+g3a gede|gabg agab|g3a gedB|AcBG AGEG|
+gfga gede|gabg a2 ga|bgaf gedB|AcBG AGEG||
+
+
+X:26607
+T:Edenderry, The 26607
+N:tune id: 9639; setting id: 26607
+Z:JACKB
+S:thesession.org
+R:reel
+M:4/4
+K:Gmajor
+B2 AG BG G2|B2 AG (3Bcd gd|B2 AG BGGB|AGBG AGEG|
+B2 AG BGGA|B2 AG (3Bcd gd|B2 AG BGGB|AGBG AGEG||
+g3a gede|gabg agab|g3a gedB|A2 BG AGEG|
+gfga gede|gabg a2 ga|bgaf gedB|A2 BG AGEG||
+DBBD BDGB|DBBD (3Bcd gd|DBBD BDGB|AcBG AGEG|
+DBBA BG G2|B2 AG (3Bcd gd|DBBA BGGB|AcBG AGEG||
+g3a gede|gabg agab|g3a gedB|AcBG AGEG|
+gfga gede|gabg a2 ga|bgaf gedB|AcBG AGEG||
+
+
+X:32647
+T:Edenderry, The 32647
+N:tune id: 9639; setting id: 32647
+Z:Boyen
+S:thesession.org
+R:reel
+M:4/4
+K:Gmajor
+|:B2 AG BG~G2|B2 AG (3Bcd gd|B2 AG BG ~G2|(3ABc BG AGEG:|
+~g3 a gede|gabg agab|~g3 a gedB|(3ABc BG AGEG|
+~g3 a gede|gabg a2 c'a|~b2 ~a2 gedB|Aeed edBA||
+
+
+X:605
+T:Greig's Pipes 605
+N:tune id: 605; setting id: 605
+Z:Josh Kane
+S:thesession.org
+R:reel
+M:4/4
+K:Gmajor
+~B2BA BAGA|B2GB AGEG|~B2BA BAGB|cABG AGEG|
+~B2BA BAGA|B2GB AGEG|Bd~d2 eBdB|AcBG AGEG||
+DG~G2 DGBG|DGBG AGEG|DGGF GABc|d2BG ABGE|
+AG~G2 AGBG|DGBG AGEG|DGGF GABc|dBAc BG~G2||
+d2 (3Bcd edge|dGBG AGEG|d2 (3Bcd eg~g2|agbg ageg|
+d2 (3Bcd edge|dGBG AGEG|d2 (3Bcd eg~g2|agab aged||
+
+
+X:13622
+T:Greig's Pipes 13622
+N:tune id: 605; setting id: 13622
+Z:Ptarmigan
+S:thesession.org
+R:reel
+M:4/4
+K:Gmajor
+d2Bd egge|d2BG AGEG|d2Bd egge|agbg ageg|
+d2Bd egge|d2BG AGEG|d2Bd egge|dBAB G3A|
+B2B/B/B BAGA|B2BG AGEG|B2B/B/B BAGA|BGAF G2GA|
+B2B/B/B BAGA|B2BG AGEG|B2B/B/B BAGA|BGAF G2D/D/D|
+DGBG AGBG|DGBG AGEG|DGBG AGBd|gedB ABGE|
+DGBG AGBG|DGBG AGEG|DGBG AGBd|gedB G4|
+
+
+X:13623
+T:Greig's Pipes 13623
+N:tune id: 605; setting id: 13623
+Z:JACKB
+S:thesession.org
+R:reel
+M:4/4
+K:Aminor
+Bc d2 BA G2|G2 GA BG e2|e2 dc BG B2|A2 A2 Ae d2|
+B2 g2 fg e2|ed B2 AB G2|AB BA GF G2|G2 G2 G2 D2||
+B2 cd d2 BA|G2 G2 GA BG|e2 e2 dc BG|B2 A2 A2 Ae|
+d2 B2 g2 fg|e2 ed B2 AB|G2 AB BA GF|G2 G2 G2 D2||
+Bc/B/ AG d2 d2|ed ce d2 ga|bd gb ag fd|dc Bc A2 Ae|
+d2 B2 ga/g/ fg|e2 ed B2 AB|G2 AB BA GF|G2 G2 G2 D2||
+
+
+X:13624
+T:Greig's Pipes 13624
+N:tune id: 605; setting id: 13624
+Z:ceolachan
+S:thesession.org
+R:reel
+M:4/4
+K:Gmajor
+B2 B2 BAGA|B2 GB AGED|B3 A BAGB|AGBG AGED|
+B3 A BAGA|B2 dB AGEG|Beed BddB|AGBG EGEG||
+DGGF DGBG|DGBG AGEG|DGGF GABc|dBAc BGGE|
+DGGF G3 E|DGBG AGEG|DGGF GABc|dBAc BGGB||
+d2 Bd efge|d2 BG AGEe|d2 Bd efge|agbg baeg|
+d2 Bd efge|d2 BG AGEe|d2 Bd efge|agbg baed||
+
+
+X:20783
+T:Greig's Pipes 20783
+N:tune id: 605; setting id: 20783
+Z:didier
+S:thesession.org
+R:reel
+M:4/4
+K:Gmajor
+DGBG AGAG|DGBG AGEG|DGBG AGAG|1 dBAB GEDz:|2 dBAB GEDe||
+d2 Bd egge|d2 BG AGE>e|d2 Bd eggb|1 agbg ageg:|2 agbg aged||
+B2 BA BAGB|A2 BG AGEG|B2 BA BA G2|(3ABc BG AGEG|
+B2 BA BAGB|A2 BG AGEG|(3B^cd ed BdeB|A2 BGAG E>D||
+G2 GF GBdB|G2 GB AGEF|G2 GF GBdB|1 A2 BG AGED:|2 A2 BG AGEG||
+B2 Gd Bdgd|B2 GB AGEG|B2 GB GBGB|A2 BG AGEG|
+B2 Gd Bdgd|B2 GB AGEG|(3B^cd gB gBgB|A2 BG AGEG||
+
+
+X:20784
+T:Greig's Pipes 20784
+N:tune id: 605; setting id: 20784
+Z:didier
+S:thesession.org
+R:reel
+M:4/4
+K:Edorian
+f/g/|a>df>d a>df>b|a>df>d e>BBf/g/|a>df>d adfd|e/e/e fd eBB:|
+e|f>df>d f>dd>e|f>df>d eBBe|f>df>d a>dfd|e/e/e fd eBB:|
+d|ADFD ADDd|ADFD BEEd|ADFD ADFD|GBFA BEE:|
+z|d>edA FDDc|d/c/B/A/ dA BEEc|d>edA F/G/AFD|GBFA BEE:|
+
+
+X:21375
+T:Greig's Pipes 21375
+N:tune id: 605; setting id: 21375
+Z:zoukboy_2000
+S:thesession.org
+R:reel
+M:4/4
+K:Amajor
+A2cA BAcB|A2cA BAFE|A2cA BABc|efed cBAG|
+A2cA BAcB|A2cA BAFE|(3efe cA (3BcB AF|EFAc ~B2Ae||
+feae feae|feae dcBA|feae feae|efed cAAe|
+feae feae|feae dcBA|Ac (3efg abaf|efed ce a2||
+e3f e3f|e2cA BAFE|e3f e2cA|(3Bcd cA Bc (3efg|
+agfa gfeg|fedf ecAc|(3ded fd (3cdc ec|(3Bcd cA BAFE||
+
+
+X:21914
+T:Greig's Pipes 21914
+N:tune id: 605; setting id: 21914
+Z:Alan Parker
+S:thesession.org
+R:reel
+M:4/4
+K:Gmajor
+G2 BG AGBA|G2 BG AGED|G2 BG AAAB|dedc BAGF|
+G2 BG AGBA|G2 BG AGED|c2 BG A2 GE|DEGB A2 Gd:|
+edgd edgd|edgd cBAG|edgd edgd|dedc BGGd|
+edgd edgd|edgd cBAG|GB (3def gage|dedc Bd g2:|
+d2 de d3 e|d2 BG AGED|d3 e d2 BG|(3ABc BG AB (3def|
+gfeg fedf|edce dBGB|c2 ec B2 dB|(3ABc BG AGED:|
+
+
+X:22923
+T:Greig's Pipes 22923
+N:tune id: 605; setting id: 22923
+Z:JACKB
+S:thesession.org
+R:reel
+M:4/4
+K:Gmajor
+B3A BAGA|B2GB AGEG|B3A BAGB|AcBG AGEG|
+B3A BAGA|B2GB AGEG|Bd d2 eBdB|AcBG AGEG||
+DG G2 DGBG|DGBG AGEG|DGGF GABc|dBAc BG G2|
+AG G2 DGBG|DGBG AGEG|DGGF GABc|dBAc BG G2||
+d2 (3Bcd egge|d2 BG AGEG|d2 (3Bcd eg g2|agbg ageg|
+d2 (3Bcd egge|d2 BG AGEG|d2 (3Bcd eg g2|agab aged||
+
+
+X:23846
+T:Greig's Pipes 23846
+N:tune id: 605; setting id: 23846
+Z:Liz McCarty
+S:thesession.org
+R:reel
+M:4/4
+K:Gmajor
+B2 BB BAGA|B2 GB AGE(D|D)B BB BAGB|AcBG AGED|
+(AB) BB BAGA|!breath! B2 GB AGED|Beed cddz|AGB z AGED||
+DGGG GGBG|GGB z AGED|DGGG GGGB|!breath!d2 Ad BGGE|
+DGGG AGAB|DGB z AGED|DGGG GGGB|!breath!d2 Ad Bgge||
+dG (3Bcd eggg|!breath!d2 BG AGED|D2 Bd eggg|!breath!a2 ab aged|
+dG (3Bcd eggg|!breath!d2 BG AGED|D2 Bd eggg|!breath!a2 ab aged||
+
+
+X:28229
+T:Greig's Pipes 28229
+N:tune id: 605; setting id: 28229
+Z:GaryAMartin
+S:thesession.org
+R:reel
+M:4/4
+K:Gmajor
+B3 B BAGA|B2 GB AGEG|B3 B BAGB|A2 BG AGEG|
+B3 B BAGA|BAGB AGEG|Bded BcdB|AcBG AGEG||
+DGGF GABG|GdBG AGEG|DGGF GABc|dBAc BGGE|
+DGGF G2BG|dGBG AGEG|DGGF GABc|dBAc BGGB||
+d2 Bd efge|d2 BG AGEG|d2 Bd efge|a3 g ageg|
+d2 Bd efge|d2 BG AGEG|d2 Bd efge|a3 a aged||
+
+
+X:31833
+T:Greig's Pipes 31833
+N:tune id: 605; setting id: 31833
+Z:Yooval
+S:thesession.org
+R:reel
+M:4/4
+K:Amixolydian
+c3e feaf|eA c/B/A BAFA|ce e/e/e fece|b2ba bafe|
+c3e feaf|eA c/B/A BAFA|ce e/e/e feaf|ecBc A2AB:|
+|:c2cB cBAB|c/c/c Ac BAAA|c/c/c cB cBAc|BAcB AAAB|
+c2cB cBAB|c/c/c Ac BAAA|c/c/c cB cBAc|1 BAcB AAAB:|2 BAcB AAAF||
+|:EAcA BAcA|EAcA BA F/F/F|EAcA BAce|afec B2AF|
+EAcA BAcA|EAcA BA F/F/F|EAcA BAce|1 afec A3F:|2 afec ABcd||
+
+
+X:33362
+T:Greig's Pipes 33362
+N:tune id: 605; setting id: 33362
+Z:Daniel Parker
+S:thesession.org
+R:reel
+M:4/4
+K:Amajor
+|:eAcA eAAf|eAcA BFFf|eAcA eAcA|1 B/B/B cA BFFf:|2 B/B/B cA BF(3Bcd||
+|:cAcB cAAB|cAcA BFBd|cAcA EAcA|1 B/B/B cA BFBd:|2 B/B/B cA BFFA|
+EA,CA, EA,A,F|EA,CE FB,B,F|EA,CA, EA,CA,|B,/B,/B, (3CDE FB,B,F|
+EA,CA, CEEA|EA,CE FB,B,F|EA,CA, EA,CA,|B,/B,/B, (3CDE FB,B,F|
+EAAE CA,EC|EAAE FB,B,F|EAAE CA,EC|B,/B,/B, (3CDE FB,B,F|
+EAAE CA,EE|EAAE FB,B,F|EAAE CA,EA,|B,/B,/B, (3CDE FB,B,f|
+
+
+X:33363
+T:Greig's Pipes 33363
+N:tune id: 605; setting id: 33363
+Z:Daniel Parker
+S:thesession.org
+R:reel
+M:4/4
+K:Amajor
+|:cAcA cAA2|cAcA BAFA|cccB ABcA|B2{c}BA E2A2:|
+A2ce eAcA|A2cA BAFB|eece fecA|B2cA BAFB|
+A2cA eAcA|e2cA BAFB|eece fecA|B2{c}BA E2A2|
+
+
+X:34044
+T:Greig's Pipes 34044
+N:tune id: 605; setting id: 34044
+Z:Zoe Nieraeth
+S:thesession.org
+R:reel
+M:4/4
+K:Gmajor
+|:B~B2A BAGA|B2GB AGEG|1 B~B2A BAGB|cABG AGEG:|2 Bdeg edBG|AcBG AGEG||
+|:DG~G2 DGBG|DGBG AGEG|DGGF GABc|1 d2BG AGEG:|2 dBAc BG~G2||
+|:d2 (3Bcd efge|dGBG AGEG|d2 (3Bcd efge|1 a~a2b ageg:|2 a~a2b aged||
+
+
+X:41651
+T:Greig's Pipes 41651
+N:tune id: 605; setting id: 41651
+Z:Jeremy
+S:thesession.org
+R:reel
+M:4/4
+K:Gmajor
+B3A BAGA|B2GB AGEG|B2BA BAGB|cABG AGEG|
+B3A BAGA|B2GB AGEG|Bdd2 eBdB|AcBG AGEG|
+|:DGG2 DGBG|DGBG AGEG|DGGF GABc|dBAc BGG2:|
+|:d2Bd efge|d2BG AGEG|d2Bd efge|agbg age2:|
+
+
+X:511
+T:Foxhunters, The 511
+N:tune id: 511; setting id: 511
+Z:Josh Kane
+S:thesession.org
+R:reel
+M:4/4
+K:Gmajor
+|:d2BG d2BG|d2BG AGEG|d2BG dGBG|AcBG AGEG:|
+|:D~D2B BAGE|DGBG AGEG|D~D2B BAGB|AcBG AGEG:|
+|:gedB GABd|gdBd eaaf|gedB GABG|ABcd eA~A2:|
+|:dggf ~g2ge|dggd egdB|dggf ~g2gd|egdB AGAB:|
+|:G2BG dGBG|GABG AGAB|~G2BG dGBd|egdB AGAB:|
+
+
+X:13438
+T:Foxhunters, The 13438
+N:tune id: 511; setting id: 13438
+Z:turophile
+S:thesession.org
+R:reel
+M:4/4
+K:Gmajor
+dGBG dGBG|dGBG AGEG|dGBG dGBG|GABG AGEG:|
+|:~D3 B BABG|DGBG AGEG|~D3 B BABG|AcBG AGEG:|
+|:gedB G2 Bd|gdBd eA ~A2|gedB GBdB|ABcd eA ~A2:|
+|:dggf g4|dg ~g2 egdB|dggf ~g3d|(3efg dB AGAB:|
+|:~G2 BG dGBG|GB ~B2 AGAB|~G2 BG dGBG|(3efg dB AGAB:|
+
+
+X:13439
+T:Foxhunters, The 13439
+N:tune id: 511; setting id: 13439
+Z:PJ Mediterranean
+S:thesession.org
+R:reel
+M:4/4
+K:Gmajor
+eAcA eAcA|eAcA BAFA|eAcA eAcA|(3Bcd cA BAFA|
+eAcA eAcA|eAcA BAFA|ce (3eee fcec|(3Bcd cA BAFA||
+E3c cBAF|~E2 cA BAFA|E3c cBAc|(3Bcd cA BAFA:|
+afec AB (3cBA|aece f~B3|afec AB (3cBA|Bcde f~B3|
+afec AB (3cBA|aece fb (3bbb|aBgB fBec|Bcde fBcd||
+eaag a3f|e~a3 (3fga ec|eaag abae|(3fga ec ~B2cd|
+eaag a3f|e~a3 (3fga ec|eaag abae|(3fga ec BdcB||
+A2cA eAcB|A~c3 BABc|(3AAA Ac eAce|(3fga ec BdcB:|
+
+
+X:22807
+T:Foxhunters, The 22807
+N:tune id: 511; setting id: 22807
+Z:JACKB
+S:thesession.org
+R:reel
+M:4/4
+K:Gmajor
+d2 BG dGBG|dGBG AGEG|d2 BG dGBG|AcBG AGEG:|
+|:D3B BABG|DGBG AGEG|D3B BABG|AcBG AGEG:|
+|:gedB G2 Bd|gedB eA A2|gedB GABG|ABcd eA A2:|
+|:dggf g3e|dg g2 egdB|dggf g3d|(3efg dB AGAB:|
+|:G2 BG dGBG|GB B2 AGAB|G2 BG dGBG|(3efg dB AGAB:|
+
+
+X:22808
+T:Foxhunters, The 22808
+N:tune id: 511; setting id: 22808
+Z:JACKB
+S:thesession.org
+R:reel
+M:4/4
+K:Amajor
+e2 cA eAcA|eAcA BAFA|e2 cA eAcA|BdcA BAFA:|
+|:E3c cBcA|EAcA BAFA|E3c cBcA|BdcA BAFA:|
+|:afec A2 ce|aece fB B2|afec Acec|Bcde fB B2:|
+|:eaag a3f|ea a2 faec|eaag a3e|faec BABc:|
+|:A2 cA eAcA|Ac c2 BABc|A2 cA eAcA|faec BABc:|
+
+
+X:28196
+T:Foxhunters, The 28196
+N:tune id: 511; setting id: 28196
+Z:GaryAMartin
+S:thesession.org
+R:reel
+M:4/4
+K:Gmajor
+d2BG dGBG|dGBG AGEG|d2BG dGBG|AcBG AGEG|
+d2BG dGBG|dGBG AGEG|Bd~d2 eBdB|AcBG AGEG||
+D3 B BAGE|DGBG AGEG|D3 B BAGB|AcBG AGEG:|
+gedB GABd|gedg eAAd|gedB GABG|1 ABcd eAA d:|2 ABcd eAA B||
+dggf ~g2ge|dggd egdB|dggf ~g2gd|egdB AGAB:|
+G2Bc d2BA|GABG AGAB|~G2Bc d2 (3Bcd|egdB AcBA:|
+
+
+X:30575
+T:Foxhunters, The 30575
+N:tune id: 511; setting id: 30575
+Z:Ash O'Rourke
+S:thesession.org
+R:reel
+M:4/4
+K:Gmajor
+d2BG dGBG|dGBG AGEG|d2 BG dGBG|AcBG AGEG:|
+D2DB BAGE|DGBG AGEG|D2 DB BAGE|AcBG AGEG:|
+gedB GABd|gedB eA A2|gedB GABG|ABcd eA A2:|
+dggf g3 e|d g3 egdB|dggf g3 d|egdB AGAB:|
+G2 BG dGBA|G B3 AGAB|G2 BG dGBd|egdB AGAB:|
+
+
