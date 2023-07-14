@@ -33,10 +33,12 @@ to disc.
 
 import os
 
-from Levenshtein import distance, hamming
+
+from Levenshtein import distance
 import numpy as np
 import pandas as pd
 from scipy.sparse import load_npz
+from scipy.spatial.distance import hamming
 from sklearn.metrics import pairwise_distances
 import swifter
 from tqdm import tqdm
@@ -83,7 +85,8 @@ class PatternSimilarity:
     EDIT_DIST_METRICS = {
         'levenshtein': 'Levenshtein distance',
         'hamming': 'Hamming distance',
-        'custom_weighted_hamming': 'custom-weighted Hamming distance'
+        'custom_weighted_hamming': 'custom-weighted Hamming distance',
+        'custom_weighted_levenshtein': 'custom-weighted Levenshtein distance'
     }
 
     def __init__(
@@ -119,9 +122,9 @@ class PatternSimilarity:
         _tfidf_vector_cos_similarity_matrix_path = f"{corpus_path}/pattern_corpus/{level}/tfidf_vector_cos_sim.mm"
         # attrs
         self._titles = np.load(_titles_path)
-        self.query_tune = query_tune    # property
-        self.n = n                      # property
-        self.feature = feature          # property
+        self.query_tune = query_tune  # property
+        self.n = n  # property
+        self.feature = feature  # property
         self._patterns = pd.Series(np.load(_patterns_path, allow_pickle=True).tolist())
         self._pattern_occurrences_matrix = self._filter_matrix(
             data=self._load_sparse_matrix(_pattern_occurrences_matrix_path),
@@ -484,10 +487,10 @@ class PatternSimilarity:
         filtered['patterns'] = similar_patterns
         # setup paths and write similar patterns to csv
 
-        out_path = f"{self._out_dir}/{self.query_tune}/motif_similar_patterns"
+        out_path = f"{self._out_dir}/{self.query_tune}/{self.n}gram_similar_patterns"
         if not os.path.isdir(out_path):
             os.makedirs(out_path)
-        filtered.to_csv(f"{out_path}/motif_similar_patterns.csv")
+        filtered.to_csv(f"{out_path}/{self.n}gram_similar_patterns.csv")
         return similar_pattern_indices
 
     def _calculate_tune_lengths(self):
@@ -591,7 +594,7 @@ class PatternSimilarity:
         out_path = f"{self._out_dir}/{self.query_tune}/motif_results"
         if not os.path.isdir(out_path):
             os.makedirs(out_path)
-        csv_out_path = f"{out_path}/{norm}motif_results.csv"
+        csv_out_path = f"{out_path}/{norm}{self.n}gram_results.csv"
         results.to_csv(csv_out_path)
 
         return None
@@ -637,9 +640,45 @@ class PatternSimilarity:
 
 class PatternSimilarityDev(PatternSimilarity):
 
+    MOTIF_MODES = ('exact', 'composite', 'edit_distance')
+
     def __init__(self, *args, **kwargs):
 
-        super(PatternSimilarity, self).__init__(*args, **kwargs)
+        super(PatternSimilarityDev, self).__init__(*args, **kwargs)
+        self.motif_edit_distance_filter_range = None
+        self.include_query_tune_in_results = False
+        self.motif_count_weighting_factor = None
+
+    @property
+    def motif_edit_distance_filter_range(self):
+        return self._motif_edit_distance_filter_range
+
+    @motif_edit_distance_filter_range.setter
+    def motif_edit_distance_filter_range(self, rng=None):
+
+        if rng:
+            assert isinstance(rng, tuple) and len(rng) == 2 and rng[0] < rng[1]
+        self._motif_edit_distance_filter_range = rng
+
+    @property
+    def include_query_tune_in_results(self):
+        return self._include_query_tune_in_results
+
+    @include_query_tune_in_results.setter
+    def include_query_tune_in_results(self, flag):
+
+        assert isinstance(flag, bool)
+        self._include_query_tune_in_results = flag
+
+    @property
+    def motif_count_weighting_factor(self):
+        return self._motif_count_weighting_factor
+
+    @motif_count_weighting_factor.setter
+    def motif_count_weighting_factor(self, factor):
+        if factor:
+            assert isinstance(factor, (int, float))
+        self._motif_count_weighting_factor = factor
 
     def _read_precomputed_tfidf_vector_similarity_results(self):
 
@@ -653,7 +692,7 @@ class PatternSimilarityDev(PatternSimilarity):
         print(tfidf_results.head())
 
         # drop query tune from results
-        tfidf_results = tfidf_results[tfidf_results['title'] != self.query_tune]
+        tfidf_results = tfidf_results[tfidf_results.index != self.query_tune]
 
         # setup out paths, create subdirs if they do not already exist
         tfidf_results_path = f"{self._out_dir}/{self.query_tune}/tfidf_results"
@@ -683,7 +722,8 @@ class PatternSimilarityDev(PatternSimilarity):
         results = self._calculate_incipit_and_cadence_edit_distance(edit_dist_metric)
         print(results.head())
         # drop query tune from results
-        results = results[results['title'] != self.query_tune]
+        if not self.include_query_tune_in_results:
+            results = results[results['title'] != self.query_tune]
 
         # format output filenames and write results to file
         if not os.path.isdir(out_path):
@@ -722,7 +762,7 @@ class PatternSimilarityDev(PatternSimilarity):
         search_terms = patterns[search_term_indices]
         return search_terms
 
-    def _extract_top_3_motifs_from_query_tune(self, save=False):
+    def _extract_top_3_motifs_from_query_tune(self):
 
         """
         Extract representative motif(s) from query tune by maximal TF-IDF for use as search term(s) in 'motif' method.
@@ -746,16 +786,16 @@ class PatternSimilarityDev(PatternSimilarity):
         # search_term_indices = [int(i) for i in max_tfidf_indices]
 
         # lookup indices of top three patterns in query tune as ranked by TF-IDF
-        max_tfidf_indices = query_tune_data_densified[title].sort_values(ascending=False).index
-        search_term_indices = max_tfidf_indices[:2]
+        tfidf_indices = query_tune_data_densified[title].sort_values(ascending=False).index
+        search_term_indices = tfidf_indices[:3]
 
-        if save:
-            # Look up search terms patterns and write to file
-            search_terms = patterns[search_term_indices]
-            out_path = f"{self._out_dir}/{self.query_tune}/motif_exact_patterns"
-            if not os.path.isdir(out_path):
-                os.makedirs(out_path)
-            search_terms.to_csv(f"{out_path}/motif_similar_patterns.csv")
+        # Look up search terms patterns and write to file
+        search_terms = patterns[search_term_indices]
+        search_terms.name = 'patterns'
+        out_path = f"{self._out_dir}/{self.query_tune}/motif_results/{self.n}gram_results/exact"
+        if not os.path.isdir(out_path):
+            os.makedirs(out_path)
+        search_terms.to_csv(f"{out_path}/{self.n}gram_exact_patterns.csv")
 
         return search_term_indices
 
@@ -769,7 +809,7 @@ class PatternSimilarityDev(PatternSimilarity):
 
         # find indices of all patterns in self._patterns which are exact matches to the search term pattern(s)
         # extracted from the query tune.
-        search_term_indices = self._extract_top_3_motifs_from_query_tune(save=False)
+        search_term_indices = self._extract_top_3_motifs_from_query_tune()
 
         freq_matrix = self._pattern_occurrences_matrix
         # look up the rows corresponding to these patterns in self_pattern_occurrences_matrix.
@@ -777,7 +817,7 @@ class PatternSimilarityDev(PatternSimilarity):
         filtered.fillna(0, inplace=True)
         return filtered
 
-    def _count_search_term_pattern_occurrences_per_tune(self, normalize=True, weighting=True):
+    def _count_search_term_pattern_occurrences_per_tune(self, normalize=True):
 
         """
         Sums corpus-level occurrences of the search term pattern(s) per tune as outputted by
@@ -788,13 +828,15 @@ class PatternSimilarityDev(PatternSimilarity):
             length of the tune as stored in self._tune_lengths.
         """
 
+        weighting = self.motif_count_weighting_factor
+
         # generate input data
         data = self._find_exact_pattern_matches_and_their_occurrences()
         # If weighting, count pattern occurrences per tune and multiply totals by 2
         # This modification to the pattern counts will boost counts of exact-matching patterns vs similar patterns in
         # final results
         count = data.sum(axis=0)
-        ranking = count * 2 if weighting else count
+        ranking = count * weighting if weighting else count
 
         if normalize:
             # normalization process
@@ -811,11 +853,12 @@ class PatternSimilarityDev(PatternSimilarity):
             results.columns = ['title', 'count']
 
         # drop query tune from results
-        results = results[results['title'] != self.query_tune]
+        if not self.include_query_tune_in_results:
+            results = results[results['title'] != self.query_tune]
 
         return results
 
-    def _run_motif_edit_distance_calculations(self, dist_metric='levenshtein'):
+    def _run_motif_edit_distance_calculations(self, dist_metric='levenshtein', motif_mode=None):
 
         """
         Calculate Levenshtein distance between search term motif(s) and all corpus patterns stored in self._patterns.
@@ -823,18 +866,22 @@ class PatternSimilarityDev(PatternSimilarity):
         Return pattern indices (which correspond to row identifiers in PatternSimilarity._pattern_freq_matrix).
 
         Args:
-            mode -- choice of edit distance to be applied, can be either 'levenshtein' (Levenshtein distance);
-            'hamming' (Hamming distance) or 'custom_weighted_hamming' (custom-weighted Hamming distance)"""
+            dist_metric -- choice of edit distance to be applied, can be either 'levenshtein' (Levenshtein distance);
+            'hamming' (Hamming distance), 'custom_weighted_hamming' (custom-weighted Hamming distance),
+            custom-weighted Levenshtein distance ('custom_weighted_levenshtein')"""
 
-        search_term_pattern_indices = self._extract_search_term_motifs_from_query_tune()
+        search_term_pattern_indices = self._extract_top_3_motifs_from_query_tune()
         patterns = self._patterns
-        search_terms = patterns[search_term_pattern_indices] if search_term_pattern_indices else None
         results = None
+        search_terms = patterns[search_term_pattern_indices]
 
-        if dist_metric == 'weighted_hamming' or 'weighted_levenshtein':
-            # convert search_terms and self._patterns data to str format
-            reformatted_search_terms = [''.join([str(int(i)) for i in t]) for t in search_terms] if search_terms else None
-            reformatted_patterns = pd.Series([''.join([str(int(i)) for i in p]) for p in patterns]) if patterns else None
+        if dist_metric == 'custom_weighted_hamming' or 'custom_weighted_levenshtein':
+            # convert self._patterns data to str
+            reformatted_patterns = pd.Series([''.join([str(int(i)) for i in p]) for p in patterns])
+            # reindex to match original patterns Series
+            reformatted_patterns.index = patterns.index
+            # extract search terms
+            reformatted_search_terms = reformatted_patterns[search_term_pattern_indices]
 
         if dist_metric == 'levenshtein':
             # apply pairwise Levenshtein.distance() between search term pattern(s) and all other patterns in the
@@ -844,25 +891,33 @@ class PatternSimilarityDev(PatternSimilarity):
             # calculate Hamming distance between search term pattern(s) and all other patterns in the
             # (filtered) patterns array
             results = pd.DataFrame([patterns.swifter.apply(hamming, args=[t]) for t in search_terms]).T
+            # reformat scipy's Hamming dist values from decimal to simple count
+            results = (results * self.n).astype(int)
         if dist_metric == 'custom_weighted_hamming':
-            results = pd.DataFrame([reformatted_patterns.swifter.apply(weighted_levenshtein.levenshtein,
-                                                                       args=t,
-                                                                       substitute_costs=substitution
-                                                               ) for t in reformatted_search_terms]).T
-        if dist_metric == 'weighted_levenshtein':
             results = pd.DataFrame([reformatted_patterns.swifter.apply(
                 weighted_levenshtein.levenshtein,
-                args=t,
+                args=[t],
+                substitute_costs=substitution
+            )
+                for t in reformatted_search_terms]).T
+        if dist_metric == 'custom_weighted_levenshtein':
+            results = pd.DataFrame([reformatted_patterns.swifter.apply(
+                weighted_levenshtein.levenshtein,
+                args=[t],
                 substitute_costs=substitution,
                 insert_costs=insertion,
-                delete_costs=deletion)
+                delete_costs=deletion
+            )
                 for t in reformatted_search_terms]).T
 
-        results.columns = [np.array2string(term) for term in search_terms]
-        # filter results by edit distance threshold of 1. This retains only patterns within one element substitution
-        # , deletion or insertion of the search term pattern.
-        # TODO: Make both threshold vals in line below user-accessible
-        filtered = results[(0 < results <= 1).any(1)]
+        if dist_metric == 'custom_weighted_hamming' or 'custom_weighted_levenshtein':
+            results.columns = [term for term in reformatted_search_terms]
+        else:
+            results.columns = [np.array2string(term) for term in search_terms]
+        # filter results by min and max edit distance threshold values set via self.motif_edit_distance_filter_range
+        # property. This retains only patterns within a user-defined distance range of the query tune.
+        rng = self.motif_edit_distance_filter_range
+        filtered = results[((rng[0] <= results) & (results <= rng[1])).any(1)]
         # retain the indices of the similar patterns discovered-- these will be used to lookup the 'freq' matrix and
         # count similar pattern occurrences per tune
         similar_pattern_indices = filtered.index.to_list()
@@ -870,13 +925,14 @@ class PatternSimilarityDev(PatternSimilarity):
         filtered['patterns'] = similar_patterns
         # setup paths and write similar patterns to csv
 
-        out_path = f"{self._out_dir}/{self.query_tune}/motif_similar_patterns"
+        out_path = f"{self._out_dir}/{self.query_tune}/motif_results/{self.n}gram_results/{motif_mode}"
         if not os.path.isdir(out_path):
             os.makedirs(out_path)
-        filtered.to_csv(f"{out_path}/motif_similar_patterns_{dist_metric}.csv")
+        filtered.to_csv(f"{out_path}/{self.n}gram_{dist_metric}_patterns.csv")
+
         return similar_pattern_indices
 
-    def _find_similar_patterns_and_their_occurrences(self, metric=None):
+    def _find_similar_patterns_and_their_occurrences(self, metric=None, motif_mode=None):
 
         """
         Call _run_edit_distance_calculations() method to find all similar patterns to the 'motif' search term(s)
@@ -886,14 +942,14 @@ class PatternSimilarityDev(PatternSimilarity):
 
         # find all patterns in self._patterns which are an edit distance of 1 or less from the search term pattern(s)
         # extracted from the query tune, excluding the query patterns.
-        similar_pattern_indices = self._run_motif_edit_distance_calculations(dist_metric=metric)
+        similar_pattern_indices = self._run_motif_edit_distance_calculations(dist_metric=metric, motif_mode=motif_mode)
         freq_matrix = self._pattern_occurrences_matrix
         # look up the rows corresponding to these patterns in self_pattern_occurrences_matrix.
         filtered = freq_matrix.loc[similar_pattern_indices].drop(columns=['pattern_len']).dropna(axis=1, how='all')
         filtered.fillna(0, inplace=True)
         return filtered
 
-    def _count_similar_pattern_occurrences_per_tune(self, normalize=True, metric=None):
+    def _count_similar_pattern_occurrences_per_tune(self, normalize=True, metric=None, motif_mode=None):
 
         """
         Sums corpus-level occurrences for all similar patterns to the search term pattern(s) as outputted by
@@ -905,7 +961,7 @@ class PatternSimilarityDev(PatternSimilarity):
         """
 
         # generate input data
-        data = self._find_similar_patterns_and_their_occurrences(metric=metric)
+        data = self._find_similar_patterns_and_their_occurrences(metric=metric, motif_mode=motif_mode)
 
         if normalize:
             # normalization process
@@ -922,20 +978,25 @@ class PatternSimilarityDev(PatternSimilarity):
             results.columns = ['title', 'count']
 
         # drop query tune from results
-        results = results[results['title'] != self.query_tune]
+        if not self.include_query_tune_in_results:
+            results = results[results['title'] != self.query_tune]
 
         return results
 
-    def _combine_exact_and_similar_pattern_results(self, normalize, metric):
+    def _combine_exact_and_similar_pattern_results(self, normalize, metric, motif_mode):
 
         exact = self._count_search_term_pattern_occurrences_per_tune(normalize=normalize)
-        similar = self._count_similar_pattern_occurrences_per_tune(normalize=normalize, metric=metric)
+        similar = self._count_similar_pattern_occurrences_per_tune(
+            normalize=normalize,
+            metric=metric,
+            motif_mode=motif_mode
+        )
         # combine dfs and sum counts of common tunes between the two results tables
         results = pd.concat([exact, similar]).groupby('title')['count'].sum().reset_index()
 
         return results
 
-    def _calculate_motif_similarity(self, normalize=True, mode=None, metric=None):
+    def _calculate_motif_similarity(self, normalize=True, motif_mode=None, metric=None):
 
         """
         Runs 'motif' similarity method via call to PatternSimilarity._count_similar_pattern_occurrences_per_tune();
@@ -946,14 +1007,16 @@ class PatternSimilarityDev(PatternSimilarity):
             tune. Passes to self._count_similar_pattern_occurrences_per_tune().
         """
 
-        results=None
+        assert motif_mode in self.MOTIF_MODES
+        results = None
 
-        if mode == 'exact':
+        if motif_mode == 'exact':
             results = self._count_search_term_pattern_occurrences_per_tune(normalize=normalize)
-        if mode == 'composite':
-            results = self._combine_exact_and_similar_pattern_results(normalize=normalize, metric=metric)
-        if mode == 'edit_distance':
-            results = self._count_similar_pattern_occurrences_per_tune(normalize=normalize, metric=metric)
+        if motif_mode == 'composite':
+            assert metric in self.EDIT_DIST_METRICS
+            results = self._combine_exact_and_similar_pattern_results(normalize=normalize, metric=metric, motif_mode=motif_mode)
+        if motif_mode == 'edit_distance':
+            results = self._count_similar_pattern_occurrences_per_tune(normalize=normalize, metric=metric, motif_mode=motif_mode)
 
         # Reformat / rename cols and sort:
         results.sort_values(by=results.columns[1], ascending=False, inplace=True)
@@ -961,15 +1024,19 @@ class PatternSimilarityDev(PatternSimilarity):
         print(results.head())
         # format filenames and write outputs to file
         norm = 'normalized_' if normalize else ''
-        out_path = f"{self._out_dir}/{self.query_tune}/motif_results/{mode}"
-        if not os.path.isdir(out_path):
-            os.makedirs(out_path)
-        csv_out_path = f"{out_path}/{norm}motif_results_{mode}_{metric}.csv"
+        base_path = f"{self._out_dir}/{self.query_tune}/motif_results/{self.n}gram_results/{motif_mode}"
+        if not os.path.isdir(base_path):
+            os.makedirs(base_path)
+        if motif_mode == 'exact':
+            csv_out_path = f"{base_path}/{norm}{self.n}gram_results_exact.csv"
+        else:
+            csv_out_path = f"{base_path}/{norm}{self.n}gram_results_{motif_mode}_{metric}.csv"
+
         results.to_csv(csv_out_path)
 
         return None
 
-    def run_similarity_search(self, method=None, motif_norm=True, motif_mode=None, edit_dist_metric='levenshtein'):
+    def run_similarity_search(self, method=None, **kwargs):
 
         """
         Top-level flow control to select and run FoNN's three similarity search methods: 'motif',
@@ -979,19 +1046,36 @@ class PatternSimilarityDev(PatternSimilarity):
         Args:
              method -- selects between three methods above.
              motif_norm -- Boolean flag. Selects whether to normalize output of 'motif' method.
+             motif_mode -- selects between 'exact', 'composite' and 'edit_distance' modes.
              edit_dist_metric -- selects between three edit distance metrics available in 'incipit_and_cadence' method:
                                  1. Levenshtein distance ('levenshtein'); 2. Hamming distance ('hamming'); or
                                  3. Custom-weighted Hamming distance ('custom_weighted_hamming').
+                                 4. Custom-weighted Levenshtein distance ('custom_weighted_levenshtein')
         """
+
+        motif_norm = kwargs.pop('motif_norm', True)
+        motif_mode = kwargs.pop('motif_mode', 'edit_distance')
+        edit_dist_metric = kwargs.pop('edit_dist_metric', 'levenshtein')
+
+        assert isinstance(motif_norm, bool)
+        assert motif_mode in self.MOTIF_MODES
+        assert edit_dist_metric in self.EDIT_DIST_METRICS
 
         print(f"Query tune: {self.query_tune}.")
 
         if method == 'motif':
             assert edit_dist_metric in self.EDIT_DIST_METRICS.keys()
             # run 'motif' similarity methods
-            print(f"Search method: {method}{' (normalized)' if motif_norm else ''}")
+            print(f"Search method: {method}{' (normalized)' if motif_norm else ''}\n"
+                  f"{'Edit distance metric: ' if edit_dist_metric else ''}{edit_dist_metric}")
+            if 'hamming' in edit_dist_metric:
+                self._pattern_occurrences_matrix = self._filter_matrix(
+                    data=self._pattern_occurrences_matrix,
+                    mode='narrow'
+                )
             self._filter_patterns()
-            self._calculate_motif_similarity(normalize=motif_norm, mode=motif_mode, metric=edit_dist_metric)
+
+            self._calculate_motif_similarity(normalize=motif_norm, motif_mode=motif_mode, metric=edit_dist_metric)
 
         elif method == 'incipit_and_cadence':
             # run incipit and cadence similarity methods
@@ -1008,9 +1092,11 @@ class PatternSimilarityDev(PatternSimilarity):
 
         return None
 
+    # TODO: make self.n an attr and data attrs properties
 
-    # TODO: add flow control for new experiment via refactored _calculate_motif_similarity() and run_similarity_search()
-    #  methods.
+    # TODO: Test -- make new test dataset
+
+    # TODO: Check that outputs save in appropriate folders
 
     # TODO: run comparison of exact / exact plus weighted Hamming / exact plus Levenshein / Levenshtein / weighted
     #  Hamming.
