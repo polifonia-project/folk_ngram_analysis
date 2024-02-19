@@ -1,6 +1,6 @@
 """
 pattern_extraction.py contains a single class, NgramPatternCorpus, containing pattern extraction tools which output data
- to ../[corpus]/pattern_corpus. These files are input requirements for the tune similarity tools stored in
+ to ../[corpus name]/pattern_corpus. These files are input requirements for the tune similarity tools stored in
  similarity_search.py.
 
 Initialization of a NgramPatternCorpus object requires feature sequence csv files representing a music corpus, as
@@ -123,7 +123,7 @@ class NgramPatternCorpus:
         if not os.path.isdir(self.out_dir):
             os.makedirs(self.out_dir)
         for n in n_vals:
-            assert 3 <= n <= 12
+            assert 3 <= n <= 16
         self.n_vals = n_vals
         self.name = in_dir.split('/')[-3]
         for l in NgramPatternCorpus.LEVELS:
