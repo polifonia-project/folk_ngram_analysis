@@ -1,8 +1,6 @@
-"""Utility script to set up and read custom edit distance penalty matrices for similarity_search_dev.py."""
-
+"""Utility script to set up and read custom edit distance penalty matrices for similarity_search.py."""
 
 import numpy as np
-
 
 # list all ascii characters
 index = [chr(i) for i in range(128)]

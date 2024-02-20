@@ -1,3 +1,5 @@
+# TODO: review before finalising new FoNN release
+
 """
 pattern_extraction.py contains a single class, NgramPatternCorpus, containing pattern extraction tools which output data
  to ../[corpus name]/pattern_corpus. These files are input requirements for the tune similarity tools stored in
@@ -205,24 +207,24 @@ class NgramPatternCorpus:
             analyzer='word'
         )
         # calculate sparse matrix of n-gram pattern occurrences:
-        freq = vec.fit_transform(data)
+        pattern_freq_matrix = vec.fit_transform(data)
         # store all unique n-gram patterns:
         patterns = [
             np.array(
                 [int(float(elem.strip())) for elem in pattern.split()], dtype='int16')
             for pattern in vec.get_feature_names()
         ]
-
-        # optionally write outputs to disc
+        
+        # optionally write pattern and frequency outputs to disc
         if write_output:
-            sparse.save_npz(f"{self.out_dir}/freq_matrix", freq)
+            file_name = f"{self.n_vals[0]}grams_tfidf_matrix"
+            sparse.save_npz(f"{self.out_dir}/{file_name}", pattern_freq_matrix)
             np.save(f"{self.out_dir}/patterns", np.array(patterns, dtype=object), allow_pickle=True)
 
         self.patterns = patterns
-        self.pattern_freq_matrix = freq
+        self.pattern_freq_matrix = pattern_freq_matrix
         # memory management
         self.data = None
-        gc.collect()
         return None
 
     def calculate_tfidf_vals(self, write_output=True):
@@ -236,15 +238,15 @@ class NgramPatternCorpus:
 
         input_data = self.pattern_freq_matrix
         # Convert pattern occurrences to TF-IDF values via using sklearn.feature_extraction.text.TfidfTransformer()
-        tfidf = TfidfTransformer()
-        tfidf = tfidf.fit_transform(input_data)
+        pattern_tfidf_matrix = TfidfTransformer()
+        pattern_tfidf_matrix = pattern_tfidf_matrix.fit_transform(input_data)
         # optionally write output to disc
         if write_output:
-            sparse.save_npz(f"{self.out_dir}/tfidf_matrix", tfidf)
-        self.pattern_tfidf_matrix = tfidf
+            file_name = f"{self.n_vals[0]}grams_freq_matrix"
+            sparse.save_npz(f"{self.out_dir}/{file_name}", pattern_tfidf_matrix)
+        self.pattern_tfidf_matrix = pattern_tfidf_matrix
         # memory management
         self.pattern_freq_matrix = None
-        gc.collect()
         return None
 
     def calculate_tfidf_vector_cos_similarity(self):
@@ -266,9 +268,8 @@ class NgramPatternCorpus:
         )
         output[:] = cos_similarity[:]
         self.pattern_tfidf_matrix = None
-        output.flush()
         # memory management
-        gc.collect()
+        output.flush()
         return None
 
     def convert_matrix_to_df(self, matrix, write_output=True, filename=None):
@@ -301,7 +302,7 @@ class NgramPatternCorpus:
     def check_data_for_null_entries(data):
         """Helper function to filter empty feature sequence csv files from input processing."""
         errors = []
-        # find any items with size < 2 in input dict
+        # identify any feature sequences with length < 2 in input data
         for k, v in data.items():
             if np.size(v) < 2:
                 errors.append(k)
@@ -313,3 +314,10 @@ class NgramPatternCorpus:
                 data.pop(err, None)
 
         return data
+        
+
+            
+            
+            
+
+        
