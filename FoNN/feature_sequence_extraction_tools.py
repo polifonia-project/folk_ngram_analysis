@@ -2,8 +2,8 @@
 Feature sequence data represents each note in a symbolic music document via numerical feature values, such
 as: (midi_note_num: 68, offset: 10, duration: 2).
 
-Tune class object represents a single tune in this feature sequence format, which is extracted from music document
-(score) files principally via the music21 Python library. Any file type compatible with music21 can be used to
+Tune class objects represent a single tune in this feature sequence format, which is extracted from music document files
+ (i.e. digital scores) principally via the music21 Python library. Any file type compatible with music21 can be used to
 initialize a Tune object.
 
 Corpus class objects represent collections of multiple Tune objects.

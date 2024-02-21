@@ -3,6 +3,21 @@
 # TODO: ordering within inits
 # TODO: misc line items below.
 
+"""
+similarity_search.py contains TuneSimilarity base class which is a template for three subclasses, implementing each of
+ our three pattern-based tune similarity methodologies:
+ MotifSimilarity class runs the 'motif' method;
+ IncipitAndCadenceSimilarity'incipit_and_cadence' runs the 'incipit and cadence' method;
+ TFIDFSimilarity runs the 'tfidf' method.
+For a user-selectable query tune, users can apply these methods to search the corpus for similar tunes.
+A use-case demo for these tools is provided at ./demo_notebooks/similarity_search_demo.ipynb.
+
+Input data must first be processed through FoNN's feature sequence and pattern extraction pipeline
+(via feature_sequence_extraction_tools.py and pattern_extraction.py) to generate and populate the required 'pattern
+corpus' data stored in './[corpus name]/pattern_corpus' dir.
+ """
+
+
 from abc import ABC, abstractmethod
 import os
 
@@ -26,14 +41,57 @@ LEVELS = FoNN.pattern_extraction.NgramPatternCorpus.LEVELS
 
 class TuneSimilarity(ABC):
 
+    """
+    Abstract base class for similarity search methodologies.
+
+    Properties:
+        query_tune -- title of query tune for input into similarity search.
+
+
+    Attributes:
+
+        corpus_path -- root dir of music corpus under investigation.
+        level -- Level of granularity of corpus data. Must correspond to one of the three levels
+                at which FoNN can extract feature sequence and pattern data, per global LEVELS constant:
+                1. 'note' (note-level)
+                2. 'accent' (accent-level)
+                3. 'duration_weighted' (duration-weighted note-level)
+        feature -- name of musical feature under investigation. Must correspond to feature name as listed and described
+                   in README.md and FoNN.feature_sequence_extraction_tools.Tune docstring.
+        _titles --  array listing titles of all tunes in corpus, outputted via pattern_extraction.py.
+        mode -- name of the similarity methodology to be applied. Must be a single value chosen from those
+                provided in PatternSimilarity.MODES class constant.
+        _patterns -- array of all unique local patterns extracted from corpus, outputted by pattern_extraction.py.
+        _feat_seq_data_path -- path to corpus feature sequence csv files outputted by
+                               FoNN.feature_sequence_extraction_tools.Corpus
+        _precomputed_tfidf_similarity_matrix_path -- path to matrix file storing Cosine similarity between TFIDF vectors
+                                                     of all tunes in the corpus, as outputted via
+                                                     FoNN.pattern_extraction.NgramPatternCorpus.
+        _pattern_frequency_matrix -- sparse matrix storing occurrences of all patterns (index) in all tunes (columns),
+                                    outputted by FoNN.pattern_extraction.NgramPatternCorpus.
+        _pattern_tfidf_matrix -- data content of file at _pattern_tfidf_matrix_path.
+        _precomputed_tfidf_similarity_matrix -- data content of file at _precomputed_tfidf_similarity_matrix_path.
+        _out_dir -- directory for output of similarity results.
+    """
+
     def __init__(
             self,
             corpus_path=None,
             level=None,
             query_tune=None,
-            feature=None,
-            *params
+            feature=None
     ):
+
+        """
+        Initialize TuneSimilarity abstract class instance.
+
+        Args:
+            corpus_path -- see corresponding attr in class docstring above.
+            level -- see corresponding attr in class docstring above.
+            n -- see corresponding attr in class docstring above.
+            query_tune -- see corresponding attr in class docstring above.
+            feature -- see corresponding attr in class docstring above.
+        """
 
         # properties (derived from args above)
         self.query_tune = query_tune
@@ -43,16 +101,17 @@ class TuneSimilarity(ABC):
         self.level = level
         assert feature in FEATURES
         self.feature = feature
+        # path to data content for self._titles attr
         _titles_path = f"{self.corpus_path}/pattern_corpus/{self.level}/titles.npy"
         print("Loading titles...")
         self._titles = np.load(_titles_path)
         print("Done.")
+        # path to data content for self._patterns attr
         _patterns_path = f"{self.corpus_path}/pattern_corpus/{self.level}/patterns.npy"
         print("Loading patterns...")
         self._patterns = pd.Series(np.load(_patterns_path, allow_pickle=True).tolist())
         print("Done.")
         self._out_dir = f"{corpus_path}/similarity_results/{level}"
-        self.initialize_params(*params)
         # create out_dir if it does not already exist
         if not os.path.isdir(self._out_dir):
             os.makedirs(self._out_dir)
@@ -64,19 +123,12 @@ class TuneSimilarity(ABC):
 
     @query_tune.setter
     def query_tune(self, val):
-        """Set 'query_tune' value. Note: must match the filename of a tune in the corpus (excluding filetype suffix)."""
+        """Set 'query_tune' value. Must match the filename of a tune in the corpus, excluding filetype suffix."""
         if val:
             assert val in self._titles
             self._query_tune = val
         else:
             self._query_tune = None
-
-    def initialize_params(self, *params):
-        pass
-
-    @abstractmethod
-    def _setup_precomputed_tfidf_similarity_matrix(self):
-        pass
 
     def _lookup_precomputed_results(self, data, ascending=False):
 
@@ -99,6 +151,10 @@ class TuneSimilarity(ABC):
         # sort results and return top 500
         similarity_results.sort_values(axis=0, ascending=ascending, by=query_tune, inplace=True)
         return similarity_results[:500]
+
+    @abstractmethod
+    def _setup_precomputed_tfidf_similarity_matrix(self):
+        pass
 
     @abstractmethod
     def _read_precomputed_tfidf_vector_similarity_results(self):
@@ -143,7 +199,21 @@ class TuneSimilarity(ABC):
 
 class TFIDFSimilarity(TuneSimilarity):
 
+    """
+    Load and read pre-calculated Cosine similarity matrix between pattern TFIDF vectors for all tunes in the corpus.
+    This similarity matrix is calculated via pattern_extraction.py but this class contains methods to query it, format
+    the results, and write to disc.
+
+    Attributes:
+        _precomputed_tfidf_similarity_matrix_path -- path to matrix file storing Cosine similarity between TFIDF vectors
+                                                     of all tunes in the corpus, as outputted via
+                                                     FoNN.pattern_extraction.NgramPatternCorpus.
+        _precomputed_tfidf_similarity_matrix -- data content of file at _precomputed_tfidf_similarity_matrix_path.
+    """
+
     def __init__(self, *args, **kwargs):
+
+        """Initialize TFIDFSimilarity class instance."""
 
         super().__init__(*args, **kwargs)
         self._precomputed_tfidf_similarity_matrix_path = \
@@ -213,6 +283,23 @@ class TFIDFSimilarity(TuneSimilarity):
 
 class IncipitAndCadenceSimilarity(TuneSimilarity):
 
+    """'
+    An extended version of a traditional musicological incipit search.
+    Structurally-important subsequences incipit and cadence subsequences are extracted from all tunes in the corpus and
+    compared via pairwise edit distance against the query tune. Users can select from three available edit distance
+    metrics: Levenshtein distance; Hamming distance; and a custom-weighted Hamming distance in which musically-consonant
+    substitutions are penalised less than dissonant substitutions. The edit distance output is taken as a
+    tune-dissimilarity metric.
+
+    Attributes:
+                _feat_seq_data_path -- path to corpus feature sequence csv files outputted by
+                                       FoNN.feature_sequence_extraction_tools.Corpus
+                _incipits_and_cadences -- subsequences automatically sliced from the above via bar-number indexing,
+                 containing data representing the structurally-significant incipit and first part-ending cadence for all
+                 tunes in the corpus.
+    """
+
+    # class constant, used in self._calculate_incipit_and_cadence_edit_distance() method.
     EDIT_DIST_METRICS = {
         'levenshtein': 'Levenshtein distance',
         'hamming': 'Hamming distance',
@@ -220,7 +307,7 @@ class IncipitAndCadenceSimilarity(TuneSimilarity):
     }
 
     def __init__(self, *args, **kwargs):
-
+        """Initialize IncipitAndCadenceSimilarity class instance."""
         super().__init__(*args, **kwargs)
         # setup input path and load data for 'incipit_and_cadence' similarity method
         self._feat_seq_data_path = f"{self.corpus_path}/feature_sequence_data/{self.level}"
@@ -283,9 +370,9 @@ class IncipitAndCadenceSimilarity(TuneSimilarity):
         Apply selected edit distance method to incipit and cadence input data.
 
         Args:
-            metric -- select similarity of distance metric by name. Value can be 'levenshtein'
-                      (Levenshtein distance); 'hamming' (Hamming distance); or 'weighted_hamming'
-                      (custom-weighted Hamming distance).
+            edit_dist_metric -- select similarity of distance metric by name. Value can be 'levenshtein'
+                                (Levenshtein distance); 'hamming' (Hamming distance); or 'weighted_hamming'
+                                (custom-weighted Hamming distance).
         """
 
         incipits_and_cadences = self._incipits_and_cadences
@@ -397,10 +484,35 @@ class IncipitAndCadenceSimilarity(TuneSimilarity):
 
 class MotifSimilarity(TuneSimilarity):
 
+    """A novel, musicologically-informed similarity metric.
+    First, representative pattern(s) are extracted from a user-selected query tune via an automatically-calculated
+    threshold TF-IDF value, using PatternSimilarity._extract_search_term_motifs_from_query_tune() method.
+    All similar patterns to these search terms which occur in any tune the corpus are detected via a custom-weighted
+    Hamming distance metric, applied using PatternSimilarity._run_motif_edit_distance_calculations().
+    The number of similar patterns per tune in the corpus is calculated, weighted by custom weighting factors,
+    normalised and ranked via PatternSimilarity._calculate_custom_weighted_motif_similarity_score() method. The final
+    value outputted is taken as a similarity metric and returned in raw and normalised formats."""
+
     def __init__(self, n, *args, **kwargs):
 
+        """Initialize MotifSimilarity class instance.
+
+        Properties:
+            n -- A single integer value corresponding to the length of n-gram patterns under investigation.
+                 Allowable values are 3 <= n <= 16.
+
+        Attributes:
+             _pattern_frequency_matrix -- sparse matrix storing occurrences of all patterns (index) in all tunes
+                                          (columns), outputted by FoNN.pattern_extraction.NgramPatternCorpus class.
+             _pattern_tfidf_matrix -- sparse matrix storing TF-IDF values for all patterns (index) in all tunes
+                                          (columns), outputted by FoNN.pattern_extraction.NgramPatternCorpus class.
+            _search_terms -- empty attr to hold array of search term pattern ids and their corresponding TF-IDF values.
+                             This data is extracted from the query tune via
+                             self._extract_search_term_motifs_from_query_tune() method.
+        """
+
         # properties
-        self.n = n  # TODO: document
+        self.n = n
 
         # attrs
         super().__init__(*args, **kwargs)
@@ -413,7 +525,7 @@ class MotifSimilarity(TuneSimilarity):
         print("Loading pattern TF-IDF matrix...")
         self._pattern_tfidf_matrix = self._load_sparse_matrix(_pattern_tfidf_matrix_path)
         print("Done.")
-        self._search_terms = None  # TODO: document this attr
+        self._search_terms = None
 
     @property
     def n(self):
@@ -463,15 +575,15 @@ class MotifSimilarity(TuneSimilarity):
 
         # calculate median, max and MAD of TF-IDF values
         _median = np.median(query_tune_data_nonzero)
-        print(f"Median: {_median}")
+        # print(f"Median: {_median}")
         _max = np.max(query_tune_data_nonzero)
-        print(f"Max: {_max}")
+        # print(f"Max: {_max}")
         m_a_d = median_abs_deviation(query_tune_data_nonzero)
-        print(f"Median absolute deviation: {m_a_d}")
+        # print(f"Median absolute deviation: {m_a_d}")
         # set threshold TF-IDF value; store patterns with TF-IDF vals above this threshold for use as pattern similarity
         # search terms.
         threshold = _median + m_a_d
-        print(f"Threshold: {threshold}")
+        # print(f"Threshold: {threshold}")
         search_term_tfidf_vals = query_tune_data[query_tune_data >= threshold]
         print(f"{len(search_term_tfidf_vals)} search term patterns extracted:")
         search_term_pattern_ids = np.asarray(np.where(query_tune_data >= threshold)).flatten()
@@ -510,7 +622,9 @@ class MotifSimilarity(TuneSimilarity):
             """
             Run custom-weighted Hamming distance calculations. This local function uses the external
             weighted_levenshtein package, which is supplemented with a custom substitution matrix based on diatonic
-            consonance.
+            consonance. This custom matrix is stored as a csv file in ./_diatonic_penalty_substitution_matrix.py, which
+            is converted to FoNN._edit_dist_weights.substitution python object and imported into this module as a
+            global constant.
             """
 
             return weighted_levenshtein.levenshtein(
@@ -557,16 +671,19 @@ class MotifSimilarity(TuneSimilarity):
     def _calculate_custom_weighted_motif_similarity_score(self, weighting='single'):
 
         """
+        Calculate 'motif' method similarity score:
+
         First, find all similar patterns to the 'motif' search term(s).
         Occurrences of the similar patterns returned are looked up in self_pattern_frequency_matrix via their indices.
         Matrix rows containing their occurrences per each tune in the corpus are weighted using 'consonance' and
         'prominence' factors. 'Consonance' weighting factor is applied by default. 'Prominence' factor
         can be enabled by the user if desired.
         These weighted frequency counts of similar pattern occurrences across the corpus are summed on a tune-by-tune
-        basis and normalised, outputting both raw and normalised similarity scores.
+        basis; a table is returned ranking tunes in descending order by their similarity to the query tune.
+        This table contains both raw and normalised 'motif' similarity score values for each tune.
 
         Args:
-            weighting -- value can be either 'single' (default; 'consonance' weighting factor applied) or
+            weighting -- value can be either 'single' (default, 'consonance' weighting factor applied) or
                          'double' (both 'consonance' and 'prominence' weighting factors applied).
         """
 
@@ -667,7 +784,7 @@ class MotifSimilarity(TuneSimilarity):
         motif_results.set_index('title', drop=True, inplace=True)
 
         # print, save, and return results
-        print(f"Final {weighting}-weighted 'motif' results:")
+        print(f"{weighting.title()}-weighted 'motif' results:")
         print(motif_results)
         motif_results_dir = f"{self._out_dir}/{self.query_tune}"
         if not os.path.isdir(motif_results_dir):

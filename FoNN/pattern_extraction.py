@@ -1,4 +1,3 @@
-# TODO: review before finalising new FoNN release
 
 """
 pattern_extraction.py contains a single class, NgramPatternCorpus, containing pattern extraction tools which output data
