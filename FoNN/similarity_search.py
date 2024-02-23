@@ -8,13 +8,14 @@ similarity_search.py contains TuneSimilarity base class which is a template for 
  our three pattern-based tune similarity methodologies:
  MotifSimilarity class runs the 'motif' method;
  IncipitAndCadenceSimilarity'incipit_and_cadence' runs the 'incipit and cadence' method;
- TFIDFSimilarity runs the 'tfidf' method.
+ TFIDFSimilarity runs the 'TF-IDF' method.
 For a user-selectable query tune, users can apply these methods to search the corpus for similar tunes.
 A use-case demo for these tools is provided at ./demo_notebooks/similarity_search_demo.ipynb.
 
 Input data must first be processed through FoNN's feature sequence and pattern extraction pipeline
-(via feature_sequence_extraction_tools.py and pattern_extraction.py) to generate and populate the required 'pattern
-corpus' data stored in './[corpus name]/pattern_corpus' dir.
+(via feature_sequence_extraction_tools.py, setup_pattern_corpus_demo.py) to generate and populate the required 
+'pattern corpus' data stored in './[corpus name]/pattern_corpus' dir. If using 'TF-IDF' method, 
+'setup_tfidf_similarity_matrix_demo.ipynb' must also be run to pre-calculate TF-IDF vector Cosine similarity data.
  """
 
 
@@ -58,19 +59,20 @@ class TuneSimilarity(ABC):
                 3. 'duration_weighted' (duration-weighted note-level)
         feature -- name of musical feature under investigation. Must correspond to feature name as listed and described
                    in README.md and FoNN.feature_sequence_extraction_tools.Tune docstring.
-        _titles --  array listing titles of all tunes in corpus, outputted via pattern_extraction.py.
+        _titles --  array listing titles of all tunes in corpus, outputted via setup_pattern_corpus_demo.py.
         mode -- name of the similarity methodology to be applied. Must be a single value chosen from those
                 provided in PatternSimilarity.MODES class constant.
-        _patterns -- array of all unique local patterns extracted from corpus, outputted by pattern_extraction.py.
+        _patterns -- array of all unique local patterns extracted from corpus, outputted by setup_pattern_corpus_demo.py.
         _feat_seq_data_path -- path to corpus feature sequence csv files outputted by
                                FoNN.feature_sequence_extraction_tools.Corpus
         _precomputed_tfidf_similarity_matrix_path -- path to matrix file storing Cosine similarity between TFIDF vectors
-                                                     of all tunes in the corpus, as outputted via
-                                                     FoNN.pattern_extraction.NgramPatternCorpus.
+                                                     of all tunes in the corpus.
         _pattern_frequency_matrix -- sparse matrix storing occurrences of all patterns (index) in all tunes (columns),
-                                    outputted by FoNN.pattern_extraction.NgramPatternCorpus.
-        _pattern_tfidf_matrix -- data content of file at _pattern_tfidf_matrix_path.
-        _precomputed_tfidf_similarity_matrix -- data content of file at _precomputed_tfidf_similarity_matrix_path.
+                                    outputted by FoNN.pattern_extraction.NgramPatternCorpus class.
+        _pattern_tfidf_matrix -- sparse matrix storing TF-IDF vals for all patterns (index) in all tunes (columns),
+                                    outputted by FoNN.pattern_extraction.NgramPatternCorpus class.
+        _precomputed_tfidf_similarity_matrix -- pairwise TF-IDF vector Cosine similarity matrix between all tunes in the
+                                                corpus, outputted via FoNN.pattern_extraction.NgramPatternCorpus class.
         _out_dir -- directory for output of similarity results.
     """
 
@@ -201,7 +203,7 @@ class TFIDFSimilarity(TuneSimilarity):
 
     """
     Load and read pre-calculated Cosine similarity matrix between pattern TFIDF vectors for all tunes in the corpus.
-    This similarity matrix is calculated via pattern_extraction.py but this class contains methods to query it, format
+    This similarity matrix is calculated via setup_pattern_corpus_demo.py but this class contains methods to query it, format
     the results, and write to disc.
 
     Attributes:
@@ -252,7 +254,7 @@ class TFIDFSimilarity(TuneSimilarity):
         tfidf_results.to_csv(tfidf_results_path)
 
     def run_similarity_search(self):
-        """run 'tfidf' similarity method; format, save, and print output."""
+        """run 'TF-IDF' similarity method; format, save, and print output."""
         print(f'Running TF-IDF similarity search...')
         self._read_precomputed_tfidf_vector_similarity_results()
 
