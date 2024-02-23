@@ -176,7 +176,7 @@ This component contains Tune family membership annotation for 10 families contai
 
 If you use the code in this repository, please cite this software as follows: 
 ```
-@software{diamond_fonn_2022,
+@software{diamond_fonn_2024,
 	address = {Galway, Ireland},
 	title = {{FONN} - {FOlk} {N}-gram {aNalysis}},
 	shorttitle = {{FONN}},
