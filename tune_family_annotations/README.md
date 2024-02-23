@@ -60,34 +60,25 @@ The annotation process outputted a list of verified family-member variants prese
 
 - S. P. Bayard, Dance to the fiddle, march to the fife: instrumental folk tunes in Pennsylvania. University Park, USA: Pennsylvania State University Press, 1982
 - S. P. Bayard, “Two representative tune families of British tradition,” Midwest Folklore, vol. 4, no. 1, pp. 13–33, 1954, publisher: Indiana University Press.
-- B. H. Bronson and F. J. Child, The traditional tunes of the Child ballads:
-with their texts, according to the extant records of Great Britain and America.
-Princeton: Princeton University Press, 1959
-- B. H. Bronson, “Melodic stability in oral transmission,” Journal of the
-International Folk Music Council, vol. 3, p. 50, 1951. 
+- B. H. Bronson and F. J. Child, The traditional tunes of the Child ballads: with their texts, according to the extant records of Great Britain and America. Princeton: Princeton University Press, 1959
+- B. H. Bronson, “Melodic stability in oral transmission,” Journal of the International Folk Music Council, vol. 3, p. 50, 1951. 
 - J. R. Cowdery, “A fresh look at the concept of tune family,”
 Ethnomusicology, vol. 28, no. 3, p. 495, Sep. 1984.
-- J. R. Cowdery, The melodic tradition of Ireland. Ohio, USA: Kent State
-University Press, 1990
-- A. Fleischmann, Sources of Irish traditional music, c. 1600-1855. New York,
-USA: Garland, 1998
-- R. Henebry, A handbook of Irish music. Cork, Ireland: Cork University Press,
-1928
+- J. R. Cowdery, The melodic tradition of Ireland. Ohio, USA: Kent State University Press, 1990
+- A. Fleischmann, Sources of Irish traditional music, c. 1600-1855. New York, USA: Garland, 1998
+- R. Henebry, A handbook of Irish music. Cork, Ireland: Cork University Press, 1928
 - A. Hillhouse, “Tradition and innovation in Irish instrumental folk music,” Master’s thesis, The University of British Columbia,, Vancouver, Canada, 2005
-- J. Keith, “The Session,” 2001
-- A. Kuntz and V. Pelliccioni, “The traditional tune archive,” 2009
-- F. O’Neill, Irish minstrels and musicians. Chicago, USA: Regan Printing
-House, 1913
-- C. Pendlebury, “Jigs, reels and hornpipes: a history of “traditional” dance
-tunes of Britain and Ireland,” Master’s thesis, University of Sheffield, Sheffield,
+- [J. Keith, “The Session,” 2001](https://thesession.org)
+- [A. Kuntz and V. Pelliccioni, “The traditional tune archive,” 2009](http://www.capeirish.com/webabc)
+- F. O’Neill, Irish minstrels and musicians. Chicago, USA: Regan Printing House, 1913
+- C. Pendlebury, “Jigs, reels and hornpipes: a history of “traditional” dance tunes of Britain and Ireland,” Master’s thesis, University of Sheffield, Sheffield,
 England, 2015
-- C. Pendlebury, “Tune families and tune histories: melodic resemblances in
-British and Irish folk tunes,” Folk Music Journal, vol. 11, no. 5, pp. 67–95,
+- C. Pendlebury, “Tune families and tune histories: melodic resemblances in British and Irish folk tunes,” Folk Music Journal, vol. 11, no. 5, pp. 67–95,
 2020
-- A. Ng, “irishtune.info,” 2000.
+- [A. Ng, “irishtune.info,” 2000](https://www.irishtune.info)
 - C. Walshaw, “A visual exploration of melodic relationships within traditional
-music collections,” in 2018 22nd International Conference Information
-Visualisation (IV). Fisciano, Italy: IEEE, Jul. 2018, pp. 478–483.
+music collections,” in 2018 22nd International Conference Information Visualisation (IV). Fisciano, Italy: IEEE, Jul. 2018, pp. 478–483.
+
 
   
 
