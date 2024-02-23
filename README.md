@@ -20,7 +20,7 @@ credits:
 
 
 
-# FONN - FOlk _N_-gram aNalysis 
+# FoNN - FOlk _N_-gram aNalysis 
 
 - Targeting the goals of [Polifonia](https://polifonia-project.eu) WP3, FoNN contains tools to extract feature sequence data, extract musical patterns, and detect similarity within a symbolic music corpus. Although some of FoNN's functionality is tailored to Western European folk music, the software can be used on any corpus in a compatible symbolic representation format (MIDI, ABC Notation, **kern, MusicXML, or any other format compatible with the [music21](http://web.mit.edu/music21/) Python library).
 
@@ -63,7 +63,7 @@ NOTE: Deliverable 3.4 of the Polifonia project describes the context and researc
 
 ## FoNN - Requirements
 
-To ensure FONN runs correctly, please navigate to local repo root directory and run the following in Terminal:
+To ensure FoNN runs correctly, please navigate to local repo root directory and run the following in Terminal:
 
 ``` pip install -r requirements.txt ```
 
@@ -178,8 +178,8 @@ If you use the code in this repository, please cite this software as follows:
 ```
 @software{diamond_fonn_2024,
 	address = {Galway, Ireland},
-	title = {{FONN} - {FOlk} {N}-gram {aNalysis}},
-	shorttitle = {{FONN}},
+	title = {{FoNN} - {FOlk} {N}-gram {aNalysis}},
+	shorttitle = {{FoNN}},
 	url = {https://github.com/polifonia-project/folk_ngram_analysis},
 	publisher = {National University of Ireland, Galway},
 	author = {Diamond, Danny and Shahid, Abdul and McDermott, James},
