@@ -1,0 +1,30 @@
+T(P(p(721,29),p(16081,29),p(31441,29),p(46801,29)),V(v(0,0),v(240,0),v(6480,2),v(7680,0),v(7920,0),v(9120,0),v(10320,2),v(10560,3),v(10800,4),v(11040,5),v(11280,6),v(11520,4),v(11760,3),v(12000,1),v(12240,2),v(12480,0),v(12720,-1),v(12960,-3),v(13200,-5),v(13440,-4),v(13680,-3),v(13920,-5),v(14160,-4)))
+T(P(p(3841,28),p(5761,28),p(13441,28),p(19201,28),p(21121,28),p(28801,28)),V(v(0,0),v(1200,-4),v(26880,6),v(27360,4),v(27600,1),v(27840,1),v(31680,-2)))
+T(P(p(2881,28),p(3841,28),p(4801,28),p(18241,28),p(19201,28),p(20161,28)),V(v(0,0),v(960,0),v(1680,-4),v(1920,0),v(2160,-4),v(3120,-4),v(28320,4),v(32640,-2),v(32880,0),v(36000,4),v(36240,1)))
+T(P(p(1,24),p(6001,24),p(15361,24),p(21361,24)),V(v(0,0),v(2400,5),v(2880,4),v(3120,5),v(7440,4),v(7680,2),v(7920,0),v(8160,1),v(10080,5),v(30000,0),v(32160,8),v(32400,9),v(32640,10),v(32880,8),v(33360,5)))
+T(P(p(2161,29),p(2401,29),p(3361,31),p(3601,29),p(3841,28),p(4321,26),p(5761,28),p(6241,26),p(9841,29),p(10081,29)),V(v(0,0),v(15360,0),v(31200,0),v(46560,0)))
+T(P(p(1441,29),p(1921,25),p(4801,28),p(5521,24),p(9601,25),p(14641,24)),V(v(0,0),v(15360,0),v(29520,4),v(44880,4)))
+T(P(p(481,25),p(1201,28),p(4081,27),p(5281,29),p(10561,28),p(10801,29),p(15841,25),p(16561,28),p(19441,27),p(20641,29),p(25921,28),p(26161,29),p(34081,34),p(36241,28),p(49441,34),p(51601,28)),V(v(0,0)))
+
+numberOfNotes 230
+tatumsPerBar null
+barOneStartsAt null
+compressionRatio 2.090909090909091
+runningTime 1535
+encodingLength 110
+encodingLengthWithoutResidualPointSet 94
+numberOfResidualPoints 16
+percentageOfResidualPoints 6.956521739130435
+compressionRatioWithoutResidualPointSet 2.276595744680851
+title thesession1.mid
+numberOfTECs 7
+inputFilePath D:\OneDrive - National University of Ireland, Galway\Polifonia\OMNISIA\thesession_dir\thesession1.mid
+outputFilePath D:\OneDrive - National University of Ireland, Galway\Polifonia\OMNISIA\test\thesession1-mid\thesession1-diat.SIATECCompress
+logFilePath D:\OneDrive - National University of Ireland, Galway\Polifonia\OMNISIA\test\thesession1-mid\thesession1-diat.log
+outputFileExtension SIATECCompress
+isDiatonic true
+withoutChannel10 false
+encoderName com.chromamorph.points022.SIATECCompressEncoding
+forMirex false
+mode Raw
+topNPatterns 0
