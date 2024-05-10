@@ -211,7 +211,7 @@ class NgramPatternCorpus:
         patterns = [
             np.array(
                 [int(float(elem.strip())) for elem in pattern.split()], dtype='int16')
-            for pattern in vec.get_feature_names()
+            for pattern in vec.get_feature_names_out() # NB sklearn version-dependent (old version: get_feature_names())
         ]
         
         # optionally write pattern and frequency outputs to disc
